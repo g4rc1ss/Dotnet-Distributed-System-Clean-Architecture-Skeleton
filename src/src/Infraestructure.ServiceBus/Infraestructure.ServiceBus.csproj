@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="SbCommand\" />
+		<None Remove="SbCommand\WeatherForecastSbCommand\" />
+		<None Remove="MediatR" />
+		<None Remove="MediatR.Extensions.Microsoft.DependencyInjection" />
+		<None Remove="SbModels\" />
+		<None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+		<None Remove="AutoMapper" />
+		<None Remove="MapperProfiles\" />
+		<None Remove="MapperProfiles\WeatherForecastProfiles\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="SbCommand\" />
+		<Folder Include="SbCommand\WeatherForecastSbCommand\" />
+		<Folder Include="SbModels\" />
+		<Folder Include="MapperProfiles\" />
+		<Folder Include="MapperProfiles\WeatherForecastProfiles\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Domain\Domain.csproj" />
+		<ProjectReference Include="..\Infraestructure.MongoDatabase\Infraestructure.MongoDatabase.csproj" />
+		<ProjectReference Include="..\Infraestructure.MySqlDatabase\Infraestructure.MySqlDatabase.csproj" />
+	</ItemGroup>
+</Project>

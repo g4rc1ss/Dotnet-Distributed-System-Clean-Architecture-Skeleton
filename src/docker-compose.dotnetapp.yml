@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  dotnetapp:
+    build:
+      context: .
+      dockerfile: dockerfile
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/cert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_ENVIRONMENT=Stagging
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - AppName=HostWebApiProduccion
+      - imageFolder=/img/
+      - ConnectionStrings__CleanArchitectureSkeletonContext=Server=mysql;Database=CleanArchitectureSkeleton;Uid=root;Pwd=123456;
+      - ConnectionStrings__CleanArchitectureSkeletonMongoDb=mongodb://root:123456@mongodb:27017
+      - ConnectionStrings__RedisConnection=redis:6379,password=password123
+      - ConnectionStrings__OpenTelemetry=http://opentelemetry_collector:4317
+      - ConnectionStrings__SeqLogs=http://seq-logs:5341
+    ports:
+      - "5001:80"
+      - "5101:443"
+    volumes:
+      - dotnetapp_data:/img
+    networks:
+      - telemetryNetwork
+    depends_on:
+      - mongodb
+      - mysql
+      - redis
+      - opentelemetry-collector
+      - prometheus-opentelemetry
+      - grafana-opentelemetry
+      - zipkin-opentelemetry
+      - seq-logs
+
+volumes:
+  dotnetapp_data:

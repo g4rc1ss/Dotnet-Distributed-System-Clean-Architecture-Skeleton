@@ -1,0 +1,28 @@
+﻿# Establece la imagen base
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Copia los archivos del proyecto y restaura las dependencias
+COPY . .
+RUN dotnet restore
+
+# Compila la aplicación
+RUN dotnet publish -c Release -o out
+
+# Instalar certificado https de desarrollador si no es pros
+RUN dotnet dev-certs https -ep /app/cert.pfx -p password
+
+
+# Configura la imagen de producción
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /app
+COPY --from=build /app/out .
+COPY --from=build /app/cert.pfx /app/cert.pfx
+
+# Expone el puerto de la aplicación
+EXPOSE 80
+
+# Inicia la aplicación
+ENTRYPOINT ["dotnet", "HostWebApi.dll"]

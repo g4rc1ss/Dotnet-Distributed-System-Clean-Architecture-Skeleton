@@ -1,0 +1,13 @@
+datasources:
+  - name: 'prometheus'
+    type: 'prometheus'
+    access: 'proxy'
+    url: 'http://prometheus-opentelemetry:9090'
+
+  - name: Zipkin
+    type: zipkin
+    access: proxy
+    url: http://zipkin-opentelemetry:9411
+    basicAuth: false
+    isDefault: false
+    editable: false
