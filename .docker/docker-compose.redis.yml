@@ -4,8 +4,7 @@ services:
   redis:
     container_name: redis
     image: redis
-    networks:
-      - telemetryNetwork
+    restart: always
     ports:
       - 6379:6379
     environment:

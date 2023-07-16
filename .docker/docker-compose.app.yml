@@ -2,6 +2,8 @@ version: '3.8'
 
 services:
   dotnetapp:
+    container_name: aspnetcore_app
+    restart: always
     build:
       context: ../src
       dockerfile: dockerfile

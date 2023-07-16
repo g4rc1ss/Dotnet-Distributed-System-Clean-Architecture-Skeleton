@@ -38,7 +38,7 @@ if ($environment -eq "test") {
     if ($action -eq "up") {
         $buildExec = "$commadDockerComposeToExecute build" 
         Write-Output $buildExec
-        # Invoke-Expression $buildExec
+        Invoke-Expression $buildExec
     }
 }
 
@@ -53,4 +53,4 @@ elseif ($action -eq "down") {
 }
 
 Write-Output "Comando a ejecutar" + $commadDockerComposeToExecute
-# Invoke-Expression $commadDockerComposeToExecute
+Invoke-Expression $commadDockerComposeToExecute

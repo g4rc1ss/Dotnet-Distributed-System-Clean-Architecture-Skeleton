@@ -2,8 +2,13 @@
 
 services:
   rabbitmq:
-    
-
-volumes:
-  rabbitmq_data:
-  
+    image: rabbitmq:management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./RabbitMQ/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+      - ./RabbitMQ/definitions.json:/etc/rabbitmq/definitions.json
+      - ./RabbitMQ/enabled_plugins:/etc/rabbitmq/enabled_plugins

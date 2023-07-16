@@ -4,12 +4,10 @@ services:
   mysql:
     container_name: mysql
     image: mysql
-    networks:
-      - telemetryNetwork
+    restart: always
     ports: 
       - 3306:3306
     environment: 
-      MYSQL_DATABASE: ${MYSQL_DATABASE_SKELETON}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD_SKELETON}
     volumes: 
       - ./MySql/InitDatabase.sql:/docker-entrypoint-initdb.d/init.sql:rw

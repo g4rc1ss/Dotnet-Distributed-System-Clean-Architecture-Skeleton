@@ -4,6 +4,7 @@ services:
   opentelemetry-collector:
     image: otel/opentelemetry-collector:latest
     container_name: opentelemetry_collector
+    restart: always
     command: [ "--config=/etc/openTelemetry.yaml" ]
     volumes:
       - ./Observability/openTelemetry.yaml:/etc/openTelemetry.yaml
@@ -16,6 +17,7 @@ services:
   prometheus-opentelemetry:
     image: prom/prometheus:latest
     container_name: prometheus_opentelemetry
+    restart: always
     volumes:
       - ./Observability/prometheus.yaml:/etc/prometheus/prometheus.yml
       - prometheus_metrics_data:/prometheus
@@ -24,6 +26,7 @@ services:
 
   zipkin-opentelemetry:
     image: openzipkin/zipkin:latest
+    restart: always
     container_name: zipkin_opentelemetry
     ports:
       - "9411:9411"

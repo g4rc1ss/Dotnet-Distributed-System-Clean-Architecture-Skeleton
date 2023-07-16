@@ -1,3 +1,5 @@
+CREATE DATABASE DistributedSkeleton;
+
 USE `DistributedSkeleton`;
 
  CREATE TABLE `DistributedSkeleton`.`WeatherForecast` (
