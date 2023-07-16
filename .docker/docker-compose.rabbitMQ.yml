@@ -1,0 +1,9 @@
+﻿version: '3.8'
+
+services:
+  rabbitmq:
+    
+
+volumes:
+  rabbitmq_data:
+  

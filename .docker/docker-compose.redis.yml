@@ -1,0 +1,18 @@
+﻿version: '3.8'
+
+services:
+  redis:
+    container_name: redis
+    image: redis
+    networks:
+      - telemetryNetwork
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD_SKELETON}
+    volumes:
+      - redis_data:/data
+    
+volumes:
+  redis_data:
+  

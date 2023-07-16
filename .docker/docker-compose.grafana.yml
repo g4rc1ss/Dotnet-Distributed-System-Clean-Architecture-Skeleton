@@ -6,8 +6,6 @@ services:
   grafana-opentelemetry:
     image: grafana/grafana
     container_name: grafana_opentelemetry
-    networks:
-      - telemetryNetwork
     environment:
       - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER_SKELETON}
       - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD_SKELETON}
