@@ -7,19 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Contexts\" />
-    <None Remove="DatabaseEntities\" />
-    <None Remove="Microsoft.EntityFrameworkCore.Relational" />
-    <None Remove="Pomelo.EntityFrameworkCore.MySql" />
-    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Context\" />
+    <None Remove="DbEntities\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Contexts\" />
-    <Folder Include="DatabaseEntities\" />
+    <Folder Include="Context\" />
+    <Folder Include="DbEntities\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.9" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.8" />
   </ItemGroup>
 </Project>

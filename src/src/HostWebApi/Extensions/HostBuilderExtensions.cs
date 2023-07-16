@@ -1,10 +1,8 @@
 ﻿using OpenTelemetry.Resources;
-using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Events;
-using StackExchange.Redis;
 using OpenTelemetry.Exporter;
 
 namespace HostWebApi.Extensions;
@@ -40,7 +38,6 @@ public static class HostBuilderExtensions
             .WithTracing(trace =>
             {
                 trace.AddAspNetCoreInstrumentation();
-                trace.AddEntityFrameworkCoreInstrumentation();
                 trace.AddOtlpExporter(exporter =>
                 {
                     exporter.Endpoint = new Uri(configuration["ConnectionStrings:OpenTelemetry"]!);

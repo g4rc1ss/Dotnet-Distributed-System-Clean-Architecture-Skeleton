@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  dotnetapp:
+    build:
+      context: ../src
+      dockerfile: dockerfile
+      args:
+        - environmentDeploy=${ASPNETCORE_ENVIRONMENT_SKELETON}
+        - certficatePathFrom=${ASPNETCORE_Kestrel_Certificate_From_Path_SKELETON}
+        - certificatePathTo=${ASPNETCORE_Kestrel__Certificates__Default__Path_SKELETON}
+        - certificatePass=${ASPNETCORE_Kestrel__Certificates__Default__Password_SKELETON}
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=${ASPNETCORE_Kestrel__Certificates__Default__Path_SKELETON}
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${ASPNETCORE_Kestrel__Certificates__Default__Password_SKELETON}
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT_SKELETON}
+      - ASPNETCORE_URLS=${ASPNETCORE_URLS_SKELETON}
+      - AppName=${AppName_SKELETON}
+      - keysFolder=${keysFolder_SKELETON}
+      - ConnectionStrings__CleanArchitectureSkeletonMongoDb=${ConnectionStrings__CleanArchitectureSkeletonMongoDb_SKELETON}
+      - ConnectionStrings__OpenTelemetry=${ConnectionStrings__OpenTelemetry_SKELETON}
+      - ConnectionStrings__SeqLogs=${ConnectionStrings__SeqLogs_SKELETON}
+    ports:
+      - "${HTTP_PORT_SKELETON}:80"
+      - "${HTTPS_PORT_SKELETON}:443"
+    volumes:
+      - dotnetapp_keys_data:${keysFolder_SKELETON}
+    networks:
+      - telemetryNetwork
+    depends_on:
+      - mongodb
+      - opentelemetry-collector
+      - prometheus-opentelemetry
+      - zipkin-opentelemetry
+      - seq-logs
+
+volumes:
+  dotnetapp_keys_data:
