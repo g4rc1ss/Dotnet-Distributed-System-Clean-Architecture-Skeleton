@@ -11,7 +11,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD_SKELETON}
     volumes: 
       - ./MySql/InitDatabase.sql:/docker-entrypoint-initdb.d/init.sql:rw
-      - mysql_data:/data
+      - mysql_data:/var/lib/mysql
   
   
 volumes:

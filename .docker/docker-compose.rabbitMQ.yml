@@ -9,6 +9,9 @@ services:
       - 5672:5672
       - 15672:15672
     volumes:
-      - ./RabbitMQ/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+      - ./RabbitMQ/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
       - ./RabbitMQ/definitions.json:/etc/rabbitmq/definitions.json
       - ./RabbitMQ/enabled_plugins:/etc/rabbitmq/enabled_plugins
+      - rabbitmq_data:/var/lib/rabbitmq
+volumes:
+  rabbitmq_data:
