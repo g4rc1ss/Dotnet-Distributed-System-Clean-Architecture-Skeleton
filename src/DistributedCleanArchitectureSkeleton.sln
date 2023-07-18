@@ -13,12 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Application
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Interfaces", "src\WeatherForecast\WeatherForecast.Interfaces\WeatherForecast.Interfaces.csproj", "{2B75047B-1AFC-47DE-8B31-F1CF8AEC6E05}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F3BA576E-D51A-491E-ABB3-F7AADF75573A}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-		docker-compose.ps1 = docker-compose.ps1
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecats.UnitTest", "src\WeatherForecast\WeatherForecats.UnitTest\WeatherForecats.UnitTest.csproj", "{8A890C24-5F18-4844-BC49-A584795E70A9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostWebApi", "src\HostWebApi\HostWebApi.csproj", "{50AFDF73-735C-48DD-B197-415C0B9992FA}"
@@ -59,9 +53,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Shared", "src\User\Use
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestructure.MySqlDatabase", "src\Infraestructure.MySqlDatabase\Infraestructure.MySqlDatabase.csproj", "{335306BA-3497-48AB-99DC-6AC729DED13D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{74A0E1B1-77F9-439A-B50B-C12EDFC4A041}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure Configuration Libs", "Infraestructure Configuration Libs", "{74A0E1B1-77F9-439A-B50B-C12EDFC4A041}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostWebApi.Shared", "src\HostWebApi.Shared\HostWebApi.Shared.csproj", "{2099F728-E473-4D95-AA07-9056295E3E32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestructure.RabbitMQ", "src\Infraestructure.RabbitMQ\Infraestructure.RabbitMQ.csproj", "{9AAA6B28-3424-4D2C-9560-DB9C60AFB238}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestructure.Communication", "src\Infraestructure.Communication\Infraestructure.Communication.csproj", "{954E999A-ED91-429A-AB51-85B1B82CCE03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecast.Infraestructure.Entities", "src\WeatherForecast\WeatherForecast.Infraestructure.Entities\WeatherForecast.Infraestructure.Entities.csproj", "{8BC474BD-3829-40FC-9B97-0C6BF47A3AC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,6 +145,18 @@ Global
 		{2099F728-E473-4D95-AA07-9056295E3E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2099F728-E473-4D95-AA07-9056295E3E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2099F728-E473-4D95-AA07-9056295E3E32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AAA6B28-3424-4D2C-9560-DB9C60AFB238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AAA6B28-3424-4D2C-9560-DB9C60AFB238}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AAA6B28-3424-4D2C-9560-DB9C60AFB238}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AAA6B28-3424-4D2C-9560-DB9C60AFB238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{954E999A-ED91-429A-AB51-85B1B82CCE03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{954E999A-ED91-429A-AB51-85B1B82CCE03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{954E999A-ED91-429A-AB51-85B1B82CCE03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{954E999A-ED91-429A-AB51-85B1B82CCE03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BC474BD-3829-40FC-9B97-0C6BF47A3AC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BC474BD-3829-40FC-9B97-0C6BF47A3AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BC474BD-3829-40FC-9B97-0C6BF47A3AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BC474BD-3829-40FC-9B97-0C6BF47A3AC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -173,8 +185,10 @@ Global
 		{6CB7C7B5-38EE-44F6-9EFE-4C915F40F6B7} = {F25F989B-F75C-4284-91CF-8E07E08913AC}
 		{36A0D136-D01E-47A0-A0CD-4336439E7BBA} = {AE0EC741-70AE-4510-83B0-2C1A39629CFD}
 		{335306BA-3497-48AB-99DC-6AC729DED13D} = {74A0E1B1-77F9-439A-B50B-C12EDFC4A041}
-		{74A0E1B1-77F9-439A-B50B-C12EDFC4A041} = {DB6FD3CC-2392-4383-A768-778E9AA19E22}
 		{2099F728-E473-4D95-AA07-9056295E3E32} = {DB6FD3CC-2392-4383-A768-778E9AA19E22}
+		{9AAA6B28-3424-4D2C-9560-DB9C60AFB238} = {74A0E1B1-77F9-439A-B50B-C12EDFC4A041}
+		{954E999A-ED91-429A-AB51-85B1B82CCE03} = {74A0E1B1-77F9-439A-B50B-C12EDFC4A041}
+		{8BC474BD-3829-40FC-9B97-0C6BF47A3AC2} = {D2A8EC22-05EF-44FB-9E06-9FA8B9788AC4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9910F84-F791-4753-8A02-193B05CB3472}

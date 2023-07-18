@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <None Remove="Microsoft.Extensions.DependencyInjection" />
-    <None Remove="MongoDbEntities\" />
     <None Remove="MongoDB.Driver" />
     <None Remove="Microsoft.Extensions.Configuration.Abstractions" />
   </ItemGroup>
@@ -16,8 +15,5 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MongoDbEntities\" />
   </ItemGroup>
 </Project>

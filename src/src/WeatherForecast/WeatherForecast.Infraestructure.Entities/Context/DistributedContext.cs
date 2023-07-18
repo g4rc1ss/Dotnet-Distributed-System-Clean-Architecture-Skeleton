@@ -1,7 +1,7 @@
 ﻿using Infraestructure.MySqlDatabase.DbEntities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infraestructure.MySqlDatabase.Context;
+namespace WeatherForecast.Infraestructure.Entities.Context;
 
 public class DistributedContext : DbContext
 {

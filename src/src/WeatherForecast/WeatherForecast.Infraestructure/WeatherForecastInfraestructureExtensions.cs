@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WeatherForecast.Infraestructure.Repositories.Query.WeatherForecastQueries;
 using WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
+using Infraestructure.MySqlDatabase;
+using Infraestructure.MongoDatabase;
 
 namespace WeatherForecast.Infraestructure;
 
@@ -12,6 +14,8 @@ public static class WeatherForecastInfraestructureExtensions
     public static IServiceCollection AddDataAccessService(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddRepositoryServices();
+        services.AddMongoDbConfig(configuration);
+        services.AddMysqlEntityFrameworkConfig<DistributedContext>(configuration);
 
         return services;
     }

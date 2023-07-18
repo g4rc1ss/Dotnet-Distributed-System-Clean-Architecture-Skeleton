@@ -1,5 +1,4 @@
-﻿using Infraestructure.MySqlDatabase.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,9 +6,11 @@ namespace Infraestructure.MySqlDatabase;
 
 public static class InfraestructureMySqlExtensions
 {
-    public static IServiceCollection AddMysqlEntityFrameworkConfig(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddMysqlEntityFrameworkConfig<TContext>(this IServiceCollection services, IConfiguration configuration)
+        where TContext : DbContext
     {
-        services.AddMySqlDbContext<DistributedContext>(configuration);
+        services.AddMySqlDbContext<TContext>(configuration);
+        services.AddMySqlHealthCheck();
 
         return services;
     }
@@ -25,6 +26,12 @@ public static class InfraestructureMySqlExtensions
 
         services.AddDbContextPool<TContext>(dbContextOptions);
         services.AddPooledDbContextFactory<TContext>(dbContextOptions);
+
+        return services;
+    }
+
+    private static IServiceCollection AddMySqlHealthCheck(this IServiceCollection services)
+    {
 
         return services;
     }
