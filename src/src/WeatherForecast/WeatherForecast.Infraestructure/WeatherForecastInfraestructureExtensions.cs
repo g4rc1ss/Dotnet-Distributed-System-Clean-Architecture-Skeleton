@@ -18,6 +18,7 @@ public static class WeatherForecastInfraestructureExtensions
 
         services.AddMongoDbConfig(configuration);
         services.AddMysqlEntityFrameworkConfig<DistributedContext>(configuration);
+        services.AddCache(configuration);
 
         return services;
     }
@@ -27,6 +28,16 @@ public static class WeatherForecastInfraestructureExtensions
         services.AddScoped<IWeatherForecastQueryAllContract, WeatherForecastQueryAll>();
         services.AddScoped<IWeatherForecastCommandCreateContract, WeatherForecastCommandCreate>();
 
+        return services;
+    }
+
+    private static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddStackExchangeRedisCache(redis =>
+        {
+            redis.Configuration = configuration.GetConnectionString("RedisConnection");
+            redis.InstanceName = configuration["AppName"];
+        });
         return services;
     }
 }

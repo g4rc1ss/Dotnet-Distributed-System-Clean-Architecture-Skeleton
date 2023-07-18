@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="7.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="7.0.9" />
   </ItemGroup>
 
   <ItemGroup>

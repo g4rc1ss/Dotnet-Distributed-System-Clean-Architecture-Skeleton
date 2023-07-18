@@ -1,23 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AssemblyName>Infraestructure.MySqlEntityFramework</AssemblyName>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="Dapper" Version="2.0.143" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\WeatherForecast.Interfaces\WeatherForecast.Interfaces.csproj" />
-    <ProjectReference Include="..\WeatherForecast.Domain\WeatherForecast.Domain.csproj" />
-    <ProjectReference Include="..\WeatherForecast.Infraestructure.Entities\WeatherForecast.Infraestructure.Entities.csproj" />
-  </ItemGroup>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AssemblyName>Infraestructure.MySqlEntityFramework</AssemblyName>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="Dapper" Version="2.0.143" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.9" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\WeatherForecast.Interfaces\WeatherForecast.Interfaces.csproj" />
+		<ProjectReference Include="..\WeatherForecast.Domain\WeatherForecast.Domain.csproj" />
+		<ProjectReference Include="..\WeatherForecast.Infraestructure.Entities\WeatherForecast.Infraestructure.Entities.csproj" />
+	</ItemGroup>
 </Project>

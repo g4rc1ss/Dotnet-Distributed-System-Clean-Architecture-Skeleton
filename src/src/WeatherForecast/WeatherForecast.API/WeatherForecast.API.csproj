@@ -5,20 +5,13 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Weather Forecast Production' " />
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Weather Forecast Stagging' " />
-	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Weather Forecast Dev' " />
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'HostWeather Forecast' " />
 	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	</ItemGroup>
-	<ItemGroup>
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="7.0.8" />
-		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="7.0.9" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" Version="1.0.0-rc9.8" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.6" />
-		<PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.9" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Controllers\" />
@@ -36,12 +29,13 @@
 		<ProjectReference Include="..\WeatherForecast.Infraestructure\WeatherForecast.Infraestructure.csproj" />
 		<ProjectReference Include="..\WeatherForecast.Shared\WeatherForecast.Shared.csproj" />
 		<ProjectReference Include="..\..\HostWebApi.Shared\HostWebApi.Shared.csproj">
-		  <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+			<GlobalPropertiesToRemove>
+			</GlobalPropertiesToRemove>
 		</ProjectReference>
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Update="Properties\launchSettings.json">
-	    <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-	  </Content>
+		<Content Update="Properties\launchSettings.json">
+			<CopyToPublishDirectory>Never</CopyToPublishDirectory>
+		</Content>
 	</ItemGroup>
 </Project>

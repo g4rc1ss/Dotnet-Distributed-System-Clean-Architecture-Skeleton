@@ -5,7 +5,6 @@ var app = DefaultWebApplication.Create(args, builder =>
 {
     // Add services to the container.
     builder.Services.InitWeatherForecast(builder.Configuration);
-    builder.Services.AddCache(builder.Configuration);
 
     builder.Services.AddControllers();
 });

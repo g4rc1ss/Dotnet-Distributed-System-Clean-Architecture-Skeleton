@@ -15,13 +15,10 @@ public class DistributedContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseCollation("utf8mb4_0900_ai_ci");
-
         modelBuilder.Entity<WeatherForecastEfEntity>(entity =>
         {
             entity.ToTable("WeatherForecast");
             entity.Property(e => e.Date).HasColumnType("datetime");
-            entity.Property(e => e.Summary).HasMaxLength(100);
         });
     }
 
