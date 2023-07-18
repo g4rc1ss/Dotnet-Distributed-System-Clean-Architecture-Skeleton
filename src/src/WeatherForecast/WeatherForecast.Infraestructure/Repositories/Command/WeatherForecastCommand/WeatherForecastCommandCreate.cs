@@ -4,9 +4,8 @@ using AutoMapper;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
-using Infraestructure.MySqlDatabase.Context;
-using Infraestructure.MySqlDatabase.DbEntities;
-using ZstdSharp.Unsafe;
+using WeatherForecast.Infraestructure.Entities.Context;
+using WeatherForecast.Infraestructure.Entities.DbEntities;
 
 namespace WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 

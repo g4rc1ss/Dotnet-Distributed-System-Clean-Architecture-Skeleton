@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Infraestructure.MongoDatabase.MongoDbEntities;
-using Infraestructure.MySqlDatabase.DbEntities;
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
+using WeatherForecast.Infraestructure.Entities.DbEntities;
+using WeatherForecast.Infraestructure.Entities.MongoDbEntities;
 
 namespace WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
 

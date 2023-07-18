@@ -17,8 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WeatherForecast.Interfaces\WeatherForecast.Interfaces.csproj" />
     <ProjectReference Include="..\WeatherForecast.Domain\WeatherForecast.Domain.csproj" />
-    <ProjectReference Include="..\..\Infraestructure.MongoDatabase\Infraestructure.MongoDatabase.csproj" />
-    <ProjectReference Include="..\..\Infraestructure.MySqlDatabase\Infraestructure.MySqlDatabase.csproj" />
+    <ProjectReference Include="..\WeatherForecast.Infraestructure.Entities\WeatherForecast.Infraestructure.Entities.csproj" />
   </ItemGroup>
 
 </Project>

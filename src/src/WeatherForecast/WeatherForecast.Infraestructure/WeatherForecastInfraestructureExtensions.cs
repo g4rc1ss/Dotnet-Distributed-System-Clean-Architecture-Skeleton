@@ -6,6 +6,7 @@ using WeatherForecast.Infraestructure.Repositories.Query.WeatherForecastQueries;
 using WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 using Infraestructure.MySqlDatabase;
 using Infraestructure.MongoDatabase;
+using WeatherForecast.Infraestructure.Entities.Context;
 
 namespace WeatherForecast.Infraestructure;
 
@@ -14,6 +15,7 @@ public static class WeatherForecastInfraestructureExtensions
     public static IServiceCollection AddDataAccessService(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddRepositoryServices();
+
         services.AddMongoDbConfig(configuration);
         services.AddMysqlEntityFrameworkConfig<DistributedContext>(configuration);
 

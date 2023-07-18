@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Infraestructure.MongoDatabase.MongoDbEntities;
 using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
+using WeatherForecast.Infraestructure.Entities.MongoDbEntities;
 
 namespace WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
 

@@ -3,7 +3,7 @@
 namespace Infraestructure.Communication.Publisher.Domain;
 
 
-public class DefaultDomainMessagePublisher
+public class DefaultDomainMessagePublisher : IDomainMessagePublisher
 {
     private readonly IExternalMessagePublisher<DomainMessage> _externalPublisher;
 

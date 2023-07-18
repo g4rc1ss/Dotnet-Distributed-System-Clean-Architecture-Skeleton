@@ -1,31 +1,5 @@
 {
   "profiles": {
-    "WebApi Production": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:7151;http://localhost:5151",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production"
-      }
-    },
-    "WebApi Stagging": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7151;http://localhost:5151",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Stagging"
-      }
-    },
-    "WebApi Dev": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7151;http://localhost:5151",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "IIS Express Dev": {
       "commandName": "IISExpress",
       "launchBrowser": true,
@@ -34,13 +8,38 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "HostWebApi": {
+    "Weather Forecast Production": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7151;http://localhost:5151",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    },
+    "Weather Forecast Stagging": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7151;http://localhost:5151",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "local"
+        "ASPNETCORE_ENVIRONMENT": "Stagging"
+      }
+    },
+    "Weather Forecast Dev": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7151;http://localhost:5151",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "HostWeather Forecast": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:6853;http://localhost:17142",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }

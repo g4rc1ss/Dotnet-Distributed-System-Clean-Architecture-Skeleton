@@ -1,11 +1,11 @@
 ﻿using System.Text.Json;
 using WeatherForecast.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
 using AutoMapper;
-using Infraestructure.MongoDatabase.MongoDbEntities;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
+using WeatherForecast.Infraestructure.Entities.MongoDbEntities;
 
 namespace WeatherForecast.Infraestructure.Repositories.Query.WeatherForecastQueries;
 

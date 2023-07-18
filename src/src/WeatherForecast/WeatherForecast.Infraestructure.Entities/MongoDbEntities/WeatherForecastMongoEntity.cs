@@ -2,7 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Infraestructure.MongoDatabase.MongoDbEntities;
+namespace WeatherForecast.Infraestructure.Entities.MongoDbEntities;
 
 public class WeatherForecastMongoEntity
 {

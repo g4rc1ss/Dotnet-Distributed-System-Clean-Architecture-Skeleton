@@ -1,5 +1,5 @@
-﻿using Infraestructure.MySqlDatabase.DbEntities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using WeatherForecast.Infraestructure.Entities.DbEntities;
 
 namespace WeatherForecast.Infraestructure.Entities.Context;
 

@@ -1,13 +1,13 @@
 ﻿using System;
-namespace Infraestructure.MySqlDatabase.DbEntities
+
+namespace WeatherForecast.Infraestructure.Entities.DbEntities;
+
+public class WeatherForecastEfEntity
 {
-    public class WeatherForecastEfEntity
-    {
-        public int Id { get; set; }
-        public DateTime? Date { get; set; }
-        public int? TemperatureC { get; set; }
-        public int? TemperatureF { get; set; }
-        public string? Summary { get; set; }
-    }
+    public int Id { get; set; }
+    public DateTime? Date { get; set; }
+    public int? TemperatureC { get; set; }
+    public int? TemperatureF { get; set; }
+    public string? Summary { get; set; }
 }
 

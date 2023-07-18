@@ -1,10 +1,8 @@
 ﻿using WeatherForecast.Application;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using WeatherForecast.Infraestructure;
+using WeatherForecast.Infraestructure.Entities.Context;
 
-namespace WeatherForecast.API;
+namespace WeatherForecast.API.Extensions;
 
 public static class WeatherForecastApiExtensions
 {
@@ -16,6 +14,16 @@ public static class WeatherForecastApiExtensions
         services.AddBusinessServices();
         services.AddDataAccessService(configuration);
 
+        return services;
+    }
+
+    public static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddStackExchangeRedisCache(redis =>
+        {
+            redis.Configuration = configuration.GetConnectionString("RedisConnection");
+            redis.InstanceName = configuration["AppName"];
+        });
         return services;
     }
 }

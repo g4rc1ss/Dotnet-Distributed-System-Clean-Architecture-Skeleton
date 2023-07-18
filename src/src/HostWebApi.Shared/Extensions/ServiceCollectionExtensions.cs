@@ -1,31 +1,23 @@
-﻿using OpenTelemetry.Resources;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Trace;
-using Serilog;
-using Serilog.Events;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Exporter;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
-namespace HostWebApi.Extensions;
+namespace HostWebApi.Shared.Extensions;
 
-public static class HostBuilderExtensions
+public static class ServiceCollectionExtensions
 {
 
-    internal static IHostBuilder AddLoggerConfiguration(this IHostBuilder hostBuilder, IConfiguration configuration)
+    public static IServiceCollection ConfigureDataProtectionProvider(this IServiceCollection services, IConfiguration configuration)
     {
-        hostBuilder.UseSerilog((context, loggerConfiguration) =>
-        {
-            loggerConfiguration
-                .MinimumLevel.Information()
-                .Enrich.WithProperty("Application", "HostWebApi")
-                .WriteTo.Seq(configuration["ConnectionStrings:SeqLogs"]!);
-
-            if (context.HostingEnvironment.IsDevelopment())
-            {
-                loggerConfiguration.WriteTo.Console(LogEventLevel.Debug);
-            };
-
-        });
-        return hostBuilder;
+        var keysFolder = configuration["keysFolder"]!;
+        services.AddDataProtection()
+            .PersistKeysToFileSystem(new DirectoryInfo(keysFolder))
+            .SetApplicationName(configuration["AppName"]!);
+        return services;
     }
 
     internal static IServiceCollection AddOpenTelemetry(this IServiceCollection services, IConfiguration configuration)
@@ -61,3 +53,4 @@ public static class HostBuilderExtensions
         return services;
     }
 }
+

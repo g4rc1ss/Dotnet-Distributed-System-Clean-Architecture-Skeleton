@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Weather Forecast Production' " />
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Weather Forecast Stagging' " />
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Weather Forecast Dev' " />
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'HostWeather Forecast' " />
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
@@ -17,17 +21,27 @@
 		<PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.8" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Remove="Controllers\" />
-	  <None Remove="MapperProfiles\" />
+		<None Remove="Controllers\" />
+		<None Remove="MapperProfiles\" />
+		<None Remove="Extensions\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Controllers\" />
-	  <Folder Include="MapperProfiles\" />
+		<Folder Include="Controllers\" />
+		<Folder Include="MapperProfiles\" />
+		<Folder Include="Extensions\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\WeatherForecast.Interfaces\WeatherForecast.Interfaces.csproj" />
-	  <ProjectReference Include="..\WeatherForecast.Application\WeatherForecast.Application.csproj" />
-	  <ProjectReference Include="..\WeatherForecast.Infraestructure\WeatherForecast.Infraestructure.csproj" />
-	  <ProjectReference Include="..\WeatherForecast.Shared\WeatherForecast.Shared.csproj" />
+		<ProjectReference Include="..\WeatherForecast.Interfaces\WeatherForecast.Interfaces.csproj" />
+		<ProjectReference Include="..\WeatherForecast.Application\WeatherForecast.Application.csproj" />
+		<ProjectReference Include="..\WeatherForecast.Infraestructure\WeatherForecast.Infraestructure.csproj" />
+		<ProjectReference Include="..\WeatherForecast.Shared\WeatherForecast.Shared.csproj" />
+		<ProjectReference Include="..\..\HostWebApi.Shared\HostWebApi.Shared.csproj">
+		  <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Update="Properties\launchSettings.json">
+	    <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+	  </Content>
 	</ItemGroup>
 </Project>

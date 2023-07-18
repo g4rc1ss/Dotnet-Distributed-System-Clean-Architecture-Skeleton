@@ -1,4 +1,6 @@
-﻿namespace Infraestructure.Communication.Consumers.Handler;
+﻿using Infraestructure.Communication.Messages;
+
+namespace Infraestructure.Communication.Consumers.Handler;
 
 public interface IMessageHandler
 {
