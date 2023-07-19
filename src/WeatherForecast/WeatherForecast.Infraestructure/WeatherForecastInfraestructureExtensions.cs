@@ -16,7 +16,7 @@ public static class WeatherForecastInfraestructureExtensions
     {
         services.AddRepositoryServices();
 
-        services.AddMongoDbConfig(configuration);
+        services.AddMongoDbConfig(configuration["MongoDbConnection"]!);
         services.AddMysqlEntityFrameworkConfig<DistributedContext>(configuration);
         services.AddCache(configuration);
 

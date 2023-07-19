@@ -18,6 +18,7 @@ $composeToExecuteAlways = @(
     "docker-compose.mySQL.yml",
     "docker-compose.openTelemetry.yml",
     "docker-compose.rabbitMQ.yml",
+    "docker-compose.seqLogs.yml",
     "docker-compose.redis.yml"
 );
 

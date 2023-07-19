@@ -20,7 +20,7 @@ services:
       - AppName=${WEATHERFORECAST_AppName_SKELETON}
       - keysFolder=${WEATHERFORECAST_keysFolder_SKELETON}
       - ConnectionStrings__DistributedContext=${WEATHERFORECAST_ConnectionStrings__DistributedContext_SKELETON}
-      - ConnectionStrings__CleanArchitectureSkeletonMongoDb=${WEATHERFORECAST_ConnectionStrings__CleanArchitectureSkeletonMongoDb_SKELETON}
+      - ConnectionStrings__MongoDbConnection=${WEATHERFORECAST_ConnectionStrings__MongoDbConnection_SKELETON}
       - ConnectionStrings__RedisConnection=${WEATHERFORECAST_ConnectionStrings__RedisConnection_SKELETON}
       - ConnectionStrings__OpenTelemetry=${WEATHERFORECAST_ConnectionStrings__OpenTelemetry_SKELETON}
       - ConnectionStrings__SeqLogs=${WEATHERFORECAST_ConnectionStrings__SeqLogs_SKELETON}
