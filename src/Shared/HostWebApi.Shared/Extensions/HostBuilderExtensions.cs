@@ -14,7 +14,7 @@ public static class HostBuilderExtensions
         {
             loggerConfiguration
                 .MinimumLevel.Information()
-                .Enrich.WithProperty("Application", "HostWebApi")
+                .Enrich.WithProperty("Application", configuration["AppName"]!)
                 .WriteTo.Seq(configuration["ConnectionStrings:SeqLogs"]!);
 
             if (context.HostingEnvironment.IsDevelopment())

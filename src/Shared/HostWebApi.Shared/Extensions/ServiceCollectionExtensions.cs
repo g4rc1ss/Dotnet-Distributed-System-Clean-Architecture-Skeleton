@@ -30,6 +30,7 @@ public static class ServiceCollectionExtensions
             .WithTracing(trace =>
             {
                 trace.AddAspNetCoreInstrumentation();
+                trace.AddEntityFrameworkCoreInstrumentation();
                 trace.AddOtlpExporter(exporter =>
                 {
                     exporter.Endpoint = new Uri(configuration["ConnectionStrings:OpenTelemetry"]!);
@@ -37,7 +38,7 @@ public static class ServiceCollectionExtensions
             })
             .WithMetrics(metric =>
             {
-                metric.AddMeter("HostWebApi");
+                metric.AddMeter(configuration["AppName"]!);
                 metric.AddAspNetCoreInstrumentation();
                 metric.AddRuntimeInstrumentation();
                 metric.AddHttpClientInstrumentation();

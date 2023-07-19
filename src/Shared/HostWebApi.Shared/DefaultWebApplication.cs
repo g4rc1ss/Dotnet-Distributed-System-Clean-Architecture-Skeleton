@@ -1,5 +1,4 @@
-﻿using HealthChecks.UI.Client;
-using HostWebApi.Shared.Extensions;
+﻿using HostWebApi.Shared.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,8 +13,6 @@ public static class DefaultWebApplication
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddHealthChecks();
-        builder.Services.AddHealthChecksUI()
-            .AddInMemoryStorage();
 
         builder.Host.AddLoggerConfiguration(builder.Configuration);
         builder.Services.AddOpenTelemetry(builder.Configuration);
@@ -50,12 +47,6 @@ public static class DefaultWebApplication
         app.UseHealthChecks("/health", new HealthCheckOptions()
         {
             Predicate = _ => true,
-            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-        });
-
-        app.UseHealthChecksUI(config =>
-        {
-            config.UIPath = "/health-ui";
         });
 
         app.UseHttpLogging();

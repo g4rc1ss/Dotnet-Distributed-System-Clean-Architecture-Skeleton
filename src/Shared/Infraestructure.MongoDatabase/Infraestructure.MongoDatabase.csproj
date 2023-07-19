@@ -15,5 +15,6 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="6.0.2" />
   </ItemGroup>
 </Project>
