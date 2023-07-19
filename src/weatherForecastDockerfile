@@ -6,10 +6,13 @@ WORKDIR /app
 
 # Copia los archivos del proyecto y restaura las dependencias
 COPY . .
-RUN dotnet restore
+
+ENV projectPath=./WeatherForecast/WeatherForecast.API
+
+RUN dotnet restore ${projectPath}
 
 # Compila la aplicación
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o out ${projectPath}
 
 # Gestion de Certificados HTTPS de Kestrel
 ARG environmentDeploy
@@ -33,5 +36,7 @@ ARG certificatePathTo
 COPY --from=build /app/out .
 COPY --from=build ${certificatePathTo} .
 
+EXPOSE 5000
+
 # Inicia la aplicación
-ENTRYPOINT ["dotnet", "Users.API.dll"]
+ENTRYPOINT ["dotnet", "WeatherForecast.API.dll"]

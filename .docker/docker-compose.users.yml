@@ -1,12 +1,12 @@
 version: '3.8'
 
 services:
-  dotnetapp:
-    container_name: aspnetcore_app
+  usersapi:
+    container_name: usersapi
     restart: always
     build:
-      context: ../src/User/User.API
-      dockerfile: dockerfile
+      context: ../src
+      dockerfile: userDockerfile
       args:
         - environmentDeploy=${USERS_ASPNETCORE_ENVIRONMENT_SKELETON}
         - certficatePathFrom=${USERS_ASPNETCORE_Kestrel_Certificate_From_Path_SKELETON}
