@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  dotnetapp:
+    container_name: aspnetcore_app
+    restart: always
+    build:
+      context: ../src/WeatherForecast/WeatherForecast.API
+      dockerfile: dockerfile
+      args:
+        - environmentDeploy=${WEATHERFORECAST_ASPNETCORE_ENVIRONMENT_SKELETON}
+        - certficatePathFrom=${WEATHERFORECAST_ASPNETCORE_Kestrel_Certificate_From_Path_SKELETON}
+        - certificatePathTo=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Path_SKELETON}
+        - certificatePass=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Password_SKELETON}
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Path_SKELETON}
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Password_SKELETON}
+      - ASPNETCORE_ENVIRONMENT=${WEATHERFORECAST_ASPNETCORE_ENVIRONMENT_SKELETON}
+      - ASPNETCORE_URLS=${WEATHERFORECAST_ASPNETCORE_URLS_SKELETON}
+      - AppName=${WEATHERFORECAST_AppName_SKELETON}
+      - keysFolder=${WEATHERFORECAST_keysFolder_SKELETON}
+      - ConnectionStrings__DistributedContext=${WEATHERFORECAST_ConnectionStrings__DistributedContext_SKELETON}
+      - ConnectionStrings__CleanArchitectureSkeletonMongoDb=${WEATHERFORECAST_ConnectionStrings__CleanArchitectureSkeletonMongoDb_SKELETON}
+      - ConnectionStrings__RedisConnection=${WEATHERFORECAST_ConnectionStrings__RedisConnection_SKELETON}
+      - ConnectionStrings__OpenTelemetry=${WEATHERFORECAST_ConnectionStrings__OpenTelemetry_SKELETON}
+      - ConnectionStrings__SeqLogs=${WEATHERFORECAST_ConnectionStrings__SeqLogs_SKELETON}
+      - ConnectionStrings__RabbitMQ=${WEATHERFORECAST_ConnectionStrings__RabbitMQ_SKELETON}
+    ports:
+      - "${WEATHERFORECAST_HTTP_PORT_SKELETON}:80"
+      - "${WEATHERFORECAST_HTTPS_PORT_SKELETON}:443"
+    volumes:
+      - dotnetapp_keys_data:${WEATHERFORECAST_keysFolder_SKELETON}
+
+volumes:
+  dotnetapp_keys_data:

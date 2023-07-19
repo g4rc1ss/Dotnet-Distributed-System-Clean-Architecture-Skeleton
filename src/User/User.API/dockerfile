@@ -34,4 +34,4 @@ COPY --from=build /app/out .
 COPY --from=build ${certificatePathTo} .
 
 # Inicia la aplicación
-ENTRYPOINT ["dotnet", "HostWebApi.dll"]
+ENTRYPOINT ["dotnet", "Users.API.dll"]

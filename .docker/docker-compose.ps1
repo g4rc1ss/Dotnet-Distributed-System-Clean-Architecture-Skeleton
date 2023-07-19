@@ -12,7 +12,7 @@ param (
     [string]$removeVolumes
 )
 
-$composeToExecuteAlways = (
+$composeToExecuteAlways = @(
     "docker-compose.grafana.yml",
     "docker-compose.mongo.yml",
     "docker-compose.mySQL.yml",
@@ -21,8 +21,17 @@ $composeToExecuteAlways = (
     "docker-compose.redis.yml"
 );
 
+
+$composeToExecuteOnTest = @(
+    "docker-compose.weatherForecast.yml"
+    "docker-compose.users.yml"
+);
+
+$composeToExecuteOnLocal = @(
+
+);
+
 $commadDockerComposeToExecute = "docker compose"
-$dockerComposeDotnetAppCommand = "docker-compose.app.yml"
 $enviromentFile = ".env.$environment"
 
 
@@ -32,9 +41,18 @@ foreach ($dockerComposeFile in $composeToExecuteAlways) {
     $commadDockerComposeToExecute += " -f $dockerComposeFile";
 }
 
+
+if ($environment -eq "local") {
+    foreach ($dockerComposeFile in $composeToExecuteOnLocal) {
+        $commadDockerComposeToExecute += " -f $dockerComposeFile";
+    }
+}
+
 if ($environment -eq "test") {
-    $commadDockerComposeToExecute += " -f $dockerComposeDotnetAppCommand";
-    
+    foreach ($dockerComposeFile in $composeToExecuteOnTest) {
+        $commadDockerComposeToExecute += " -f $dockerComposeFile";
+    }
+
     if ($action -eq "up") {
         $buildExec = "$commadDockerComposeToExecute build" 
         Write-Output $buildExec
@@ -48,7 +66,10 @@ if ($action -eq "up") {
 }
 elseif ($action -eq "down") {
     $commadDockerComposeToExecute += " down"
-    $commadDockerComposeToExecute += $removeVolumes -eq "v" ? " -v" : ""
+
+    if ($removeVolumes -eq "v") {
+        $commadDockerComposeToExecute += " -v"
+    }
 
 }
 

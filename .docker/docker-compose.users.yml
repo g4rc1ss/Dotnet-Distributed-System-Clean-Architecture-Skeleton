@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  dotnetapp:
+    container_name: aspnetcore_app
+    restart: always
+    build:
+      context: ../src/User/User.API
+      dockerfile: dockerfile
+      args:
+        - environmentDeploy=${USERS_ASPNETCORE_ENVIRONMENT_SKELETON}
+        - certficatePathFrom=${USERS_ASPNETCORE_Kestrel_Certificate_From_Path_SKELETON}
+        - certificatePathTo=${USERS_ASPNETCORE_Kestrel__Certificates__Default__Path_SKELETON}
+        - certificatePass=${USERS_ASPNETCORE_Kestrel__Certificates__Default__Password_SKELETON}
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=${USERS_ASPNETCORE_Kestrel__Certificates__Default__Path_SKELETON}
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${USERS_ASPNETCORE_Kestrel__Certificates__Default__Password_SKELETON}
+      - ASPNETCORE_ENVIRONMENT=${USERS_ASPNETCORE_ENVIRONMENT_SKELETON}
+      - ASPNETCORE_URLS=${USERS_ASPNETCORE_URLS_SKELETON}
+      - AppName=${USERS_AppName_SKELETON}
+      - keysFolder=${USERS_keysFolder_SKELETON}
+      - ConnectionStrings__OpenTelemetry=${USERS_ConnectionStrings__OpenTelemetry_SKELETON}
+      - ConnectionStrings__SeqLogs=${USERS_ConnectionStrings__SeqLogs_SKELETON}
+    ports:
+      - "${USERS_HTTP_PORT_SKELETON}:80"
+      - "${USERS_HTTPS_PORT_SKELETON}:443"
+    volumes:
+      - dotnetapp_keys_data:${USERS_keysFolder_SKELETON}
+
+volumes:
+  dotnetapp_keys_data:

@@ -1,0 +1,37 @@
+﻿# Establece la imagen base
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Copia los archivos del proyecto y restaura las dependencias
+COPY . .
+RUN dotnet restore
+
+# Compila la aplicación
+RUN dotnet publish -c Release -o out
+
+# Gestion de Certificados HTTPS de Kestrel
+ARG environmentDeploy
+ARG certficatePathFrom
+ARG certificatePathTo
+ARG certificatePass
+
+RUN if [ "${environmentDeploy}" = "Development" ]; then \
+    dotnet dev-certs https -ep ${certificatePathTo} -p ${certificatePass}; \
+    \
+    else \
+    cp ${certficatePathFrom} ./out/; \
+    fi
+
+# Configura la imagen de producción
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /app
+
+ARG certificatePathTo
+
+COPY --from=build /app/out .
+COPY --from=build ${certificatePathTo} .
+
+# Inicia la aplicación
+ENTRYPOINT ["dotnet", "WeatherForecast.API.dll"]
