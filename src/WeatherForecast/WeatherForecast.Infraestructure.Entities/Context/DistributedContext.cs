@@ -15,6 +15,7 @@ public class DistributedContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<WeatherForecastEfEntity>(entity =>
         {
             entity.ToTable("WeatherForecast");

@@ -10,7 +10,7 @@ public static class InfraestructureMySqlExtensions
         where TContext : DbContext
     {
         services.AddMySqlDbContext<TContext>(configuration);
-        services.AddMySqlHealthCheck();
+        services.AddMySqlHealthCheck<TContext>();
 
         return services;
     }
@@ -20,8 +20,9 @@ public static class InfraestructureMySqlExtensions
     {
         void dbContextOptions(DbContextOptionsBuilder db)
         {
-            var mySqlVersion = MySqlServerVersion.LatestSupportedServerVersion;
-            db.UseMySql(configuration.GetConnectionString(typeof(TContext).Name), mySqlVersion);
+            var connectionString = configuration.GetConnectionString(typeof(TContext).Name);
+            var mySqlVersion = ServerVersion.AutoDetect(connectionString);
+            db.UseMySql(connectionString, mySqlVersion);
         }
 
         services.AddDbContextPool<TContext>(dbContextOptions);
@@ -30,8 +31,11 @@ public static class InfraestructureMySqlExtensions
         return services;
     }
 
-    private static IServiceCollection AddMySqlHealthCheck(this IServiceCollection services)
+    private static IServiceCollection AddMySqlHealthCheck<TContext>(this IServiceCollection services)
+        where TContext : DbContext
     {
+        services.AddHealthChecks()
+            .AddDbContextCheck<TContext>();
 
         return services;
     }

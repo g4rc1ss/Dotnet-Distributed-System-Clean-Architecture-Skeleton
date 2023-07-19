@@ -17,7 +17,7 @@
     <Folder Include="MongoDbEntities\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Infraestructure.MongoDatabase\Infraestructure.MongoDatabase.csproj" />
-    <ProjectReference Include="..\..\Infraestructure.MySqlDatabase\Infraestructure.MySqlDatabase.csproj" />
+    <ProjectReference Include="..\..\Shared\Infraestructure.MongoDatabase\Infraestructure.MongoDatabase.csproj" />
+    <ProjectReference Include="..\..\Shared\Infraestructure.MySqlDatabase\Infraestructure.MySqlDatabase.csproj" />
   </ItemGroup>
 </Project>
