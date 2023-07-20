@@ -7,6 +7,9 @@ using WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastComman
 using Infraestructure.MySqlDatabase;
 using Infraestructure.MongoDatabase;
 using WeatherForecast.Infraestructure.Entities.Context;
+using Infraestructure.RabbitMQ;
+using Infraestructure.Communication;
+using Infraestructure.Communication.Messages;
 
 namespace WeatherForecast.Infraestructure;
 
@@ -16,11 +19,19 @@ public static class WeatherForecastInfraestructureExtensions
     {
         services.AddRepositoryServices();
 
-        services.AddMongoDbConfig(configuration["MongoDbConnection"]!);
+        services.AddMongoDbConfig(configuration.GetConnectionString("MongoDbConnection")!);
         services.AddMysqlEntityFrameworkConfig<DistributedContext>(configuration);
         services.AddCache(configuration);
 
+        services.AddIntegrationServiceBus(configuration);
+
         return services;
+    }
+
+    private static void AddIntegrationServiceBus(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddRabbitMQ(configuration);
+        services.AddRabbitMqPublisher<IntegrationMessage>();
     }
 
     private static IServiceCollection AddRepositoryServices(this IServiceCollection services)

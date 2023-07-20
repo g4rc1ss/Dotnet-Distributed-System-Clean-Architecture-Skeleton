@@ -6,4 +6,19 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Infraestructure.Communication\Infraestructure.Communication.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Publisher\" />
+    <None Remove="Consumer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Publisher\" />
+    <Folder Include="Consumer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="6.0.2" />
+  </ItemGroup>
 </Project>

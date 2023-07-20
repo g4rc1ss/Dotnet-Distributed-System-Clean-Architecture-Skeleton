@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 using WeatherForecast.Infraestructure.Entities.Context;
 using WeatherForecast.Infraestructure.Entities.DbEntities;
+using Infraestructure.Communication.Publisher.Integration;
 
 namespace WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 
@@ -14,14 +15,16 @@ public class WeatherForecastCommandCreate : IWeatherForecastCommandCreateContrac
     private DistributedContext _context;
     private readonly IDistributedCache _distributedCache;
     private readonly ILogger<WeatherForecastCommandCreate> _logger;
+    private readonly IIntegrationMessagePublisher _integrationMessagePublisher;
     private readonly IMapper _mapper;
 
-    public WeatherForecastCommandCreate(DistributedContext context, IDistributedCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IMapper mapper)
+    public WeatherForecastCommandCreate(DistributedContext context, IDistributedCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IMapper mapper, IIntegrationMessagePublisher integrationMessagePublisher)
     {
         _context = context;
         _distributedCache = distributedCache;
         _logger = logger;
         _mapper = mapper;
+        _integrationMessagePublisher = integrationMessagePublisher;
     }
 
     public async Task<int> ExecuteAsync(WeatherForecastCommandCreateRequest weather, CancellationToken cancellationToken = default)
@@ -38,7 +41,7 @@ public class WeatherForecastCommandCreate : IWeatherForecastCommandCreateContrac
 
         if (countOfSave > 0)
         {
-            // todo Agregar RabbitMQ Service bus para sincronizar con MongoDB
+            await _integrationMessagePublisher.Publish(weatherForecast, null, "subscription", cancellationToken);
             await _distributedCache.RemoveAsync("WeatherForecasts", cancellationToken);
         }
 
