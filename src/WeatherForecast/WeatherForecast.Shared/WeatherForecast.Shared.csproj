@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="ServiceBusMessages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ServiceBusMessages\" />
+  </ItemGroup>
 </Project>

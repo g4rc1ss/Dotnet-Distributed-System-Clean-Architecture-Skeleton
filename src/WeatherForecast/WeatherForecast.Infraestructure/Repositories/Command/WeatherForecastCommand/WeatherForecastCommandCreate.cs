@@ -7,6 +7,7 @@ using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 using WeatherForecast.Infraestructure.Entities.Context;
 using WeatherForecast.Infraestructure.Entities.DbEntities;
 using Infraestructure.Communication.Publisher.Integration;
+using WeatherForecast.Shared.ServiceBusMessages;
 
 namespace WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 
@@ -41,7 +42,8 @@ public class WeatherForecastCommandCreate : IWeatherForecastCommandCreateContrac
 
         if (countOfSave > 0)
         {
-            await _integrationMessagePublisher.Publish(weatherForecast, null, "subscription", cancellationToken);
+            var createWeather = _mapper.Map<CreateWeatherForecast>(weatherForecast);
+            await _integrationMessagePublisher.Publish(createWeather, null, "subscription", cancellationToken);
             await _distributedCache.RemoveAsync("WeatherForecasts", cancellationToken);
         }
 

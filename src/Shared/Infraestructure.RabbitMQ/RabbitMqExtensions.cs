@@ -42,6 +42,18 @@ public static class RabbitMqExtensions
         services.AddSingleton<IExternalMessagePublisher<TMessage>, RabbitMqPublisher<TMessage>>();
     }
 
+    public static void AddHandlersInAssembly<T>(this IServiceCollection services)
+    {
+        services.Scan(scan => scan.FromAssemblyOf<T>()
+            .AddClasses(classes => classes.AssignableTo<IMessageHandler>())
+            .AsImplementedInterfaces()
+            .WithTransientLifetime());
+
+        ServiceProvider sp = services.BuildServiceProvider();
+        var listHandlers = sp.GetServices<IMessageHandler>();
+        services.AddConsumerHandlers(listHandlers);
+    }
+
     private static void AddRabbitMqHealthCheck(this IServiceCollection services)
     {
         services.AddHealthChecks()

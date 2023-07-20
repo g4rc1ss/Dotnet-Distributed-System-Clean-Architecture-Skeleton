@@ -18,6 +18,7 @@ public static class DefaultWebApplication
         builder.Services.AddOpenTelemetry(builder.Configuration);
         builder.Services.ConfigureDataProtectionProvider(builder.Configuration);
         builder.Services.AddControllers();
+        builder.Services.AddOptions();
 
         builder.Services.AddProblemDetails();
 

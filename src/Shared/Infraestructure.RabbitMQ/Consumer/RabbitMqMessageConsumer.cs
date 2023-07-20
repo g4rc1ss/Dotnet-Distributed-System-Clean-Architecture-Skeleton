@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Runtime;
 using Infraestructure.Communication.Consumers;
 using Infraestructure.Communication.Consumers.Handler;
+using Infraestructure.Communication.Messages;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 
@@ -44,7 +46,10 @@ namespace Infraestructure.RabbitMQ.Consumer
 
         private string GetCorrectQueue()
         {
-            throw new NotImplementedException();
+            return (typeof(TMessage) == typeof(IntegrationMessage)
+                   ? _rabbitMqSettings.Consumer?.IntegrationQueue
+                   : _rabbitMqSettings.Consumer?.DomainQueue)
+               ?? throw new ArgumentException("please configure the queues on the appsettings");
         }
     }
 }
