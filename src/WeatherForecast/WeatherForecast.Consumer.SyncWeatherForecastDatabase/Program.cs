@@ -26,5 +26,10 @@ builder.ConfigureAppConfiguration(configuration =>
 
 var app = builder.Build();
 
+var environment = app.Services.GetRequiredService<IHostEnvironment>();
+var config = app.Services.GetRequiredService<IConfiguration>();
+
+Console.WriteLine($"{environment.EnvironmentName}");
+Console.WriteLine(config["AppName"]);
 
 await app.RunAsync();

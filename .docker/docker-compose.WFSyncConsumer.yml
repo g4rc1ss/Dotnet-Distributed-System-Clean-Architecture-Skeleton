@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  weatherforecastconsumersyncdatabases:
+    container_name: weatherforecastconsumersyncdatabases
+    restart: always
+    build:
+      context: ../src
+      dockerfile: weatherForecastSyncConsumerDockerfile
+    environment:
+      - DOTNET_ENVIRONMENT=${WEATHERFORECAST_CONSUMER_DOTNET_ENVIRONMENT_SKELETON}
+      - AppName=${WEATHERFORECAST_CONSUMER_AppName_SKELETON}
+      - keysFolder=${WEATHERFORECAST_CONSUMER_keysFolder_SKELETON}
+      - ConnectionStrings__MongoDbConnection=${WEATHERFORECAST_CONSUMER_ConnectionStrings__MongoDbConnection_SKELETON}
+      - ConnectionStrings__RabbitMqData__HostName=${WEATHERFORECAST_CONSUMER_ConnectionStrings__RabbitMqData_HostName_SKELETON}
+      - ConnectionStrings__RabbitMqData__Credentials__Username=${WEATHERFORECAST_CONSUMER_ConnectionStrings__RabbitMqData_Credentials_Username_SKELETON}
+      - ConnectionStrings__RabbitMqData__Credentials__Password=${WEATHERFORECAST_CONSUMER_ConnectionStrings__RabbitMqData_Credentials_Password_SKELETON}
+      - ConnectionStrings__RabbitMqData__Consumer__IntegrationQueue=${WEATHERFORECAST_CONSUMER_ConnectionStrings__RabbitMqData_Consumer_IntegrationQueue_SKELETON}
+    volumes:
+      - dotnetapp_keys_data:${WEATHERFORECAST_CONSUMER_keysFolder_SKELETON}
+
+volumes:
+  dotnetapp_keys_data:

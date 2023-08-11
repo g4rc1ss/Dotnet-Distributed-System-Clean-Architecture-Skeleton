@@ -24,7 +24,8 @@ $composeToExecuteAlways = @(
 
 
 $composeToExecuteOnTest = @(
-    "docker-compose.weatherForecast.yml"
+    "docker-compose.weatherForecast.yml",
+    "docker-compose.WFSyncConsumer.yml",
     "docker-compose.users.yml"
 );
 
