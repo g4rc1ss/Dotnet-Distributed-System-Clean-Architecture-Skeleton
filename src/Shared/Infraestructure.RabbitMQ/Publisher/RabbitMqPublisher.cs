@@ -1,9 +1,7 @@
 ﻿using System.Text;
-using System.Text.Json;
 using Infraestructure.Communication.Messages;
 using Infraestructure.Communication.Publisher;
-using Microsoft.AspNetCore.Connections;
-using Microsoft.AspNetCore.HttpLogging;
+using Infraestructure.RabbitMQ.Serialization;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using IConnectionFactory = RabbitMQ.Client.IConnectionFactory;
@@ -13,10 +11,11 @@ namespace Infraestructure.RabbitMQ.Publisher
     public class RabbitMqPublisher<TMessage> : IExternalMessagePublisher<TMessage>
         where TMessage : IMessage
     {
+        private readonly ISerializer _serializer;
         private readonly RabbitMqSettings _rabbitMqSettings;
         private readonly IConnectionFactory _connectionFactory;
 
-        public RabbitMqPublisher(IOptions<RabbitMqSettings> rabbitMqSettings)
+        public RabbitMqPublisher(IOptions<RabbitMqSettings> rabbitMqSettings, ISerializer serializer)
         {
             _rabbitMqSettings = rabbitMqSettings.Value;
             _connectionFactory = new ConnectionFactory()
@@ -25,6 +24,7 @@ namespace Infraestructure.RabbitMQ.Publisher
                 Password = rabbitMqSettings.Value.Credentials!.Password,
                 UserName = rabbitMqSettings.Value.Credentials!.Username,
             };
+            _serializer = serializer;
         }
 
         public Task Publish(TMessage message, string? routingKey = null, CancellationToken cancellationToken = default)
@@ -54,9 +54,10 @@ namespace Infraestructure.RabbitMQ.Publisher
             properties.Persistent = true;
             properties.Type = RemoveVersionFromQualifiedName(message.GetType().AssemblyQualifiedName!, 0);
 
-            model.BasicPublish(GetCorrectExchange(), routingKey ?? string.Empty,
+            model.BasicPublish(exchange: GetCorrectExchange(),
+                routingKey: routingKey ?? string.Empty,
                 basicProperties: properties,
-                body: JsonSerializer.SerializeToUtf8Bytes(message));
+                body: _serializer.SerializeObjectToByteArray(message));
         }
 
         private string GetCorrectExchange()

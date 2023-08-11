@@ -42,8 +42,9 @@ public class ConsumerHostedService<TMessage> : IHostedService
             try
             {
                 await _messageConsumer.StartAsync(cancellationToken);
+                await Task.Delay(1000, cancellationToken);
             }
-            catch (Exception)
+            catch (OperationCanceledException)
             {
             }
         }

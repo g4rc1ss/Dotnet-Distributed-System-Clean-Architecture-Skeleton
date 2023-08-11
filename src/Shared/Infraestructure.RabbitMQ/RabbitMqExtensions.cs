@@ -5,6 +5,7 @@ using Infraestructure.Communication.Messages;
 using Infraestructure.Communication.Publisher;
 using Infraestructure.RabbitMQ.Consumer;
 using Infraestructure.RabbitMQ.Publisher;
+using Infraestructure.RabbitMQ.Serialization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -19,6 +20,7 @@ public static class RabbitMqExtensions
     {
         services.Configure<RabbitMqSettings>(configuration.GetSection("RabbitMqData"));
         //services.AddRabbitMqHealthCheck();
+        services.AddTransient<ISerializer, Serializer>();
 
         return services;
     }

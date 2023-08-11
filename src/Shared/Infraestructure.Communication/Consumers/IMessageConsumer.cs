@@ -1,7 +1,7 @@
 ﻿
 namespace Infraestructure.Communication.Consumers;
 
-public interface IMessageConsumer
+public interface IMessageConsumer : IDisposable
 {
     Task StartAsync(CancellationToken cancellationToken = default);
 }

@@ -4,7 +4,7 @@ using MongoDB.Driver;
 using WeatherForecast.Infraestructure.Entities.MongoDbEntities;
 using WeatherForecast.Shared.ServiceBusMessages;
 
-namespace WeatherForecast.Consumer.SyncCreateData.Handler;
+namespace WeatherForecast.Consumer.SyncWeatherForecastDatabase.Handler;
 
 public class SyncWeatherForecastDatabaseHandler : IIntegrationMessageHandler<CreateWeatherForecast>
 {
@@ -17,7 +17,7 @@ public class SyncWeatherForecastDatabaseHandler : IIntegrationMessageHandler<Cre
 
     public async Task Handle(IntegrationMessage<CreateWeatherForecast> message, CancellationToken cancelToken = default)
     {
-        var weatherForecast = GetWeatherForecastMongo(message.Content);
+        var weatherForecast = GetWeatherForecastMongo(message.Content!);
 
         var collection = _mongoClient.GetDatabase("CleanArchitecture")
             .GetCollection<WeatherForecastMongoEntity>("WeatherForecast");

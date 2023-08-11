@@ -12,14 +12,17 @@
   <ItemGroup>
     <None Remove="Publisher\" />
     <None Remove="Consumer\" />
+    <None Remove="Serialization\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Publisher\" />
     <Folder Include="Consumer\" />
+    <Folder Include="Serialization\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
     <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="6.0.2" />
     <PackageReference Include="Scrutor" Version="4.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 </Project>
