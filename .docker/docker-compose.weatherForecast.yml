@@ -24,7 +24,13 @@ services:
       - ConnectionStrings__RedisConnection=${WEATHERFORECAST_ConnectionStrings__RedisConnection_SKELETON}
       - ConnectionStrings__OpenTelemetry=${WEATHERFORECAST_ConnectionStrings__OpenTelemetry_SKELETON}
       - ConnectionStrings__SeqLogs=${WEATHERFORECAST_ConnectionStrings__SeqLogs_SKELETON}
-      - ConnectionStrings__RabbitMQ=${WEATHERFORECAST_ConnectionStrings__RabbitMQ_SKELETON}
+      - ConnectionStrings__RabbitMqData__HostName=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_HostName_SKELETON}
+      - ConnectionStrings__RabbitMqData__Credentials__Username=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_Credentials_Username_SKELETON}
+      - ConnectionStrings__RabbitMqData__Credentials__Password=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_Credentials_Password_SKELETON}
+      - ConnectionStrings__RabbitMqData__Publisher__IntegrationExchange=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_Publisher_IntegrationExchange_SKELETON}
+      - ConnectionStrings__RabbitMqData__Publisher__DomainExchange=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_Publisher_DomainExchange_SKELETON}
+      - ConnectionStrings__RabbitMqData__ConsumerSettings__IntegrationQueue=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_ConsumerSettings_IntegrationQueue_SKELETON}
+      - ConnectionStrings__RabbitMqData__ConsumerSettings__DomainQueue=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_ConsumerSettings_DomainQueue_SKELETON}
     ports:
       - "${WEATHERFORECAST_HTTP_PORT_SKELETON}:80"
       - "${WEATHERFORECAST_HTTPS_PORT_SKELETON}:443"
