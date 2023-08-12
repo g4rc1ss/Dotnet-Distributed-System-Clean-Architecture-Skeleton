@@ -25,13 +25,14 @@ jobs:
       uses: docker/setup-buildx-action@v2
     
     - name: Read .env
-      run: more ./src/.env.test
+      run: more ./docker/.env.test
 
     - name: Ejecutar comando de PowerShell
       run: |
         cd .docker
         ls -la
         pwsh -File ./docker-compose.ps1 up test
+        docker ps -a
         cd ..
     
     - name: Test
