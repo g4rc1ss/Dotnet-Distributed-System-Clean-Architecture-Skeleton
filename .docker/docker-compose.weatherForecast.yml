@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  weatherforecastapi:
+    container_name: weatherforecastapi
+    restart: always
+    build:
+      context: ../src
+      dockerfile: weatherForecastDockerfile
+      args:
+        - environmentDeploy=${WEATHERFORECAST_ASPNETCORE_ENVIRONMENT_SKELETON}
+        - certficatePathFrom=${WEATHERFORECAST_ASPNETCORE_Kestrel_Certificate_From_Path_SKELETON}
+        - certificatePathTo=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Path_SKELETON}
+        - certificatePass=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Password_SKELETON}
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Path_SKELETON}
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Password_SKELETON}
+      - ASPNETCORE_ENVIRONMENT=${WEATHERFORECAST_ASPNETCORE_ENVIRONMENT_SKELETON}
+      - ASPNETCORE_URLS=${WEATHERFORECAST_ASPNETCORE_URLS_SKELETON}
+      - AppName=${WEATHERFORECAST_AppName_SKELETON}
+      - keysFolder=${WEATHERFORECAST_keysFolder_SKELETON}
+      - ConnectionStrings__DistributedContext=${WEATHERFORECAST_ConnectionStrings__DistributedContext_SKELETON}
+      - ConnectionStrings__MongoDbConnection=${WEATHERFORECAST_ConnectionStrings__MongoDbConnection_SKELETON}
+      - ConnectionStrings__RedisConnection=${WEATHERFORECAST_ConnectionStrings__RedisConnection_SKELETON}
+      - ConnectionStrings__OpenTelemetry=${WEATHERFORECAST_ConnectionStrings__OpenTelemetry_SKELETON}
+      - ConnectionStrings__SeqLogs=${WEATHERFORECAST_ConnectionStrings__SeqLogs_SKELETON}
+      - ConnectionStrings__RabbitMqData__HostName=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_HostName_SKELETON}
+      - ConnectionStrings__RabbitMqData__Credentials__Username=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_Credentials_Username_SKELETON}
+      - ConnectionStrings__RabbitMqData__Credentials__Password=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_Credentials_Password_SKELETON}
+      - ConnectionStrings__RabbitMqData__Publisher__IntegrationExchange=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_Publisher_IntegrationExchange_SKELETON}
+      - ConnectionStrings__RabbitMqData__Publisher__DomainExchange=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_Publisher_DomainExchange_SKELETON}
+      - ConnectionStrings__RabbitMqData__Consumer__IntegrationQueue=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_ConsumerSettings_IntegrationQueue_SKELETON}
+      - ConnectionStrings__RabbitMqData__Consumer__DomainQueue=${WEATHERFORECAST_ConnectionStrings__RabbitMqData_ConsumerSettings_DomainQueue_SKELETON}
+    ports:
+      - "${WEATHERFORECAST_HTTP_PORT_SKELETON}:80"
+      - "${WEATHERFORECAST_HTTPS_PORT_SKELETON}:443"
+    volumes:
+      - dotnetapp_keys_data:${WEATHERFORECAST_keysFolder_SKELETON}
+
+volumes:
+  dotnetapp_keys_data:

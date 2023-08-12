@@ -1,0 +1,5 @@
+scrape_configs:
+  - job_name: 'collect-metrics'
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['opentelemetry-collector:8889', 'opentelemetry-collector:8888']

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Messages\" />
+		<None Remove="Consumers\" />
+		<None Remove="Consumers\Manager\" />
+		<None Remove="Consumers\Host\" />
+		<None Remove="Consumers\Handler\" />
+		<None Remove="Publisher\" />
+		<None Remove="Publisher\Domain\" />
+		<None Remove="Publisher\Integration\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Messages\" />
+		<Folder Include="Consumers\" />
+		<Folder Include="Consumers\Manager\" />
+		<Folder Include="Consumers\Host\" />
+		<Folder Include="Consumers\Handler\" />
+		<Folder Include="Publisher\" />
+		<Folder Include="Publisher\Domain\" />
+		<Folder Include="Publisher\Integration\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+	</ItemGroup>
+</Project>

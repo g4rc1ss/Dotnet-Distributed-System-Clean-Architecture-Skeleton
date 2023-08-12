@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Context\" />
+    <None Remove="DbEntities\" />
+    <None Remove="MongoDbEntities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Context\" />
+    <Folder Include="DbEntities\" />
+    <Folder Include="MongoDbEntities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Infraestructure.MongoDatabase\Infraestructure.MongoDatabase.csproj" />
+    <ProjectReference Include="..\..\Shared\Infraestructure.MySqlDatabase\Infraestructure.MySqlDatabase.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,41 @@
+# https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+# Configure exporters
+exporters:
+  # Export prometheus endpoint
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+
+  # log to the console
+  logging:
+
+  # Export to zipkin
+  zipkin:
+    endpoint: "http://zipkin-opentelemetry:9411/api/v2/spans"
+    format: proto
+
+# https://opentelemetry.io/docs/collector/configuration/#processors
+processors:
+  batch:
+
+# https://opentelemetry.io/docs/collector/configuration/#service
+# https://github.com/open-telemetry/opentelemetry-collector/blob/main/docs/design.md#pipelines
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging, zipkin]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging, prometheus]
+    logs:
+      receivers: [otlp]
+      processors: []
+      exporters: [logging]

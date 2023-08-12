@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="7.0.9" />
+		<PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" Version="1.0.0-rc9.10" />
+		<PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.9" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Controllers\" />
+		<None Remove="MapperProfiles\" />
+		<None Remove="Extensions\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Controllers\" />
+		<Folder Include="MapperProfiles\" />
+		<Folder Include="Extensions\" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\WeatherForecast.Interfaces\WeatherForecast.Interfaces.csproj" />
+		<ProjectReference Include="..\WeatherForecast.Application\WeatherForecast.Application.csproj" />
+		<ProjectReference Include="..\WeatherForecast.Infraestructure\WeatherForecast.Infraestructure.csproj" />
+		<ProjectReference Include="..\WeatherForecast.Shared\WeatherForecast.Shared.csproj" />
+		<ProjectReference Include="..\..\Shared\HostWebApi.Shared\HostWebApi.Shared.csproj">
+			<GlobalPropertiesToRemove>
+			</GlobalPropertiesToRemove>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Update="Properties\launchSettings.json">
+			<CopyToPublishDirectory>Never</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+</Project>
