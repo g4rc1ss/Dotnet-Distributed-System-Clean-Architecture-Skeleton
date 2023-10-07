@@ -9,5 +9,3 @@ var app = DefaultWebApplication.Create(args, builder =>
 
 
 await DefaultWebApplication.RunAsync(app);
-
-public partial class Program { }

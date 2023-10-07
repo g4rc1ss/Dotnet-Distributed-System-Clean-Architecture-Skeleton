@@ -20,7 +20,7 @@ public class WeatherForecastControllerTest
     public async Task GetWeatherForecastByAPI_Then_ReturnJsonAndDeserialiceToIEnumerable_NotNullAndOneOrMoreResults()
     {
 
-        var client = _apiConnection.ApiClient;
+        var client = _apiConnection.WeatherForecastClient;
         var response = await client.GetFromJsonAsync<IEnumerable<WeatherForecastResponse>>("WeatherForecast/all");
         response.Should().NotBeNull();
 
@@ -34,7 +34,7 @@ public class WeatherForecastControllerTest
     public async Task CreateWeatherForecastByAPI_Then_ReturnJsonAndDeserialiceToIEnumerable_NotNullAndOneOrMoreResults()
     {
 
-        var client = _apiConnection.ApiClient;
+        var client = _apiConnection.WeatherForecastClient;
         var weather = new CreateWeatherForecastRequest
         {
             Celsius = 1,

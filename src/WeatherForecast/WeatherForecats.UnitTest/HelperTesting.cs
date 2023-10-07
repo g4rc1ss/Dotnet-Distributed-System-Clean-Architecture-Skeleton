@@ -5,26 +5,25 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast;
 
-namespace TestUnitarios
+namespace WeatherForecats.UnitTest;
+
+internal static class HelperTesting
 {
-    internal static class HelperTesting
+    public static IServiceProvider CreateServiceProvider(Action<IServiceCollection> addServices)
     {
-        public static IServiceProvider CreateServiceProvider(Action<IServiceCollection> addServices)
+        var host = new HostBuilder();
+
+        host.ConfigureServices(services =>
         {
-            var host = new HostBuilder();
+            services.AddSingleton(x => new MoqDataProtection().Mock.Object);
+            services.AddBusinessServices();
+        });
 
-            host.ConfigureServices(services =>
-            {
-                services.AddSingleton<IDataProtectionProvider>(x => new MoqDataProtection().Mock.Object);
-                services.AddBusinessServices();
-            });
-
-            if (addServices is not null)
-            {
-                host.ConfigureServices(addServices);
-            }
-
-            return host.Build().Services;
+        if (addServices is not null)
+        {
+            host.ConfigureServices(addServices);
         }
+
+        return host.Build().Services;
     }
 }
