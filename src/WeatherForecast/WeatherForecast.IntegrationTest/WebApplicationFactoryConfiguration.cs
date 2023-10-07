@@ -12,6 +12,6 @@ public class WebApplicationFactoryConfiguration : WebApplicationFactory<Program>
         {
             config.SetBasePath(Directory.GetCurrentDirectory());
         });
-        builder.UseEnvironment("local");
+        builder.UseEnvironment("test");
     }
 }
