@@ -37,6 +37,7 @@ jobs:
     - name: Docker ps
       run: |
         docker ps -a
+        sleep -s 5
       
     - name: Test
       run: dotnet test ./src/
