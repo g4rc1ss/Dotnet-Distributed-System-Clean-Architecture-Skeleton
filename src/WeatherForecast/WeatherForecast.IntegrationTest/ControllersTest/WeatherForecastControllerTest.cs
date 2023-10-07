@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
 using FluentAssertions;
 using WeatherForecast.Shared.Peticiones.Request;
 using WeatherForecast.Shared.Peticiones.Responses.WeatherForecast;
@@ -21,10 +22,13 @@ public class WeatherForecastControllerTest
     {
 
         var client = _apiConnection.WeatherForecastClient;
-        var response = await client.GetFromJsonAsync<IEnumerable<WeatherForecastResponse>>("WeatherForecast/all");
+        var response = await client.GetAsync("WeatherForecast/all");
+        var content = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(content);
+        var weatherForecasts = JsonSerializer.Deserialize<IEnumerable<WeatherForecastResponse>>(content);
         response.Should().NotBeNull();
 
-        foreach (var item in response!)
+        foreach (var item in weatherForecasts!)
         {
             item.Should().NotBeNull();
         }
@@ -42,6 +46,7 @@ public class WeatherForecastControllerTest
             Descripcion = "Grados en Bilbao"
         };
         var response = await client.PostAsJsonAsync<CreateWeatherForecastRequest>("WeatherForecast/create", weather);
+        Console.WriteLine(await response.Content.ReadAsStringAsync());
         response.Should().Match(x => x.IsSuccessStatusCode);
     }
 }
