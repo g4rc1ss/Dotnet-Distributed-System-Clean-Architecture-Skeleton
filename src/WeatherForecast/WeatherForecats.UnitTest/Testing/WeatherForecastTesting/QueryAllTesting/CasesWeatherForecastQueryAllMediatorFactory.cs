@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqQueries.QueryAll.QueryAllValidatingTrueData;
 using WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqQueries.QueryAll.QueryAllValidatingFalseData;
+using WeatherForecats.UnitTest;
 
 namespace TestUnitarios.Testing.WeatherForecastTesting.QueryAllTesting
 {

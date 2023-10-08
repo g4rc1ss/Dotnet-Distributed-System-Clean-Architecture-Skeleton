@@ -35,6 +35,7 @@ ARG certificatePathTo
 
 COPY --from=build /app/out .
 COPY --from=build ${certificatePathTo} .
+RUN rm -rf appsettings.json
 
 # Inicia la aplicación
 ENTRYPOINT ["dotnet", "User.API.dll"]

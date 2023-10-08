@@ -19,6 +19,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 
 COPY --from=build /app/out .
+RUN rm -rf appsettings.json
 
 # Inicia la aplicación
 ENTRYPOINT ["dotnet", "WeatherForecast.Consumer.SyncWeatherForecastDatabase.dll"]

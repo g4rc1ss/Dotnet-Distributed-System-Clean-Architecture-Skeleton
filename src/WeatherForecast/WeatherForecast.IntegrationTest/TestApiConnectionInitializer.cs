@@ -1,12 +1,12 @@
-﻿using HostWebApi.Test.Configurations;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WeatherForecast.IntegrationTest;
 
 public class TestApiConnectionInitializer
 {
-    public HttpClient ApiClient { get; set; }
+    public HttpClient WeatherForecastClient { get; set; }
+    public HttpClient UsersClient { get; set; }
     public IServiceProvider ServiceProvider { get; set; }
     public IConfiguration Configuration { get; set; }
 
@@ -14,10 +14,10 @@ public class TestApiConnectionInitializer
     {
         try
         {
-            var webHost = new WebApplicationFactoryConfiguration();
-            ServiceProvider = webHost.Services;
-            ApiClient = webHost.CreateClient();
+            ServiceProvider = HelperTesting.ConfigureServices();
             Configuration = ServiceProvider.GetRequiredService<IConfiguration>();
+            WeatherForecastClient = ServiceProvider.GetRequiredService<IHttpClientFactory>().CreateClient("weatherForecastapi");
+            UsersClient = ServiceProvider.GetRequiredService<IHttpClientFactory>().CreateClient("usersapi");
         }
         finally
         {

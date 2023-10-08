@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.local.json" />
+    <None Remove="appsettings.json" />
     <None Remove="Handler\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="appsettings.local.json" Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'">
+    <Content Include="appsettings.json" Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
