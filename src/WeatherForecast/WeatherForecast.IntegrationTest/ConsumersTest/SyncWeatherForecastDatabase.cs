@@ -33,14 +33,12 @@ public class SyncWeatherForecastDatabase
 
         await Task.Delay(500);
 
-        var weatherForecast = await client.GetAsync("WeatherForecast/all");
-        var content = await weatherForecast.Content.ReadAsStringAsync();
-        var weatherForecasts = JsonSerializer.Deserialize<IEnumerable<WeatherForecastResponse>>(content);
+        var weatherForecast = await client.GetFromJsonAsync<IEnumerable<WeatherForecastResponse>>("WeatherForecast/all");
         response.Should().NotBeNull();
 
-        weatherForecasts.Where(x => x.TemperatureC == 1
-            && x.TemperatureC == 2
+        weatherForecast.Where(x => x.TemperatureC == 1
+            && x.TemperatureF == 2
             && x.Summary == "Grados en Bilbao")
-        .Should().NotBeNullOrEmpty();
+        .Should().HaveCountGreaterThan(0);
     }
 }
