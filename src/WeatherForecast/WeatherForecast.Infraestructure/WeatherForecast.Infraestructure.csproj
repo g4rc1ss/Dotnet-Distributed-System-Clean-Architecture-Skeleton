@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
@@ -7,11 +7,10 @@
 		<AssemblyName>Infraestructure.MySqlEntityFramework</AssemblyName>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="AutoMapper" Version="12.0.1" />
-		<PackageReference Include="Dapper" Version="2.0.143" />
+		<PackageReference Include="Dapper" Version="2.1.11" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.9" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.12" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\WeatherForecast.Interfaces\WeatherForecast.Interfaces.csproj" />
