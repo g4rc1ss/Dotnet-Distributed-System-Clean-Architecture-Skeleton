@@ -8,8 +8,8 @@ using Infraestructure.MySqlDatabase;
 using Infraestructure.MongoDatabase;
 using WeatherForecast.Infraestructure.Entities.Context;
 using Infraestructure.RabbitMQ;
-using Infraestructure.Communication;
 using Infraestructure.Communication.Messages;
+using WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
 
 namespace WeatherForecast.Infraestructure;
 
@@ -19,6 +19,7 @@ public static class WeatherForecastInfraestructureExtensions
     {
         services.AddRepositoryServices();
 
+        services.AddMapperServices();
         services.AddMongoDbConfig(configuration.GetConnectionString("MongoDbConnection")!);
         services.AddMysqlEntityFrameworkConfig<DistributedContext>(configuration);
         services.AddCache(configuration);
@@ -26,6 +27,12 @@ public static class WeatherForecastInfraestructureExtensions
         services.AddIntegrationServiceBus(configuration);
 
         return services;
+    }
+
+    private static void AddMapperServices(this IServiceCollection services)
+    {
+        services.AddSingleton<WeatherForecastCommandCreateMapper>();
+        services.AddSingleton<WeatherForecastQueryAllMapper>();
     }
 
     private static void AddIntegrationServiceBus(this IServiceCollection services, IConfiguration configuration)

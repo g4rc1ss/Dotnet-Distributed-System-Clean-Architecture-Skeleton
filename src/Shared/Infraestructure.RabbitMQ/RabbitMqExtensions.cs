@@ -59,18 +59,19 @@ public static class RabbitMqExtensions
     private static void AddRabbitMqHealthCheck(this IServiceCollection services)
     {
         services.AddHealthChecks()
-            .AddRabbitMQ(serviceProvider =>
+        .AddRabbitMQ((serviceProvider, rabbitOptions) =>
         {
             var settings = serviceProvider.GetRequiredService<IOptions<RabbitMqSettings>>().Value;
 
-            return new ConnectionFactory
+            rabbitOptions.ConnectionFactory = new ConnectionFactory
             {
                 UserName = settings.Credentials?.Username,
                 Password = settings.Credentials?.Password,
                 VirtualHost = "/",
                 HostName = settings.Hostname,
                 Port = AmqpTcpEndpoint.UseDefaultPort,
-            }.CreateConnection();
+            };
+            rabbitOptions.Connection = rabbitOptions.ConnectionFactory.CreateConnection();
         }, string.Empty, HealthStatus.Unhealthy);
     }
 

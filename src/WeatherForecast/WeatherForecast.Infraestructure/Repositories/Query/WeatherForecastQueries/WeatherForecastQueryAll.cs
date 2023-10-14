@@ -1,11 +1,11 @@
 ﻿using System.Text.Json;
 using WeatherForecast.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
-using AutoMapper;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
 using WeatherForecast.Infraestructure.Entities.MongoDbEntities;
+using WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
 
 namespace WeatherForecast.Infraestructure.Repositories.Query.WeatherForecastQueries;
 
@@ -14,14 +14,14 @@ internal class WeatherForecastQueryAll : IWeatherForecastQueryAllContract
     private readonly MongoClient _mongoClient;
     private readonly IDistributedCache _distributedCache;
     private readonly ILogger<WeatherForecastQueryAll> _logger;
-    private readonly IMapper _mapper;
+    private readonly WeatherForecastQueryAllMapper _queryAllMapper;
 
-    public WeatherForecastQueryAll(ILogger<WeatherForecastQueryAll> logger, IMapper mapper, IDistributedCache distributedCache, MongoClient mongoClient)
+    public WeatherForecastQueryAll(MongoClient mongoClient, IDistributedCache distributedCache, ILogger<WeatherForecastQueryAll> logger, WeatherForecastQueryAllMapper queryAllMapper)
     {
-        _logger = logger;
-        _mapper = mapper;
-        _distributedCache = distributedCache;
         _mongoClient = mongoClient;
+        _distributedCache = distributedCache;
+        _logger = logger;
+        _queryAllMapper = queryAllMapper;
     }
 
     public async Task<List<WeatherForecastQueryAllResponse>> ExecuteAsync(CancellationToken cancellationToken = default)
@@ -36,7 +36,7 @@ internal class WeatherForecastQueryAll : IWeatherForecastQueryAllContract
             var find = await collection.FindAsync(FilterDefinition<WeatherForecastMongoEntity>.Empty, cancellationToken: cancellationToken);
             var weathers = await find.ToListAsync(cancellationToken: cancellationToken);
 
-            weatherList = _mapper.Map<List<WeatherForecastQueryAllResponse>>(weathers);
+            weatherList = weathers.Select(x => _queryAllMapper.ToWeatherQueryAllResponse(x)).ToList();
             cacheWeatherList = JsonSerializer.Serialize(weatherList);
             await _distributedCache.SetStringAsync("WeatherForecasts", cacheWeatherList, cancellationToken);
         }
