@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using Riok.Mapperly.Abstractions;
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 using WeatherForecast.Infraestructure.Entities.DbEntities;
 using WeatherForecast.Infraestructure.Entities.MongoDbEntities;
@@ -6,18 +6,15 @@ using WeatherForecast.Shared.ServiceBusMessages;
 
 namespace WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
 
-public class WeatherForecastCommandCreateMapper : Profile
+[Mapper]
+public partial class WeatherForecastCommandCreateMapper
 {
-    public WeatherForecastCommandCreateMapper()
-    {
-        CreateMap<WeatherForecastCommandCreateRequest, WeatherForecastMongoEntity>();
-        CreateMap<WeatherForecastCommandCreateRequest, WeatherForecastEfEntity>();
+    public partial WeatherForecastMongoEntity ToMongoEntity(WeatherForecastCommandCreateRequest weatherForecastRequest);
+    public partial WeatherForecastEfEntity ToEfEntity(WeatherForecastCommandCreateRequest weatherForecastRequest);
 
-        CreateMap<WeatherForecastEfEntity, CreateWeatherForecast>()
-            .ForMember(x => x.temperatureC, y => y.MapFrom(x => x.TemperatureC))
-            .ForMember(x => x.temperatureF, y => y.MapFrom(x => x.TemperatureF))
-            .ForMember(x => x.summary, y => y.MapFrom(x => x.Summary))
-            .ForMember(x => x.id, y => y.MapFrom(x => x.Id))
-            .ReverseMap();
-    }
+    [MapProperty(nameof(@WeatherForecastEfEntity.Id), nameof(@CreateWeatherForecast.id))]
+    [MapProperty(nameof(@WeatherForecastEfEntity.Summary), nameof(@CreateWeatherForecast.summary))]
+    [MapProperty(nameof(@WeatherForecastEfEntity.TemperatureF), nameof(@CreateWeatherForecast.temperatureF))]
+    [MapProperty(nameof(@WeatherForecastEfEntity.TemperatureC), nameof(@CreateWeatherForecast.temperatureC))]
+    public partial CreateWeatherForecast ToWeatherForecast(WeatherForecastEfEntity weatherForecastEf);
 }
