@@ -1,16 +1,14 @@
-﻿using AutoMapper;
+﻿using Riok.Mapperly.Abstractions;
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 using WeatherForecast.Shared.Peticiones.Request;
 
 namespace WeatherForecast.API.MapperProfiles.WeatherForecast;
 
-public class WeatherForecastCommandCreateMapper : Profile
+[Mapper]
+public partial class WeatherForecastCommandCreateMapper
 {
-    public WeatherForecastCommandCreateMapper()
-    {
-        CreateMap<CreateWeatherForecastRequest, WeatherForecastCommandCreateRequest>()
-            .ForMember(x => x.TemperatureF, y => y.MapFrom(x => x.Fahrenheit))
-            .ForMember(x => x.TemperatureC, y => y.MapFrom(x => x.Celsius))
-            .ForMember(x => x.Summary, y => y.MapFrom(x => x.Descripcion));
-    }
+    [MapProperty(nameof(@CreateWeatherForecastRequest.Fahrenheit), nameof(@WeatherForecastCommandCreateRequest.TemperatureF))]
+    [MapProperty(nameof(@CreateWeatherForecastRequest.Celsius), nameof(@WeatherForecastCommandCreateRequest.TemperatureC))]
+    [MapProperty(nameof(@CreateWeatherForecastRequest.Descripcion), nameof(@WeatherForecastCommandCreateRequest.Summary))]
+    public partial WeatherForecastCommandCreateRequest ToWeatherForecastCommandRequest(CreateWeatherForecastRequest weatherForecast);
 }
