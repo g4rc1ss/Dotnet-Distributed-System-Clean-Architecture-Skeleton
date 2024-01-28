@@ -1,4 +1,5 @@
 ﻿using Infraestructure.Communication.Messages;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace Infraestructure.Communication.Publisher.Domain;
@@ -15,22 +16,27 @@ public class DomainMessageMapper
             BindingFlags.Static | BindingFlags.NonPublic
         );
 
-        var buildWrapperGenericMethodInfo = buildWrapperMethodInfo?.MakeGenericMethod(new[] { message.GetType() });
+        var buildWrapperGenericMethodInfo = buildWrapperMethodInfo?.MakeGenericMethod([message.GetType()]);
+        var traces = new MessageDiagnosticTraces
+        {
+            TraceId = Activity.Current!.TraceId.ToString(),
+            SpanId = Activity.Current!.SpanId.ToString(),
+        };
         var wrapper = buildWrapperGenericMethodInfo?.Invoke(
             null,
-            new[]
-            {
+            [
                 message,
-                metadata
-            }
+                metadata,
+                traces
+            ]
         );
         return (wrapper as DomainMessage)!;
     }
 
 
-    private static DomainMessage<T> ToTypedIntegrationEvent<T>(T message, Metadata metadata)
+    private static DomainMessage<T> ToTypedIntegrationEvent<T>(T message, Metadata metadata, MessageDiagnosticTraces traces)
     {
-        return new DomainMessage<T>(Guid.NewGuid().ToString(), typeof(T).Name, message, metadata);
+        return new DomainMessage<T>(Guid.NewGuid().ToString(), typeof(T).Name, traces, message, metadata);
     }
 }
 

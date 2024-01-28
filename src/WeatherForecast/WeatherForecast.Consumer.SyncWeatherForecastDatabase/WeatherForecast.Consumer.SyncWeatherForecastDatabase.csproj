@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -19,15 +19,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Shared\Infraestructure.RabbitMQ\Infraestructure.RabbitMQ.csproj" />
     <ProjectReference Include="..\WeatherForecast.Domain\WeatherForecast.Domain.csproj" />
     <ProjectReference Include="..\WeatherForecast.Infraestructure.Entities\WeatherForecast.Infraestructure.Entities.csproj" />
     <ProjectReference Include="..\WeatherForecast.Shared\WeatherForecast.Shared.csproj" />
     <ProjectReference Include="..\WeatherForecast.Infraestructure\WeatherForecast.Infraestructure.csproj" />
+    <ProjectReference Include="..\..\Shared\HostWebApi.Shared\HostWebApi.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Handler\" />

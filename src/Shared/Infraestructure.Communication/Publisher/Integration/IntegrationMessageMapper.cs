@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using Infraestructure.Communication.Messages;
 
 namespace Infraestructure.Communication.Publisher.Integration;
@@ -18,20 +19,25 @@ public static class IntegrationMessageMapper
         );
 
         var buildWrapperGenericMethodInfo = buildWrapperMethodInfo?.MakeGenericMethod(new[] { message.GetType() });
+        var traces = new MessageDiagnosticTraces
+        {
+            TraceId = Activity.Current!.TraceId.ToString(),
+            SpanId = Activity.Current!.SpanId.ToString()
+        };
         var wrapper = buildWrapperGenericMethodInfo?.Invoke(
             null,
-            new[]
-            {
+            [
                 message,
-                metadata
-            }
+                metadata,
+                traces
+            ]
         );
         return (wrapper as IntegrationMessage)!;
     }
 
-    private static IntegrationMessage<T> ToTypedIntegrationEvent<T>(T message, Metadata metadata)
+    private static IntegrationMessage<T> ToTypedIntegrationEvent<T>(T message, Metadata metadata, MessageDiagnosticTraces traces)
     {
-        return new IntegrationMessage<T>(Guid.NewGuid().ToString(), typeof(T).Name, message, metadata);
+        return new IntegrationMessage<T>(Guid.NewGuid().ToString(), typeof(T).Name, traces, message, metadata);
     }
 }
 

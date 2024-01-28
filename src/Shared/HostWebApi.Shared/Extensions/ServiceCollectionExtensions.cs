@@ -20,7 +20,8 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    internal static IServiceCollection AddOpenTelemetry(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddOpenTelemetry(this IServiceCollection services, IConfiguration configuration,
+        Action<MeterProviderBuilder> meterProvider = null, Action<TracerProviderBuilder> tracerProvider = null)
     {
         services.AddOpenTelemetry()
             .ConfigureResource(resource =>
@@ -29,8 +30,8 @@ public static class ServiceCollectionExtensions
             })
             .WithTracing(trace =>
             {
+                tracerProvider?.Invoke(trace);
                 trace.AddAspNetCoreInstrumentation();
-                trace.AddEntityFrameworkCoreInstrumentation();
                 trace.AddOtlpExporter(exporter =>
                 {
                     exporter.Endpoint = new Uri(configuration["ConnectionStrings:OpenTelemetry"]!);
@@ -38,6 +39,7 @@ public static class ServiceCollectionExtensions
             })
             .WithMetrics(metric =>
             {
+                meterProvider?.Invoke(metric);
                 metric.AddMeter(configuration["AppName"]!);
                 metric.AddAspNetCoreInstrumentation();
                 metric.AddRuntimeInstrumentation();

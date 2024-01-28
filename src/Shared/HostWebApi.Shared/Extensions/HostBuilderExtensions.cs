@@ -8,7 +8,7 @@ namespace HostWebApi.Shared.Extensions;
 public static class HostBuilderExtensions
 {
 
-    internal static IHostBuilder AddLoggerConfiguration(this IHostBuilder hostBuilder, IConfiguration configuration)
+    public static IHostBuilder AddLoggerConfiguration(this IHostBuilder hostBuilder, IConfiguration configuration)
     {
         hostBuilder.UseSerilog((context, loggerConfiguration) =>
         {

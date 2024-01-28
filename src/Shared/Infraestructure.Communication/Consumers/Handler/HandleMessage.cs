@@ -5,22 +5,19 @@ using Infraestructure.Communication.Messages;
 
 namespace Infraestructure.Communication.Consumers.Handler;
 
-public class HandleMessage : IHandleMessage
+public class HandleMessage(IMessageHandlerRegistry messageHandlerRegistry) 
+    : IHandleMessage
 {
-    private readonly IMessageHandlerRegistry _messageHandlerRegistry;
-
-    public HandleMessage(IMessageHandlerRegistry messageHandlerRegistry)
-    {
-        _messageHandlerRegistry = messageHandlerRegistry;
-    }
-
     public async Task Handle(IMessage message, CancellationToken cancellationToken = default)
     {
-        if (message == null) throw new ArgumentNullException(nameof(message));
+        if (message == null)
+        {
+            throw new ArgumentNullException(nameof(message));
+        }
 
         var messageType = message.GetType();
         var handlerType = typeof(IMessageHandler<>).MakeGenericType(messageType);
-        var handlers = _messageHandlerRegistry.GetMessageHandlersForType(handlerType, messageType);
+        var handlers = messageHandlerRegistry.GetMessageHandlersForType(handlerType, messageType);
 
         foreach (var handler in handlers)
         {
@@ -33,10 +30,16 @@ public class HandleMessage : IHandleMessage
                     .Contains(message.GetType()));
             if (handle != null)
             {
-                using var tracingConsumer = new ActivitySource(nameof(IMessageConsumer));
-                using var activity = tracingConsumer.StartActivity("Consumiendo Mensaje", ActivityKind.Consumer);
+                var traceId = ActivityTraceId.CreateFromString(message.Traces.TraceId);
+                var spanId = ActivitySpanId.CreateFromString(message.Traces.SpanId);
+                
+                using var tracingConsumer = new ActivitySource(nameof(IMessageHandler));
+                using var activity = tracingConsumer.CreateActivity("Consumiendo Mensaje", ActivityKind.Consumer);
+                activity?.SetParentId(traceId, spanId, ActivityTraceFlags.Recorded);
                 activity?.AddTag("Handler", handler);
-                await (Task)handle.Invoke(handler, new object[] { message, cancellationToken })!;
+                activity?.Start();
+
+                await (Task)handle.Invoke(handler, [message, cancellationToken])!;
             }
 
         }

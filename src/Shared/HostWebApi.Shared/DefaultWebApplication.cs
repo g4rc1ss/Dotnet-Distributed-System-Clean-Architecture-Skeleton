@@ -3,22 +3,26 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 
 namespace HostWebApi.Shared;
 
 public static class DefaultWebApplication
 {
-    public static WebApplication Create(string[] args, Action<WebApplicationBuilder>? webApp = null)
+    public static WebApplication Create(string[] args, Action<WebApplicationBuilder>? webApp = null,
+        Action<MeterProviderBuilder> meterProvider = null, Action<TracerProviderBuilder> tracerProvider = null)
     {
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddHealthChecks();
 
         builder.Host.AddLoggerConfiguration(builder.Configuration);
-        builder.Services.AddOpenTelemetry(builder.Configuration);
+        builder.Services.AddOpenTelemetry(builder.Configuration, meterProvider, tracerProvider);
         builder.Services.ConfigureDataProtectionProvider(builder.Configuration);
         builder.Services.AddControllers();
         builder.Services.AddOptions();
+        builder.Services.AddHttpLogging(o => { });
 
         builder.Services.AddProblemDetails();
 
@@ -51,7 +55,6 @@ public static class DefaultWebApplication
         });
 
         app.UseHttpLogging();
-
         app.UseHttpsRedirection();
         app.UseAuthorization();
 
