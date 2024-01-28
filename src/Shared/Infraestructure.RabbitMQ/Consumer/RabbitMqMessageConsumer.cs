@@ -69,10 +69,10 @@ namespace Infraestructure.RabbitMQ.Consumer
             var message = _serializer.DeserializeObject(messageBody, messageType) as IMessage
                 ?? throw new ArgumentException("The message did not deserialized properly");
 
-            ((AsyncEventingBasicConsumer)ch).Model.BasicAck(deliveryTag, false);
 
             await _handleMessage.Handle(message, CancellationToken.None);
 
+            ((AsyncEventingBasicConsumer)ch).Model.BasicAck(deliveryTag, false);
             await Task.Yield();
         }
 

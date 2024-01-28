@@ -1,4 +1,5 @@
-﻿using Infraestructure.Communication.Consumers.Manager;
+﻿using System.Diagnostics;
+using Infraestructure.Communication.Consumers.Manager;
 using Microsoft.Extensions.Hosting;
 
 namespace Infraestructure.Communication.Consumers.Host;

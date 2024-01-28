@@ -4,6 +4,9 @@ using Infraestructure.MongoDatabase;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Infraestructure.Communication.Consumers;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
 
 
 var builder = Host.CreateDefaultBuilder(args);
@@ -17,6 +20,19 @@ builder.ConfigureServices((hostBuilder, serviceCollection) =>
     serviceCollection.AddRabbitMQ(hostBuilder.Configuration);
     serviceCollection.AddRabbitMqConsumer<IntegrationMessage>();
 
+    serviceCollection.AddOpenTelemetry()
+        .ConfigureResource(resource =>
+        {
+            resource.AddService("Consumer Weather Forecast");
+        }).WithTracing(traces =>
+        {
+            traces.AddMongoDBInstrumentation();
+            traces.AddSource(nameof(IMessageConsumer));
+            traces.AddOtlpExporter(exporter =>
+            {
+                exporter.Endpoint = new Uri(hostBuilder.Configuration["ConnectionStrings:OpenTelemetry"]!);
+            });
+        });
 });
 
 builder.ConfigureAppConfiguration(configuration =>

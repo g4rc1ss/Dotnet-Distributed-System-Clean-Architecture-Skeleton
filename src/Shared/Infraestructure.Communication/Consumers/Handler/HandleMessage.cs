@@ -1,4 +1,5 @@
 ﻿
+using System.Diagnostics;
 using System.Linq;
 using Infraestructure.Communication.Messages;
 
@@ -13,7 +14,7 @@ public class HandleMessage : IHandleMessage
         _messageHandlerRegistry = messageHandlerRegistry;
     }
 
-    public Task Handle(IMessage message, CancellationToken cancellationToken = default)
+    public async Task Handle(IMessage message, CancellationToken cancellationToken = default)
     {
         if (message == null) throw new ArgumentNullException(nameof(message));
 
@@ -32,11 +33,13 @@ public class HandleMessage : IHandleMessage
                     .Contains(message.GetType()));
             if (handle != null)
             {
-                return (Task)handle.Invoke(handler, new object[] { message, cancellationToken })!;
+                using var tracingConsumer = new ActivitySource(nameof(IMessageConsumer));
+                using var activity = tracingConsumer.StartActivity("Consumiendo Mensaje", ActivityKind.Consumer);
+                activity?.AddTag("Handler", handler);
+                await (Task)handle.Invoke(handler, new object[] { message, cancellationToken })!;
             }
 
         }
-        return Task.CompletedTask;
     }
 }
 
