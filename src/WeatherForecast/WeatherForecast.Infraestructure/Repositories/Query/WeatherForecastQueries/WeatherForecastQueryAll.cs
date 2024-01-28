@@ -6,17 +6,18 @@ using MongoDB.Driver;
 using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
 using WeatherForecast.Infraestructure.Entities.MongoDbEntities;
 using WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
+using Infraestructure.DistributedCache;
 
 namespace WeatherForecast.Infraestructure.Repositories.Query.WeatherForecastQueries;
 
 internal class WeatherForecastQueryAll : IWeatherForecastQueryAllContract
 {
     private readonly MongoClient _mongoClient;
-    private readonly IDistributedCache _distributedCache;
+    private readonly IDistributedCleanArchitectureCache _distributedCache;
     private readonly ILogger<WeatherForecastQueryAll> _logger;
     private readonly WeatherForecastQueryAllMapper _queryAllMapper;
 
-    public WeatherForecastQueryAll(MongoClient mongoClient, IDistributedCache distributedCache, ILogger<WeatherForecastQueryAll> logger, WeatherForecastQueryAllMapper queryAllMapper)
+    public WeatherForecastQueryAll(MongoClient mongoClient, IDistributedCleanArchitectureCache distributedCache, ILogger<WeatherForecastQueryAll> logger, WeatherForecastQueryAllMapper queryAllMapper)
     {
         _mongoClient = mongoClient;
         _distributedCache = distributedCache;

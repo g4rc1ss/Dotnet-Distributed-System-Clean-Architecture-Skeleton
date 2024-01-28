@@ -10,6 +10,7 @@ using WeatherForecast.Infraestructure.Entities.Context;
 using Infraestructure.RabbitMQ;
 using Infraestructure.Communication.Messages;
 using WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
+using Infraestructure.DistributedCache;
 
 namespace WeatherForecast.Infraestructure;
 
@@ -22,7 +23,7 @@ public static class WeatherForecastInfraestructureExtensions
         services.AddMapperServices();
         services.AddMongoDbConfig(configuration.GetConnectionString("MongoDbConnection")!);
         services.AddMysqlEntityFrameworkConfig<DistributedContext>(configuration);
-        services.AddCache(configuration);
+        services.AddDistributedCache(configuration);
 
         services.AddIntegrationServiceBus(configuration);
 
@@ -46,16 +47,6 @@ public static class WeatherForecastInfraestructureExtensions
         services.AddScoped<IWeatherForecastQueryAllContract, WeatherForecastQueryAll>();
         services.AddScoped<IWeatherForecastCommandCreateContract, WeatherForecastCommandCreate>();
 
-        return services;
-    }
-
-    private static IServiceCollection AddCache(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddStackExchangeRedisCache(redis =>
-        {
-            redis.Configuration = configuration.GetConnectionString("RedisConnection");
-            redis.InstanceName = configuration["AppName"];
-        });
         return services;
     }
 }

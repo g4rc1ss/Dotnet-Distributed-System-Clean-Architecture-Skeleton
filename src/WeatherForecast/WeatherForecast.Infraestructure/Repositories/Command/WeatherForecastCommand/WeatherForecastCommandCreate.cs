@@ -6,18 +6,19 @@ using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 using WeatherForecast.Infraestructure.Entities.Context;
 using Infraestructure.Communication.Publisher.Integration;
 using WeatherForecast.Infraestructure.MapperProfiles.WeatherForecastProfiles;
+using Infraestructure.DistributedCache;
 
 namespace WeatherForecast.Infraestructure.Repositories.Command.WeatherForecastCommand;
 
 public class WeatherForecastCommandCreate : IWeatherForecastCommandCreateContract
 {
     private DistributedContext _context;
-    private readonly IDistributedCache _distributedCache;
+    private readonly IDistributedCleanArchitectureCache _distributedCache;
     private readonly ILogger<WeatherForecastCommandCreate> _logger;
     private readonly IIntegrationMessagePublisher _integrationMessagePublisher;
     private readonly WeatherForecastCommandCreateMapper _weatherCreateMapper;
 
-    public WeatherForecastCommandCreate(DistributedContext context, IDistributedCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IIntegrationMessagePublisher integrationMessagePublisher, WeatherForecastCommandCreateMapper weatherCreateMapper)
+    public WeatherForecastCommandCreate(DistributedContext context, IDistributedCleanArchitectureCache distributedCache, ILogger<WeatherForecastCommandCreate> logger, IIntegrationMessagePublisher integrationMessagePublisher, WeatherForecastCommandCreateMapper weatherCreateMapper)
     {
         _context = context;
         _distributedCache = distributedCache;

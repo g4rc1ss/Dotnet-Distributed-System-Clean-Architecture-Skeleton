@@ -1,6 +1,7 @@
 ﻿using HostWebApi.Shared;
 using Infraestructure.Communication.Messages;
 using Infraestructure.Communication.Publisher;
+using Infraestructure.DistributedCache;
 using OpenTelemetry.Trace;
 using WeatherForecast.API.Extensions;
 
@@ -12,6 +13,7 @@ var app = DefaultWebApplication.Create(args, builder =>
 {
 }, traces =>
 {
+    traces.AddDistributedCacheInstrumentation();
     traces.AddSource(nameof(IExternalMessagePublisher<IMessage>));
     traces.AddEntityFrameworkCoreInstrumentation();
     traces.AddMongoDBInstrumentation();

@@ -8,9 +8,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Dapper" Version="2.1.28" />
-		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.1" />
 		<PackageReference Include="Riok.Mapperly" Version="3.3.0" />
 	</ItemGroup>
 	<ItemGroup>
@@ -19,5 +17,6 @@
 		<ProjectReference Include="..\WeatherForecast.Infraestructure.Entities\WeatherForecast.Infraestructure.Entities.csproj" />
 		<ProjectReference Include="..\..\Shared\Infraestructure.RabbitMQ\Infraestructure.RabbitMQ.csproj" />
 		<ProjectReference Include="..\WeatherForecast.Shared\WeatherForecast.Shared.csproj" />
+		<ProjectReference Include="..\..\Shared\Infraestructure.DistributedCache\Infraestructure.DistributedCache.csproj" />
 	</ItemGroup>
 </Project>
