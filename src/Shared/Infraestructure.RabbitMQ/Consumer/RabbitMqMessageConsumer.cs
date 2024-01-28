@@ -1,4 +1,5 @@
-﻿using Infraestructure.Communication.Consumers;
+﻿using System.Diagnostics;
+using Infraestructure.Communication.Consumers;
 using Infraestructure.Communication.Consumers.Handler;
 using Infraestructure.Communication.Messages;
 using Infraestructure.RabbitMQ.Serialization;
@@ -69,10 +70,18 @@ namespace Infraestructure.RabbitMQ.Consumer
             var message = _serializer.DeserializeObject(messageBody, messageType) as IMessage
                 ?? throw new ArgumentException("The message did not deserialized properly");
 
-
             await _handleMessage.Handle(message, CancellationToken.None);
 
+            var traceId = ActivityTraceId.CreateFromString(message.Traces.TraceId);
+            var spanId = ActivitySpanId.CreateFromString(message.Traces.SpanId);
+
+            using var tracingConsumer = new ActivitySource(nameof(IMessageHandler));
+            using var activity = tracingConsumer.CreateActivity("Call ACK", ActivityKind.Consumer);
+            activity?.SetParentId(traceId, spanId, ActivityTraceFlags.Recorded);
+            activity?.Start();
             ((AsyncEventingBasicConsumer)ch).Model.BasicAck(deliveryTag, false);
+            activity?.SetStatus(ActivityStatusCode.Ok);
+
             await Task.Yield();
         }
 

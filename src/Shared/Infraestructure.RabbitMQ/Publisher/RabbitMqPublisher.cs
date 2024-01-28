@@ -37,17 +37,6 @@ namespace Infraestructure.RabbitMQ.Publisher
             return Task.CompletedTask;
         }
 
-        public async Task PublishMany(IEnumerable<TMessage> messages, string? routingKey = null, CancellationToken cancellationToken = default)
-        {
-            var taskList = new List<Task>();
-            foreach (var message in messages)
-            {
-                taskList.Add(Publish(message, routingKey, cancellationToken));
-            }
-
-            await Task.WhenAll(taskList);
-        }
-
         private void PublishSingle(TMessage message, IModel model, string? routingKey)
         {
             var properties = model.CreateBasicProperties();

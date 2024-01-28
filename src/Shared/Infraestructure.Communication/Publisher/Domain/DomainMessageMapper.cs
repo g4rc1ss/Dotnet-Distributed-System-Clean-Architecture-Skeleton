@@ -6,7 +6,7 @@ namespace Infraestructure.Communication.Publisher.Domain;
 
 public class DomainMessageMapper
 {
-    public static DomainMessage MapToMessage(object message, Metadata metadata)
+    public static DomainMessage MapToMessage(object message, Metadata metadata, string parentId)
     {
         if (message is IntegrationMessage)
             throw new ArgumentException("Message should not be of type DomainMessage, it should be a plain type");
@@ -21,6 +21,7 @@ public class DomainMessageMapper
         {
             TraceId = Activity.Current!.TraceId.ToString(),
             SpanId = Activity.Current!.SpanId.ToString(),
+            ParentId = parentId
         };
         var wrapper = buildWrapperGenericMethodInfo?.Invoke(
             null,

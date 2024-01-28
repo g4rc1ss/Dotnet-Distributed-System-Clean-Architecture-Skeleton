@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 using Infraestructure.Communication.Messages;
 
@@ -13,17 +14,20 @@ public class DefaultIntegrationMessagePublisher : IIntegrationMessagePublisher
         _externalPublisher = externalPublisher;
     }
 
-    public Task Publish(object message, Metadata? metadata = null, string? routingKey = null, CancellationToken cancellationToken = default)
+    public async Task Publish(object message, Metadata? metadata = null, string? routingKey = null, CancellationToken cancellationToken = default)
     {
-        var calculateMetadata = CalculateMetadata(metadata);
-        var integrationMessage = IntegrationMessageMapper.MapToMessage(message, calculateMetadata);
-        return _externalPublisher.Publish(integrationMessage, routingKey, cancellationToken);
-    }
+        using var tracingConsumer = new ActivitySource(nameof(IExternalMessagePublisher<IMessage>));
+        using var activity = tracingConsumer.CreateActivity("Publicar mensaje", ActivityKind.Consumer);
 
-    public Task PublishMany(IEnumerable<object> messages, Metadata? metadata = null, string? routingKey = null, CancellationToken cancellationToken = default)
-    {
-        var integrationMessages = messages.Select(message => IntegrationMessageMapper.MapToMessage(message, CalculateMetadata(metadata)));
-        return _externalPublisher.PublishMany(integrationMessages, routingKey, cancellationToken);
+        var calculateMetadata = CalculateMetadata(metadata);
+
+        activity?.Start();
+        var integrationMessage = IntegrationMessageMapper.MapToMessage(message, calculateMetadata, activity?.SpanId.ToString());
+
+        await _externalPublisher.Publish(integrationMessage, routingKey, cancellationToken);
+
+        TracerPublisher.TracePublishTags(activity, routingKey, calculateMetadata, integrationMessage);
+        activity.SetStatus(ActivityStatusCode.Ok);
     }
 
     private Metadata CalculateMetadata(Metadata? metadata)

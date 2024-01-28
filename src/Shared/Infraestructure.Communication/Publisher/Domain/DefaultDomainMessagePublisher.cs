@@ -1,4 +1,5 @@
-﻿using Infraestructure.Communication.Messages;
+﻿using System.Diagnostics;
+using Infraestructure.Communication.Messages;
 
 namespace Infraestructure.Communication.Publisher.Domain;
 
@@ -12,18 +13,20 @@ public class DefaultDomainMessagePublisher : IDomainMessagePublisher
         _externalPublisher = externalPublisher;
     }
 
-    public Task Publish(object message, Metadata? metadata = null, string? routingKey = null, CancellationToken cancellationToken = default)
+    public async Task Publish(object message, Metadata? metadata = null, string? routingKey = null, CancellationToken cancellationToken = default)
     {
-        Metadata calculatedMetadata = CalculateMetadata(metadata);
-        var domainMessage = DomainMessageMapper.MapToMessage(message, calculatedMetadata);
-        return _externalPublisher.Publish(domainMessage, routingKey, cancellationToken);
-    }
+        using var tracingConsumer = new ActivitySource(nameof(IExternalMessagePublisher<IMessage>));
+        using var activity = tracingConsumer.CreateActivity("Publicar mensaje", ActivityKind.Consumer);
 
-    public Task PublishMany(IEnumerable<object> messages, Metadata? metadata = null, string? routingKey = null, CancellationToken cancellationToken = default)
-    {
-        var domainMessages =
-            messages.Select(a => DomainMessageMapper.MapToMessage(a, CalculateMetadata(metadata)));
-        return _externalPublisher.PublishMany(domainMessages, routingKey, cancellationToken);
+        var calculateMetadata = CalculateMetadata(metadata);
+
+        activity?.Start();
+        var domainMessage = DomainMessageMapper.MapToMessage(message, calculateMetadata, activity?.SpanId.ToString());
+
+        await _externalPublisher.Publish(domainMessage, routingKey, cancellationToken);
+
+        TracerPublisher.TracePublishTags(activity, routingKey, calculateMetadata, domainMessage);
+        activity.SetStatus(ActivityStatusCode.Ok);
     }
 
     private Metadata CalculateMetadata(Metadata? metadata)

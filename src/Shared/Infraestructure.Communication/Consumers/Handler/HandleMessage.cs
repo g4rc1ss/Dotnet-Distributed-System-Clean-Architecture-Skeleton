@@ -34,12 +34,14 @@ public class HandleMessage(IMessageHandlerRegistry messageHandlerRegistry)
                 var spanId = ActivitySpanId.CreateFromString(message.Traces.SpanId);
                 
                 using var tracingConsumer = new ActivitySource(nameof(IMessageHandler));
-                using var activity = tracingConsumer.CreateActivity("Consumiendo Mensaje", ActivityKind.Consumer);
+                using var activity = tracingConsumer.CreateActivity("Llamar handler", ActivityKind.Consumer);
                 activity?.SetParentId(traceId, spanId, ActivityTraceFlags.Recorded);
                 activity?.AddTag("Handler", handler);
                 activity?.Start();
 
                 await (Task)handle.Invoke(handler, [message, cancellationToken])!;
+
+                activity?.SetStatus(ActivityStatusCode.Ok);
             }
 
         }

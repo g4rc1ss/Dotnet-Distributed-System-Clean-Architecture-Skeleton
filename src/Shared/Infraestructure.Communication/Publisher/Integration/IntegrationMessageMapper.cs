@@ -6,7 +6,7 @@ namespace Infraestructure.Communication.Publisher.Integration;
 
 public static class IntegrationMessageMapper
 {
-    internal static IntegrationMessage MapToMessage(object message, Metadata metadata)
+    internal static IntegrationMessage MapToMessage(object message, Metadata metadata, string parentId)
     {
         if (message is IntegrationMessage)
         {
@@ -22,7 +22,8 @@ public static class IntegrationMessageMapper
         var traces = new MessageDiagnosticTraces
         {
             TraceId = Activity.Current!.TraceId.ToString(),
-            SpanId = Activity.Current!.SpanId.ToString()
+            SpanId = Activity.Current!.SpanId.ToString(),
+            ParentId = parentId
         };
         var wrapper = buildWrapperGenericMethodInfo?.Invoke(
             null,
