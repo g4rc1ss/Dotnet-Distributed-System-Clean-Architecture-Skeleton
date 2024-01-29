@@ -1,0 +1,56 @@
+# https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+# Configure exporters
+exporters:
+
+ #######
+# LOCAL #
+ #######
+  prometheus:
+    endpoint: 0.0.0.0:8889
+    send_timestamps: true
+  
+  loki:
+    endpoint: http://loki-grafana:3100/loki/api/v1/push
+    tls:
+      insecure: true
+
+  otlp/1:
+    endpoint: tempo-grafana:4317
+    tls:
+      insecure: true
+
+ ###############
+# GRAFANA CLOUD #
+ ###############
+
+  otlphttp:
+    endpoint: https://otlp-gateway-prod-us-east-0.grafana.net/otlp
+    headers: 
+      Authorization: Basic ODM5OTgxOmdsY19leUp2SWpvaU9UQXhNREkwSWl3aWJpSTZJbk4wWVdOckxUZ3pPVGs0TVMxdmRHeHdMWGR5YVhSbExXZHlZV1poYm1GdmRHVnNZV2RsYm5SMGIydGxiaUlzSW1zaU9pSmhUMDVCTWpReFQycHBlRFJQYlRoV05USXlaWFEyT0ZNaUxDSnRJanA3SW5JaU9pSndjbTlrTFhWekxXVmhjM1F0TUNKOWZRPT0=
+
+# https://opentelemetry.io/docs/collector/configuration/#processors
+processors:
+  batch:
+
+# https://opentelemetry.io/docs/collector/configuration/#service
+# https://github.com/open-telemetry/opentelemetry-collector/blob/main/docs/design.md#pipelines
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/1, otlphttp]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheus, otlphttp]
+    logs:
+      receivers: [otlp]
+      processors: []
+      exporters: [loki, otlphttp]

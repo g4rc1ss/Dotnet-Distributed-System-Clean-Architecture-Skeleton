@@ -32,6 +32,7 @@ builder.ConfigureAppConfiguration(configuration =>
 {
 
 });
+builder.AddLoggerConfiguration();
 
 var app = builder.Build();
 

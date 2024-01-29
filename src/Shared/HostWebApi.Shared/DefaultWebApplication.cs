@@ -17,7 +17,7 @@ public static class DefaultWebApplication
 
         builder.Services.AddHealthChecks();
 
-        builder.Host.AddLoggerConfiguration(builder.Configuration);
+        builder.Host.AddLoggerConfiguration();
         builder.Services.AddOpenTelemetry(builder.Configuration, meterProvider, tracerProvider);
         builder.Services.ConfigureDataProtectionProvider(builder.Configuration);
         builder.Services.AddControllers();

@@ -8,14 +8,17 @@ namespace HostWebApi.Shared.Extensions;
 public static class HostBuilderExtensions
 {
 
-    public static IHostBuilder AddLoggerConfiguration(this IHostBuilder hostBuilder, IConfiguration configuration)
+    public static IHostBuilder AddLoggerConfiguration(this IHostBuilder hostBuilder)
     {
         hostBuilder.UseSerilog((context, loggerConfiguration) =>
         {
             loggerConfiguration
                 .MinimumLevel.Information()
-                .Enrich.WithProperty("Application", configuration["AppName"]!)
-                .WriteTo.Seq(configuration["ConnectionStrings:SeqLogs"]!);
+                .Enrich.WithProperty("Application", context.Configuration["AppName"]!)
+                .WriteTo.OpenTelemetry(options =>
+                {
+                    options.Endpoint = context.Configuration["ConnectionStrings:OpenTelemetry"]!;
+                });
 
             if (context.HostingEnvironment.IsDevelopment())
             {

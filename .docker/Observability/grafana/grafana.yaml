@@ -2,12 +2,32 @@ datasources:
   - name: 'prometheus'
     type: 'prometheus'
     access: 'proxy'
-    url: 'http://prometheus-opentelemetry:9090'
-
-  - name: Zipkin
-    type: zipkin
+    url: 'http://prometheus-grafana:9090'
+  
+  - name: Tempo
+    type: tempo
     access: proxy
-    url: http://zipkin-opentelemetry:9411
+    orgId: 1
+    url: http://tempo-grafana:3200
     basicAuth: false
     isDefault: false
+    version: 1
     editable: false
+    apiVersion: 1
+    uid: tempo
+
+  - name: Loki
+    type: loki
+    access: proxy 
+    orgId: 1
+    url: http://loki-grafana:3100
+    basicAuth: false
+    isDefault: false
+    version: 1
+    editable: false
+    jsonData:
+      derivedFields:
+        - datasourceUid: tempo
+          matcherRegex: tid=(\w+)
+          name: TraceID
+          url: $${__value.raw}

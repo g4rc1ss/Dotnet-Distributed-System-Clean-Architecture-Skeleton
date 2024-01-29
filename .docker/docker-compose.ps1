@@ -13,15 +13,12 @@ param (
 )
 
 $composeToExecuteAlways = @(
-    "docker-compose.grafana.yml",
     "docker-compose.mongo.yml",
     "docker-compose.mySQL.yml",
     "docker-compose.openTelemetry.yml",
     "docker-compose.rabbitMQ.yml",
-    "docker-compose.seqLogs.yml",
     "docker-compose.redis.yml"
 );
-
 
 $composeToExecuteOnTest = @(
     "docker-compose.weatherForecast.yml",
@@ -30,7 +27,7 @@ $composeToExecuteOnTest = @(
 );
 
 $composeToExecuteOnLocal = @(
-
+    "docker-compose.grafana.yml"
 );
 
 $commadDockerComposeToExecute = "docker compose"
