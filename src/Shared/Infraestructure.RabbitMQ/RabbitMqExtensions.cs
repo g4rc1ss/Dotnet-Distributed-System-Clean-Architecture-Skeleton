@@ -25,12 +25,6 @@ public static class RabbitMqExtensions
         return services;
     }
 
-    public static void AddConsumerHandlers(this IServiceCollection services, IEnumerable<IMessageHandler> messageHandlers)
-    {
-        services.AddSingleton<IMessageHandlerRegistry>(new MessageHandlerRegistry(messageHandlers));
-        services.AddSingleton<IHandleMessage, HandleMessage>();
-    }
-
     public static void AddRabbitMqConsumer<TMessage>(this IServiceCollection services)
     {
         services.AddConsumer<TMessage>();
@@ -42,18 +36,6 @@ public static class RabbitMqExtensions
     {
         services.AddPublisher<TMessage>();
         services.AddSingleton<IExternalMessagePublisher<TMessage>, RabbitMqPublisher<TMessage>>();
-    }
-
-    public static void AddHandlersInAssembly<T>(this IServiceCollection services)
-    {
-        services.Scan(scan => scan.FromAssemblyOf<T>()
-            .AddClasses(classes => classes.AssignableTo<IMessageHandler>())
-            .AsImplementedInterfaces()
-            .WithTransientLifetime());
-
-        ServiceProvider sp = services.BuildServiceProvider();
-        var listHandlers = sp.GetServices<IMessageHandler>();
-        services.AddConsumerHandlers(listHandlers);
     }
 
     private static void AddRabbitMqHealthCheck(this IServiceCollection services)

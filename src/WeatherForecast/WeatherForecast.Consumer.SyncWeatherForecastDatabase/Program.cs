@@ -7,14 +7,29 @@ using Microsoft.Extensions.Hosting;
 using HostWebApi.Shared.Extensions;
 using Infraestructure.Communication.Consumers.Handler;
 using OpenTelemetry.Trace;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Infraestructure.Communication;
 
 
 var builder = Host.CreateDefaultBuilder(args);
 
+builder.ConfigureAppConfiguration(configuration =>
+{
+
+});
+
+builder.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddSerilog();
+});
+builder.AddLoggerConfiguration();
+
 builder.ConfigureServices((hostBuilder, serviceCollection) =>
 {
     serviceCollection.AddMongoDbConfig(hostBuilder.Configuration.GetConnectionString("MongoDbConnection")!);
-
+    
     serviceCollection.AddHandlersInAssembly<Program>();
     serviceCollection.AddRabbitMQ(hostBuilder.Configuration);
     serviceCollection.AddRabbitMqConsumer<IntegrationMessage>();
@@ -28,11 +43,6 @@ builder.ConfigureServices((hostBuilder, serviceCollection) =>
     });
 });
 
-builder.ConfigureAppConfiguration(configuration =>
-{
-
-});
-builder.AddLoggerConfiguration();
 
 var app = builder.Build();
 
