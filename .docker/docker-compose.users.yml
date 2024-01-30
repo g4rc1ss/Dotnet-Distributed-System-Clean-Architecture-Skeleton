@@ -20,7 +20,6 @@ services:
       - AppName=${USERS_AppName_SKELETON}
       - keysFolder=${USERS_keysFolder_SKELETON}
       - ConnectionStrings__OpenTelemetry=${USERS_ConnectionStrings__OpenTelemetry_SKELETON}
-      - ConnectionStrings__SeqLogs=${USERS_ConnectionStrings__SeqLogs_SKELETON}
     ports:
       - "${USERS_HTTP_PORT_SKELETON}:80"
       - "${USERS_HTTPS_PORT_SKELETON}:443"

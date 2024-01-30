@@ -23,7 +23,6 @@ services:
       - ConnectionStrings__MongoDbConnection=${WEATHERFORECAST_ConnectionStrings__MongoDbConnection_SKELETON}
       - ConnectionStrings__RedisConnection=${WEATHERFORECAST_ConnectionStrings__RedisConnection_SKELETON}
       - ConnectionStrings__OpenTelemetry=${WEATHERFORECAST_ConnectionStrings__OpenTelemetry_SKELETON}
-      - ConnectionStrings__SeqLogs=${WEATHERFORECAST_ConnectionStrings__SeqLogs_SKELETON}
       - RabbitMqData__HostName=${WEATHERFORECAST_RabbitMqData_HostName_SKELETON}
       - RabbitMqData__Credentials__Username=${WEATHERFORECAST_RabbitMqData_Credentials_Username_SKELETON}
       - RabbitMqData__Credentials__Password=${WEATHERFORECAST_RabbitMqData_Credentials_Password_SKELETON}

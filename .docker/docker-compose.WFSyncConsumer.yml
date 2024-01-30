@@ -12,6 +12,7 @@ services:
       - AppName=${WEATHERFORECAST_CONSUMER_AppName_SKELETON}
       - keysFolder=${WEATHERFORECAST_CONSUMER_keysFolder_SKELETON}
       - ConnectionStrings__MongoDbConnection=${WEATHERFORECAST_CONSUMER_ConnectionStrings__MongoDbConnection_SKELETON}
+      - ConnectionStrings__OpenTelemetry=${WEATHERFORECAST_ConnectionStrings__OpenTelemetry_SKELETON}
       - RabbitMqData__HostName=${WEATHERFORECAST_CONSUMER_RabbitMqData_HostName_SKELETON}
       - RabbitMqData__Credentials__Username=${WEATHERFORECAST_CONSUMER_RabbitMqData_Credentials_Username_SKELETON}
       - RabbitMqData__Credentials__Password=${WEATHERFORECAST_CONSUMER_RabbitMqData_Credentials_Password_SKELETON}
