@@ -1,6 +1,10 @@
-﻿using HostWebApi.Shared.Extensions;
+﻿using System.Diagnostics;
+using System.Threading.RateLimiting;
+using HostWebApi.Shared.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Metrics;
@@ -22,6 +26,17 @@ public static class DefaultWebApplication
         builder.Services.ConfigureDataProtectionProvider(builder.Configuration);
         builder.Services.AddControllers();
         builder.Services.AddOptions();
+        builder.Services.AddRateLimiter(rateLimiter =>
+        {
+            rateLimiter.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpcontext =>
+                RateLimitPartition.GetConcurrencyLimiter("Partition Key",
+                _ => new ConcurrencyLimiterOptions()
+                {
+                    PermitLimit = Environment.ProcessorCount * 2,
+                    QueueLimit = 0,
+                    QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+                }));
+        });
         builder.Services.AddHttpLogging(o => { });
 
         builder.Services.AddProblemDetails();
@@ -54,6 +69,7 @@ public static class DefaultWebApplication
             Predicate = _ => true,
         });
 
+        app.UseRateLimiter();
         app.UseHttpLogging();
         app.UseHttpsRedirection();
         app.UseAuthorization();
