@@ -1,15 +1,16 @@
 ﻿using Infraestructure.Communication;
 using Infraestructure.Communication.Consumers;
-using Infraestructure.Communication.Consumers.Handler;
 using Infraestructure.Communication.Messages;
 using Infraestructure.Communication.Publisher;
 using Infraestructure.RabbitMQ.Consumer;
 using Infraestructure.RabbitMQ.Publisher;
 using Infraestructure.RabbitMQ.Serialization;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
+
 using RabbitMQ.Client;
 
 namespace Infraestructure.RabbitMQ;

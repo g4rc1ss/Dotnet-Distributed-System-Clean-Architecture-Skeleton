@@ -1,6 +1,4 @@
-﻿using System;
-using WeatherForecast.Application;
-using Microsoft.AspNetCore.DataProtection;
+﻿using WeatherForecast.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast;

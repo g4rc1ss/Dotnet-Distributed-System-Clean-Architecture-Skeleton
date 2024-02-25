@@ -4,6 +4,7 @@ using Infraestructure.Communication.Consumers.Manager;
 using Infraestructure.Communication.Messages;
 using Infraestructure.Communication.Publisher.Domain;
 using Infraestructure.Communication.Publisher.Integration;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

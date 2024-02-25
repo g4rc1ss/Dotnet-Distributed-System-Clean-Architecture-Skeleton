@@ -18,15 +18,15 @@ public static class InfraestructureMySqlExtensions
     private static IServiceCollection AddMySqlDbContext<TContext>(this IServiceCollection services, IConfiguration configuration)
         where TContext : DbContext
     {
-        void dbContextOptions(DbContextOptionsBuilder db)
+        void DbContextOptions(DbContextOptionsBuilder db)
         {
             var connectionString = configuration.GetConnectionString(typeof(TContext).Name);
             var mySqlVersion = ServerVersion.AutoDetect(connectionString);
             db.UseMySql(connectionString, mySqlVersion);
         }
 
-        services.AddDbContextPool<TContext>(dbContextOptions);
-        services.AddPooledDbContextFactory<TContext>(dbContextOptions);
+        services.AddDbContextPool<TContext>(DbContextOptions);
+        services.AddPooledDbContextFactory<TContext>(DbContextOptions);
 
         return services;
     }

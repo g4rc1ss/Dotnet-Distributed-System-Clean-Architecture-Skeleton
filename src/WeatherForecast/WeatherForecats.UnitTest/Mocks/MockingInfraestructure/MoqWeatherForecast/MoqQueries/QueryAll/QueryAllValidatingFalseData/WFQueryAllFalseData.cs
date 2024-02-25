@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using WeatherForecast.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
+﻿using WeatherForecast.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
 using Moq;
 
 namespace WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqQueries.QueryAll.QueryAllValidatingFalseData;

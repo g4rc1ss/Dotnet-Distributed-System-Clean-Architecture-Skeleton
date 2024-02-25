@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
-using Infraestructure.Communication.Messages;
-using Infraestructure.Communication.Publisher;
 
-namespace Infraestructure.Communication;
+using Infraestructure.Communication.Messages;
+
+namespace Infraestructure.Communication.Publisher;
 
 public static class TracerPublisher
 {

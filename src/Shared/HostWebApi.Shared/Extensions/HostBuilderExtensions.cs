@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
+
 using Serilog;
 using Serilog.Events;
 
@@ -15,10 +15,7 @@ public static class HostBuilderExtensions
             loggerConfiguration
                 .MinimumLevel.Information()
                 .Enrich.WithProperty("Application", context.Configuration["AppName"]!)
-                .WriteTo.OpenTelemetry(options =>
-                {
-                    options.Endpoint = context.Configuration["ConnectionStrings:OpenTelemetry"]!;
-                });
+                .WriteTo.OpenTelemetry(options => options.Endpoint = context.Configuration["ConnectionStrings:OpenTelemetry"]!);
 
             if (context.HostingEnvironment.IsDevelopment())
             {

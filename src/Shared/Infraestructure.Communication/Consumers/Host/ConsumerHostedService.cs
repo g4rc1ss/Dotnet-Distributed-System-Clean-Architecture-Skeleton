@@ -1,21 +1,15 @@
-﻿using System.Diagnostics;
-using Infraestructure.Communication.Consumers.Manager;
+﻿using Infraestructure.Communication.Consumers.Manager;
+
 using Microsoft.Extensions.Hosting;
 
 namespace Infraestructure.Communication.Consumers.Host;
 
-public class ConsumerHostedService<TMessage> : IHostedService
+public class ConsumerHostedService<TMessage>(IConsumerManager<TMessage> consumerManager, IMessageConsumer<TMessage> messageConsumer) : IHostedService
 {
-    private readonly IConsumerManager<TMessage> _consumerManager;
-    private readonly IMessageConsumer<TMessage> _messageConsumer;
-    private readonly CancellationTokenSource _stoppingCancellationTokenSource = new CancellationTokenSource();
+    private readonly IConsumerManager<TMessage> _consumerManager = consumerManager;
+    private readonly IMessageConsumer<TMessage> _messageConsumer = messageConsumer;
+    private readonly CancellationTokenSource _stoppingCancellationTokenSource = new();
     private Task? _executingTask;
-
-    public ConsumerHostedService(IConsumerManager<TMessage> consumerManager, IMessageConsumer<TMessage> messageConsumer)
-    {
-        _consumerManager = consumerManager;
-        _messageConsumer = messageConsumer;
-    }
 
     public Task StartAsync(CancellationToken cancellationToken)
     {

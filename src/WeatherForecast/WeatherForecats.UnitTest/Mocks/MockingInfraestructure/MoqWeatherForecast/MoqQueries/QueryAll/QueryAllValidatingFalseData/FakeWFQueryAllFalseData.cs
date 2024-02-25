@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
+﻿using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
 
 namespace WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast.MoqQueries.QueryAll.QueryAllValidatingFalseData;
 

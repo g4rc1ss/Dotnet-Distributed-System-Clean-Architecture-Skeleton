@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WeatherForecast.Infraestructure.Entities.DbEntities;
+﻿namespace WeatherForecast.Infraestructure.Entities.DbEntities;
 
 public class WeatherForecastEfEntity
 {

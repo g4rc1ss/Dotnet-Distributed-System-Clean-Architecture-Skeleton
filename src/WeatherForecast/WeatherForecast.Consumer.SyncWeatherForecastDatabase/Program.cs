@@ -29,7 +29,7 @@ builder.AddLoggerConfiguration();
 builder.ConfigureServices((hostBuilder, serviceCollection) =>
 {
     serviceCollection.AddMongoDbConfig(hostBuilder.Configuration.GetConnectionString("MongoDbConnection")!);
-    
+
     serviceCollection.AddHandlersInAssembly<Program>();
     serviceCollection.AddRabbitMQ(hostBuilder.Configuration);
     serviceCollection.AddRabbitMqConsumer<IntegrationMessage>();

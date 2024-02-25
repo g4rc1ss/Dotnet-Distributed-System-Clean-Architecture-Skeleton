@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -24,18 +25,12 @@ public static class ServiceCollectionExtensions
         Action<MeterProviderBuilder> meterProvider = null, Action<TracerProviderBuilder> tracerProvider = null)
     {
         services.AddOpenTelemetry()
-            .ConfigureResource(resource =>
-            {
-                resource.AddService(configuration["AppName"]!);
-            })
+            .ConfigureResource(resource => resource.AddService(configuration["AppName"]!))
             .WithTracing(trace =>
             {
                 tracerProvider?.Invoke(trace);
                 trace.AddAspNetCoreInstrumentation();
-                trace.AddOtlpExporter(exporter =>
-                {
-                    exporter.Endpoint = new Uri(configuration["ConnectionStrings:OpenTelemetry"]!);
-                });
+                trace.AddOtlpExporter(exporter => exporter.Endpoint = new Uri(configuration["ConnectionStrings:OpenTelemetry"]!));
             })
             .WithMetrics(metric =>
             {

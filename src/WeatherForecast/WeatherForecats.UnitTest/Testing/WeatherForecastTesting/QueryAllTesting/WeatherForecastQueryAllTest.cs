@@ -1,20 +1,21 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
+
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TestUnitarios.Testing.WeatherForecastTesting.QueryAllTesting;
+namespace WeatherForecats.UnitTest.Testing.WeatherForecastTesting.QueryAllTesting;
 
 [TestClass]
 public class WeatherForecastQueryAllTest
 {
 
     [ClassInitialize]
-    public static void OnInitializeTest(TestContext testContext)
+    public static void OnInitializeTest()
     {
     }
 
     [TestMethod]
-    public async Task GetWeatherForecast_Then_ResponseWithOneOrMoreResults()
+    public async Task GetWeatherForecastThenResponseWithOneOrMoreResults()
     {
         var weatherForecastQuery = CasesWeatherForecastQueryAllFactory.GetTrueCaseWithCommandCreateMock;
 
@@ -29,7 +30,7 @@ public class WeatherForecastQueryAllTest
     }
 
     [TestMethod]
-    public async Task GetWeatherForecast_Then_ResponseWithNullValue()
+    public async Task GetWeatherForecastThenResponseWithNullValue()
     {
         var weatherForecastQuery = CasesWeatherForecastQueryAllFactory.GetFalseCaseWithCommandCreateMock;
 

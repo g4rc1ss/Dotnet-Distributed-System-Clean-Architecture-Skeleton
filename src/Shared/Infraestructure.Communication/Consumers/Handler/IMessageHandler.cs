@@ -8,7 +8,7 @@ public interface IMessageHandler
 
 public interface IMessageHandler<in TMessage> : IMessageHandler
 {
-    Task Handle(TMessage message, CancellationToken cancelToken = default(CancellationToken));
+    Task Handle(TMessage message, CancellationToken cancelToken = default);
 }
 
 public interface IIntegrationMessageHandler : IMessageHandler

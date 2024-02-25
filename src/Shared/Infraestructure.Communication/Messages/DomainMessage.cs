@@ -1,5 +1,4 @@
-﻿using System;
-namespace Infraestructure.Communication.Messages;
+﻿namespace Infraestructure.Communication.Messages;
 
 public record DomainMessage : IMessage
 {

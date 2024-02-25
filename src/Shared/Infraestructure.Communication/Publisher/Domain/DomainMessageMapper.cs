@@ -1,4 +1,5 @@
 ﻿using Infraestructure.Communication.Messages;
+
 using System.Diagnostics;
 using System.Reflection;
 
@@ -9,7 +10,9 @@ public class DomainMessageMapper
     public static DomainMessage MapToMessage(object message, Metadata metadata, string parentId)
     {
         if (message is IntegrationMessage)
+        {
             throw new ArgumentException("Message should not be of type DomainMessage, it should be a plain type");
+        }
 
         var buildWrapperMethodInfo = typeof(DomainMessageMapper).GetMethod(
             nameof(ToTypedIntegrationEvent),

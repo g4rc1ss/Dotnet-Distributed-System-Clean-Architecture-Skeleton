@@ -1,32 +1,29 @@
-﻿using System;
+﻿namespace Infraestructure.Communication.Consumers.Manager;
 
-namespace Infraestructure.Communication.Consumers.Manager
+public class ConsumerManager<TMessage> : IConsumerManager<TMessage>
 {
-    public class ConsumerManager<TMessage> : IConsumerManager<TMessage>
+    private CancellationTokenSource _cancellationTokenSource;
+
+    public ConsumerManager()
     {
-        private CancellationTokenSource _cancellationTokenSource;
+        _cancellationTokenSource = new CancellationTokenSource();
+    }
 
-        public ConsumerManager()
-        {
-            _cancellationTokenSource = new CancellationTokenSource();
-        }
+    public CancellationToken GetCancellationToken()
+    {
+        return _cancellationTokenSource.Token;
+    }
 
-        public CancellationToken GetCancellationToken()
-        {
-            return _cancellationTokenSource.Token;
-        }
+    public void RestartExecution()
+    {
+        var cancellationTokenSource = _cancellationTokenSource;
+        _cancellationTokenSource = new CancellationTokenSource();
+        cancellationTokenSource.Cancel();
+    }
 
-        public void RestartExecution()
-        {
-            var cancellationTokenSource = _cancellationTokenSource;
-            _cancellationTokenSource = new CancellationTokenSource();
-            cancellationTokenSource.Cancel();
-        }
-
-        public void StopExecution()
-        {
-            _cancellationTokenSource.Cancel();
-        }
+    public void StopExecution()
+    {
+        _cancellationTokenSource.Cancel();
     }
 }
 

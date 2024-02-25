@@ -1,24 +1,22 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
+
 using FluentAssertions;
+
 using WeatherForecast.Shared.Peticiones.Request;
 using WeatherForecast.Shared.Peticiones.Responses.WeatherForecast;
+
 using Xunit;
 
 namespace WeatherForecast.IntegrationTest.ControllersTest;
 
-[Collection(FixtureWeatherForecastNamesConstants.WeatherForecastTest)]
-public class WeatherForecastControllerTest
+[Collection(FixtureWeatherForecastNamesConstants.WEATHERFORECASTTEST)]
+public class WeatherForecastControllerTest(TestApiConnectionInitializer apiConnection)
 {
-    private readonly TestApiConnectionInitializer _apiConnection;
-
-    public WeatherForecastControllerTest(TestApiConnectionInitializer apiConnection)
-    {
-        _apiConnection = apiConnection;
-    }
+    private readonly TestApiConnectionInitializer _apiConnection = apiConnection;
 
     [Fact]
-    public async Task GetWeatherForecastByAPI_Then_ReturnJsonAndDeserialiceToIEnumerable_NotNullAndOneOrMoreResults()
+    public async Task GetWeatherForecastByAPIThenReturnJsonAndDeserialiceToIEnumerableNotNullAndOneOrMoreResults()
     {
 
         var client = _apiConnection.WeatherForecastClient;
@@ -35,7 +33,7 @@ public class WeatherForecastControllerTest
     }
 
     [Fact]
-    public async Task CreateWeatherForecastByAPI_Then_ReturnJsonAndDeserialiceToIEnumerable_NotNullAndOneOrMoreResults()
+    public async Task CreateWeatherForecastByAPIThenReturnJsonAndDeserialiceToIEnumerableNotNullAndOneOrMoreResults()
     {
 
         var client = _apiConnection.WeatherForecastClient;
@@ -45,7 +43,7 @@ public class WeatherForecastControllerTest
             Fahrenheit = 2,
             Descripcion = "Grados en Bilbao"
         };
-        var response = await client.PostAsJsonAsync<CreateWeatherForecastRequest>("WeatherForecast/create", weather);
+        var response = await client.PostAsJsonAsync("WeatherForecast/create", weather);
         Console.WriteLine(await response.Content.ReadAsStringAsync());
         response.Should().Match(x => x.IsSuccessStatusCode);
     }

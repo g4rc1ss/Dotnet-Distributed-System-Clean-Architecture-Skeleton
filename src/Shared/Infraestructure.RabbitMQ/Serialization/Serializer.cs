@@ -1,10 +1,12 @@
 ﻿using System.Text;
+
 using Newtonsoft.Json;
+
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Infraestructure.RabbitMQ.Serialization;
 
-internal class Serializer : ISerializer
+internal class Serializer(JsonSerializerSettings serializerSettings) : ISerializer
 {
     private static readonly Encoding Encoding = new UTF8Encoding(false);
 
@@ -14,17 +16,12 @@ internal class Serializer : ISerializer
             TypeNameHandling = TypeNameHandling.Auto
         };
 
-    private const int DefaultBufferSize = 1024;
+    private const int DEFAULTBUFFERSIZE = 1024;
 
-    private readonly Newtonsoft.Json.JsonSerializer _jsonSerializer;
+    private readonly Newtonsoft.Json.JsonSerializer _jsonSerializer = Newtonsoft.Json.JsonSerializer.Create(serializerSettings);
 
     public Serializer() : this(DefaultSerializerSettings)
     {
-    }
-
-    public Serializer(JsonSerializerSettings serializerSettings)
-    {
-        _jsonSerializer = Newtonsoft.Json.JsonSerializer.Create(serializerSettings);
     }
 
     public T DeserializeObject<T>(string input)
@@ -41,7 +38,7 @@ internal class Serializer : ISerializer
     public object DeserializeObject(byte[] input, Type type)
     {
         using var memoryStream = new MemoryStream(input, false);
-        using var streamReader = new StreamReader(memoryStream, Encoding, false, DefaultBufferSize, true);
+        using var streamReader = new StreamReader(memoryStream, Encoding, false, DEFAULTBUFFERSIZE, true);
         using var reader = new JsonTextReader(streamReader);
         return _jsonSerializer.Deserialize(reader, type) ?? throw new InvalidOperationException();
     }
@@ -53,8 +50,8 @@ internal class Serializer : ISerializer
 
     public byte[] SerializeObjectToByteArray<T>(T obj)
     {
-        using var memoryStream = new MemoryStream(DefaultBufferSize);
-        using (var streamWriter = new StreamWriter(memoryStream, Encoding, DefaultBufferSize, true))
+        using var memoryStream = new MemoryStream(DEFAULTBUFFERSIZE);
+        using (var streamWriter = new StreamWriter(memoryStream, Encoding, DEFAULTBUFFERSIZE, true))
         using (var jsonWriter = new JsonTextWriter(streamWriter))
         {
             jsonWriter.Formatting = _jsonSerializer.Formatting;

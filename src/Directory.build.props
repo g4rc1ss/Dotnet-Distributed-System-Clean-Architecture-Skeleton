@@ -1,0 +1,18 @@
+<Project>
+    <PropertyGroup>
+        <TargetFrameworks>net8.0</TargetFrameworks>
+        <AndroidTargetMaui>net8.0-android</AndroidTargetMaui>
+        <IOSTargetMaui>net8.0-ios</IOSTargetMaui>
+        <MaccatalystTargetMaui>net8.0-maccatalyst</MaccatalystTargetMaui>
+        <WindowsTargetMaui>net8.0-windows10.0.19041.0</WindowsTargetMaui>
+        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks)</TargetFrameworks>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    </PropertyGroup>
+</Project>

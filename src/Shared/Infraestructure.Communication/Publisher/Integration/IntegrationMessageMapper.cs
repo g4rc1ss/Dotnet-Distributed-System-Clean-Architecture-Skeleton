@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+
 using Infraestructure.Communication.Messages;
 
 namespace Infraestructure.Communication.Publisher.Integration;
@@ -18,7 +19,7 @@ public static class IntegrationMessageMapper
             BindingFlags.Static | BindingFlags.NonPublic
         );
 
-        var buildWrapperGenericMethodInfo = buildWrapperMethodInfo?.MakeGenericMethod(new[] { message.GetType() });
+        var buildWrapperGenericMethodInfo = buildWrapperMethodInfo?.MakeGenericMethod([message.GetType()]);
         var traces = new MessageDiagnosticTraces
         {
             TraceId = Activity.Current!.TraceId.ToString(),

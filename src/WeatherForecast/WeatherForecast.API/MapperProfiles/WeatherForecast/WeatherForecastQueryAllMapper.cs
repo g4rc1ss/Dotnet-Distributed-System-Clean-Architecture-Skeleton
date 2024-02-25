@@ -1,4 +1,5 @@
 ﻿using Riok.Mapperly.Abstractions;
+
 using WeatherForecast.Domain.Application.WeatherForecast.QueryAll;
 using WeatherForecast.Shared.Peticiones.Responses.WeatherForecast;
 

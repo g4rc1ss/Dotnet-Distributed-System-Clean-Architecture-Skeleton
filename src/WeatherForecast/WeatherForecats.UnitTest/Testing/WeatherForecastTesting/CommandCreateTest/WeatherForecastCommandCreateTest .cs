@@ -1,21 +1,23 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 
-namespace TestUnitarios.Testing.WeatherForecastTesting.CommandCreateTest;
+namespace WeatherForecats.UnitTest.Testing.WeatherForecastTesting.CommandCreateTest;
 
 [TestClass]
 public class WeatherForecastCommandCreateTest
 {
 
     [ClassInitialize]
-    public static void OnInitializeTest(TestContext testContext)
+    public static void OnInitializeTest()
     {
     }
 
     [TestMethod]
-    public async Task CreateWeatherForecast_Then_ResponseWithSuccessTrue()
+    public async Task CreateWeatherForecastThenResponseWithSuccessTrue()
     {
         var weatherForecastCreate = CasesWeatherForecastCreateMediatorFactory.GetTrueCaseWithCommandCreateMock;
 
@@ -31,7 +33,7 @@ public class WeatherForecastCommandCreateTest
     }
 
     [TestMethod]
-    public async Task CreateWeatherForecast_Then_ResponseWithSuccessFalse()
+    public async Task CreateWeatherForecastThenResponseWithSuccessFalse()
     {
         var weatherForecastCreate = CasesWeatherForecastCreateMediatorFactory.GetFalseCaseWithCommandCreateMock;
 

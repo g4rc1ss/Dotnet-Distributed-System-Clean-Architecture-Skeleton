@@ -1,9 +1,7 @@
-﻿using System;
-namespace Infraestructure.Communication.Consumers.Handler
+﻿namespace Infraestructure.Communication.Consumers.Handler;
+
+public interface IMessageHandlerRegistry
 {
-    public interface IMessageHandlerRegistry
-    {
-        IEnumerable<IMessageHandler> GetMessageHandlersForType(Type messageHandlerType, Type messageType);
-    }
+    IEnumerable<IMessageHandler> GetMessageHandlersForType(Type messageHandlerType, Type messageType);
 }
 

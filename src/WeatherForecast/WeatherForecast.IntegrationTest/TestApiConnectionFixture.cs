@@ -2,7 +2,7 @@
 
 namespace WeatherForecast.IntegrationTest;
 
-[CollectionDefinition(FixtureWeatherForecastNamesConstants.WeatherForecastTest)]
+[CollectionDefinition(FixtureWeatherForecastNamesConstants.WEATHERFORECASTTEST)]
 public class TestApiConnectionFixture : ICollectionFixture<TestApiConnectionInitializer>
 {
 }

@@ -1,18 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.Text;
+﻿using System.Diagnostics;
+
 using Infraestructure.Communication.Messages;
 
 namespace Infraestructure.Communication.Publisher.Integration;
 
-public class DefaultIntegrationMessagePublisher : IIntegrationMessagePublisher
+public class DefaultIntegrationMessagePublisher(IExternalMessagePublisher<IntegrationMessage> externalPublisher) : IIntegrationMessagePublisher
 {
-    private readonly IExternalMessagePublisher<IntegrationMessage> _externalPublisher;
-
-    public DefaultIntegrationMessagePublisher(IExternalMessagePublisher<IntegrationMessage> externalPublisher)
-    {
-        _externalPublisher = externalPublisher;
-    }
+    private readonly IExternalMessagePublisher<IntegrationMessage> _externalPublisher = externalPublisher;
 
     public async Task Publish(object message, Metadata? metadata = null, string? routingKey = null, CancellationToken cancellationToken = default)
     {

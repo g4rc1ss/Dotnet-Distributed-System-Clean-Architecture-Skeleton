@@ -1,15 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 using WeatherForecast.Infraestructure.Entities.DbEntities;
 
 namespace WeatherForecast.Infraestructure.Entities.Context;
 
-public class DistributedContext : DbContext
+public class DistributedContext(DbContextOptions<DistributedContext> options) : DbContext(options)
 {
-    public DistributedContext(DbContextOptions<DistributedContext> options)
-    : base(options)
-    {
-    }
-
     public virtual DbSet<WeatherForecastEfEntity> WeatherForecasts { get; set; } = null!;
 
 

@@ -1,11 +1,11 @@
 ﻿
 using System.Diagnostics;
-using System.Linq;
+
 using Infraestructure.Communication.Messages;
 
 namespace Infraestructure.Communication.Consumers.Handler;
 
-public class HandleMessage(IMessageHandlerRegistry messageHandlerRegistry) 
+public class HandleMessage(IMessageHandlerRegistry messageHandlerRegistry)
     : IHandleMessage
 {
     public async Task Handle(IMessage message, CancellationToken cancellationToken = default)
@@ -32,7 +32,7 @@ public class HandleMessage(IMessageHandlerRegistry messageHandlerRegistry)
             {
                 var traceId = ActivityTraceId.CreateFromString(message.Traces.TraceId);
                 var spanId = ActivitySpanId.CreateFromString(message.Traces.SpanId);
-                
+
                 using var tracingConsumer = new ActivitySource(nameof(IMessageHandler));
                 using var activity = tracingConsumer.CreateActivity("Llamar handler", ActivityKind.Consumer);
                 activity?.SetParentId(traceId, spanId, ActivityTraceFlags.Recorded);

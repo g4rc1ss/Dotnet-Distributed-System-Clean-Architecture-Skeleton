@@ -1,24 +1,21 @@
 ﻿using System.Net.Http.Json;
-using System.Text.Json;
+
 using FluentAssertions;
+
 using WeatherForecast.Shared.Peticiones.Request;
 using WeatherForecast.Shared.Peticiones.Responses.WeatherForecast;
+
 using Xunit;
 
-namespace WeatherForecast.IntegrationTest;
+namespace WeatherForecast.IntegrationTest.ConsumersTest;
 
-[Collection(FixtureWeatherForecastNamesConstants.WeatherForecastTest)]
-public class SyncWeatherForecastDatabase
+[Collection(FixtureWeatherForecastNamesConstants.WEATHERFORECASTTEST)]
+public class SyncWeatherForecastDatabase(TestApiConnectionInitializer apiConnection)
 {
-    private readonly TestApiConnectionInitializer _apiConnection;
-
-    public SyncWeatherForecastDatabase(TestApiConnectionInitializer apiConnection)
-    {
-        _apiConnection = apiConnection;
-    }
+    private readonly TestApiConnectionInitializer _apiConnection = apiConnection;
 
     [Fact]
-    public async Task CreateWeatherAndGetWeather_Then_CheckIfIsTheSameWeatherAndConsumerIsWorks()
+    public async Task CreateWeatherAndGetWeatherThenCheckIfIsTheSameWeatherAndConsumerIsWorks()
     {
         var client = _apiConnection.WeatherForecastClient;
 

@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using WeatherForecast.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
+﻿using WeatherForecast.Interfaces.Infraestructure.Command.WeatherForecastCommandContracts;
 using Moq;
 using WeatherForecast.Domain.Application.WeatherForecast.ComandCreate;
 

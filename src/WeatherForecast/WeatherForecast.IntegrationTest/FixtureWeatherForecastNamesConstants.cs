@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace WeatherForecast.IntegrationTest;
+﻿namespace WeatherForecast.IntegrationTest;
 
 public class FixtureWeatherForecastNamesConstants
 {
-    public const string WeatherForecastTest = "WeatherForecastTest";
+    public const string WEATHERFORECASTTEST = "WeatherForecastTest";
 }
 

@@ -1,6 +1,5 @@
-﻿using System;
-using WeatherForecast.Interfaces.Infraestructure.Query.WeatherForecastQueryContracts;
-using Microsoft.AspNetCore.DataProtection;
+﻿using Microsoft.AspNetCore.DataProtection;
+
 using Moq;
 
 namespace WeatherForecats.UnitTest.Mocks.MockingInfraestructure.MoqWeatherForecast;

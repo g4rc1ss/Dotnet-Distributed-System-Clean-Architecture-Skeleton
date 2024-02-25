@@ -1,17 +1,13 @@
 ﻿using System.Diagnostics;
+
 using Infraestructure.Communication.Messages;
 
 namespace Infraestructure.Communication.Publisher.Domain;
 
 
-public class DefaultDomainMessagePublisher : IDomainMessagePublisher
+public class DefaultDomainMessagePublisher(IExternalMessagePublisher<DomainMessage> externalPublisher) : IDomainMessagePublisher
 {
-    private readonly IExternalMessagePublisher<DomainMessage> _externalPublisher;
-
-    public DefaultDomainMessagePublisher(IExternalMessagePublisher<DomainMessage> externalPublisher)
-    {
-        _externalPublisher = externalPublisher;
-    }
+    private readonly IExternalMessagePublisher<DomainMessage> _externalPublisher = externalPublisher;
 
     public async Task Publish(object message, Metadata? metadata = null, string? routingKey = null, CancellationToken cancellationToken = default)
     {
