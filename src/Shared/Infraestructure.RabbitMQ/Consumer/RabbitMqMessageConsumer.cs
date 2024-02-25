@@ -19,9 +19,9 @@ public class RabbitMqMessageConsumer<TMessage> : IMessageConsumer<TMessage>
     private readonly IHandleMessage _handleMessage;
     private readonly ISerializer _serializer;
 
-    private bool _disposed;
-    private IConnection? _connection;
-    private IModel? _channel;
+    private bool disposed;
+    private IConnection? connection;
+    private IModel? channel;
 
     public RabbitMqMessageConsumer(IHandleMessage handleMessage, IOptions<RabbitMqSettings> rabbitMqSettings, ISerializer serializer)
     {
@@ -40,19 +40,19 @@ public class RabbitMqMessageConsumer<TMessage> : IMessageConsumer<TMessage>
 
     public Task StartAsync(CancellationToken cancellationToken = default)
     {
-        _connection = _connectionFactory.CreateConnection();
-        _channel = _connection.CreateModel();
+        connection = _connectionFactory.CreateConnection();
+        channel = connection.CreateModel();
 
         return Consume();
     }
 
     private Task Consume()
     {
-        var asyncReceiver = new AsyncEventingBasicConsumer(_channel);
+        var asyncReceiver = new AsyncEventingBasicConsumer(channel);
         asyncReceiver.Received += HandleMessage;
 
         var queue = GetCorrectQueue();
-        _channel.BasicConsume(queue, false, asyncReceiver);
+        channel.BasicConsume(queue, false, asyncReceiver);
         return Task.CompletedTask;
     }
 
@@ -90,11 +90,11 @@ public class RabbitMqMessageConsumer<TMessage> : IMessageConsumer<TMessage>
 
     public void Dispose()
     {
-        if (!_disposed)
+        if (!disposed)
         {
-            _connection.Dispose();
-            _channel.Dispose();
-            _disposed = true;
+            connection.Dispose();
+            channel.Dispose();
+            disposed = true;
 
             GC.SuppressFinalize(this);
         }

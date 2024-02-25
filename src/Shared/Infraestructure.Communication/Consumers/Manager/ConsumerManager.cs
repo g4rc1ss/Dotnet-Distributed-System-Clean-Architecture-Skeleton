@@ -2,28 +2,28 @@
 
 public class ConsumerManager<TMessage> : IConsumerManager<TMessage>
 {
-    private CancellationTokenSource _cancellationTokenSource;
+    private CancellationTokenSource cancellationTokenSource;
 
     public ConsumerManager()
     {
-        _cancellationTokenSource = new CancellationTokenSource();
+        cancellationTokenSource = new CancellationTokenSource();
     }
 
     public CancellationToken GetCancellationToken()
     {
-        return _cancellationTokenSource.Token;
+        return cancellationTokenSource.Token;
     }
 
     public void RestartExecution()
     {
-        var cancellationTokenSource = _cancellationTokenSource;
-        _cancellationTokenSource = new CancellationTokenSource();
+        var cancellationTokenSource = this.cancellationTokenSource;
+        this.cancellationTokenSource = new CancellationTokenSource();
         cancellationTokenSource.Cancel();
     }
 
     public void StopExecution()
     {
-        _cancellationTokenSource.Cancel();
+        cancellationTokenSource.Cancel();
     }
 }
 

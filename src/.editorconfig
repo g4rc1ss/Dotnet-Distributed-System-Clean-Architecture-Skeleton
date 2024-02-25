@@ -12,17 +12,6 @@ indent_size = 2
 [*.cs]
 
 #### Core EditorConfig Options ####
-dotnet_analyzer_diagnostic.category-Naming.severity = error
-dotnet_analyzer_diagnostic.category-Style.severity = error
-
-
-dotnet_diagnostic.CA1711.severity = none
-# Quitar advertencias por nombres reservados del sistema
-dotnet_diagnostic.CA1716.severity = none
-# Si esperamos recibir null, declaramos como nullable
-dotnet_diagnostic.CS8618.severity = error
-dotnet_diagnostic.IDE0290.severity = error
-
 
 # Indentation and spacing
 indent_size = 4
@@ -221,10 +210,8 @@ dotnet_naming_rule.local_variables_should_be_camelcase.style = camelcase
 dotnet_naming_rule.constants_should_be_upper_case.severity = suggestion
 dotnet_naming_rule.constants_should_be_upper_case.symbols = constants
 dotnet_naming_rule.constants_should_be_upper_case.style = constant_style
-
 dotnet_naming_symbols.constants.applicable_kinds = field, local
 dotnet_naming_symbols.constants.required_modifiers = const
-
 dotnet_naming_style.constant_style.capitalization = all_upper
 
 dotnet_naming_rule.parameters_should_be_camelcase.severity = suggestion
@@ -237,7 +224,11 @@ dotnet_naming_rule.public_fields_should_be_camelcase.style = camelcase
 
 dotnet_naming_rule.private_fields_should_be__camelcase.severity = suggestion
 dotnet_naming_rule.private_fields_should_be__camelcase.symbols = private_fields
-dotnet_naming_rule.private_fields_should_be__camelcase.style = _camelcase
+dotnet_naming_rule.private_fields_should_be__camelcase.style = camelcase
+
+dotnet_naming_rule.private_readonly_fields_should_be__camelcase.severity = suggestion
+dotnet_naming_rule.private_readonly_fields_should_be__camelcase.symbols = private_readonly_fields
+dotnet_naming_rule.private_readonly_fields_should_be__camelcase.style = _camelcase
 
 dotnet_naming_rule.public_static_readonly_fields_should_be_pascalcase.severity = suggestion
 dotnet_naming_rule.public_static_readonly_fields_should_be_pascalcase.symbols = public_static_readonly_fields
@@ -288,6 +279,10 @@ dotnet_naming_symbols.public_fields.required_modifiers =
 dotnet_naming_symbols.private_fields.applicable_kinds = field
 dotnet_naming_symbols.private_fields.applicable_accessibilities = private, protected, protected_internal, private_protected
 dotnet_naming_symbols.private_fields.required_modifiers = 
+
+dotnet_naming_symbols.private_readonly_fields.applicable_kinds = field
+dotnet_naming_symbols.private_readonly_fields.applicable_accessibilities = private, protected, protected_internal, private_protected
+dotnet_naming_symbols.private_readonly_fields.required_modifiers = readonly
 
 dotnet_naming_symbols.private_static_fields.applicable_kinds = field
 dotnet_naming_symbols.private_static_fields.applicable_accessibilities = private, protected, protected_internal, private_protected
@@ -364,3 +359,21 @@ dotnet_naming_style.camelcase.required_suffix =
 dotnet_naming_style.camelcase.word_separator = 
 dotnet_naming_style.camelcase.capitalization = camel_case
 
+
+# Activate Analizer on Build
+dotnet_analyzer_diagnostic.category-Naming.severity = error
+dotnet_analyzer_diagnostic.category-Style.severity = error
+dotnet_analyzer_diagnostic.category-Documentation.severity = suggestion
+dotnet_analyzer_diagnostic.category-Performance.severity = suggestion
+dotnet_analyzer_diagnostic.category-Security.severity = suggestion
+
+
+dotnet_diagnostic.CA1711.severity = none
+# Quitar advertencias por nombres reservados del sistema
+dotnet_diagnostic.CA1716.severity = none
+# Si esperamos recibir null, declaramos como nullable
+dotnet_diagnostic.CS8618.severity = error
+dotnet_diagnostic.IDE0290.severity = error
+# Field never asigned
+dotnet_diagnostic.CS0649.severity = error
+dotnet_diagnostic.CS1998.severity = error
