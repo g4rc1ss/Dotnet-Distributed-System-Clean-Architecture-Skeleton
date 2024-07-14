@@ -8,6 +8,6 @@ public class HealthController : Controller
     [HttpGet("/health")]
     public IActionResult Health()
     {
-        return Ok("Healthy");
+        return Ok("healthy");
     }
 }
