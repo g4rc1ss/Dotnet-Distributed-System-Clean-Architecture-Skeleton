@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   weatherforecastapi:
     container_name: weatherforecastapi
@@ -31,8 +29,8 @@ services:
       - RabbitMqData__Consumer__IntegrationQueue=${WEATHERFORECAST_RabbitMqData_ConsumerSettings_IntegrationQueue_SKELETON}
       - RabbitMqData__Consumer__DomainQueue=${WEATHERFORECAST_RabbitMqData_ConsumerSettings_DomainQueue_SKELETON}
     ports:
-      - "${WEATHERFORECAST_HTTP_PORT_SKELETON}:80"
-      - "${WEATHERFORECAST_HTTPS_PORT_SKELETON}:443"
+      - "7325:80"
+      - "7326:443"
     volumes:
       - dotnetapp_keys_data:${WEATHERFORECAST_keysFolder_SKELETON}
 
