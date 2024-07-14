@@ -1,6 +1,4 @@
-﻿version: '3.8'
-
-## Configuracion de Grafana para localhost
+﻿## Configuracion de Grafana para localhost
 ## En un entorno de DEV, PRE o PRO se suele acceder desde la web de grafana cloud
 services:
   grafana:

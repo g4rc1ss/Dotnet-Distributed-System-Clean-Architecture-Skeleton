@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   weatherforecastconsumersyncdatabases:
     container_name: weatherforecastconsumersyncdatabases

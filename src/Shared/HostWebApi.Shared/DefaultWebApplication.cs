@@ -66,7 +66,7 @@ public static class DefaultWebApplication
 
         app.UseRateLimiter();
         app.UseHttpLogging();
-        app.UseHttpsRedirection();
+        // app.UseHttpsRedirection();
         app.UseAuthorization();
 
         app.MapControllers();
