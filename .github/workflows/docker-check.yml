@@ -1,0 +1,47 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Docker_build
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Docker
+      uses: docker/setup-buildx-action@v3
+
+    - name: Listado directorio
+      run: |
+        ls -la
+
+    - name: Ejecutar docker test
+      working-directory: .docker
+      run: |
+        ls -la
+        pwsh -File ./docker-compose.ps1 up test
+        
+    - name: Call endpoint
+      run: |
+       # Esperar a que el servicio esté listo verificando el endpoint /health
+       for i in {1..10}; do
+         if curl -s http://localhost/health | grep "healthy"; then
+           echo "Service is up and running"
+           exit 0
+         fi
+         echo "Waiting for the service to be ready..."
+         sleep 5
+       done
+       echo "Service did not become ready in time" >&2
+       exit 1
+    
+    - name: Eliminar docker test
+      working-directory: .docker
+      run: |
+        ls -la
+        pwsh -File ./docker-compose.ps1 down test v
