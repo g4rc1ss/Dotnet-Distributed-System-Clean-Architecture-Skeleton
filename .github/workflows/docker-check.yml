@@ -30,7 +30,7 @@ jobs:
       run: |
        # Esperar a que el servicio esté listo verificando el endpoint /health
        for i in {1..10}; do
-         if curl -s http://localhost:7325/health | grep "healthy"; then
+         if curl -s http://localhost:7325/health | grep "[hH]ealthy"; then
            echo "Service is up and running"
            exit 0
          fi
@@ -44,7 +44,7 @@ jobs:
       run: |
        # Esperar a que el servicio esté listo verificando el endpoint /health
        for i in {1..10}; do
-         if curl -s http://localhost:8550/health | grep "healthy"; then
+         if curl -s http://localhost:8550/health | grep "[hH]ealthy"; then
            echo "Service is up and running"
            exit 0
          fi
