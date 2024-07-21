@@ -7,6 +7,12 @@
       - 3306:3306
     environment: 
       - MYSQL_ROOT_PASSWORD
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u example_user -pexample_password || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     volumes: 
       - ./MySql/InitDatabase.sql:/docker-entrypoint-initdb.d/init.sql:rw
       - mysql_data:/var/lib/mysql
