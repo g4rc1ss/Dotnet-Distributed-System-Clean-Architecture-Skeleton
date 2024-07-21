@@ -1,0 +1,6 @@
+services:
+  weatherforecastconsumersyncdatabases:
+    image: distributed/weatherforecastconsumersyncdatabases:latest
+    build:
+      context: ../src
+      dockerfile: weatherForecastSyncConsumerDockerfile

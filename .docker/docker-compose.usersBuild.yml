@@ -1,0 +1,6 @@
+services:
+  usersapi:
+    image: distributed/usersapi:latest
+    build:
+      context: ../src
+      dockerfile: userDockerfile

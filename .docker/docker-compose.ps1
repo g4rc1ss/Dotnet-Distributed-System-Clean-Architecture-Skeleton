@@ -1,11 +1,11 @@
 param (
     [Parameter(Mandatory = $true)]
     [ValidateSet("up", "down")]
-    [string]$action,
+    [string]$action = "up",
 
     [Parameter(Mandatory = $true)]
     [ValidateSet("local", "test")]
-    [string]$environment,
+    [string]$environment = "test",
 
     [Parameter(Mandatory = $false)]
     [ValidateSet("v")]
@@ -20,6 +20,12 @@ $composeToExecuteAlways = @(
     "docker-compose.redis.yml"
 );
 
+$composeBuildFiles = @(
+    "docker-compose.usersBuild.yml",
+    "docker-compose.weatherForecastBuild.yml",
+    "docker-compose.WFSyncConsumerBuild.yml"
+);
+
 $composeToExecuteOnTest = @(
     "docker-compose.weatherForecast.yml",
     "docker-compose.WFSyncConsumer.yml",
@@ -27,12 +33,10 @@ $composeToExecuteOnTest = @(
 );
 
 $composeToExecuteOnLocal = @(
-    "docker-compose.grafana.yml"
 );
 
-$commadDockerComposeToExecute = "docker compose"
-$enviromentFile = ".env.$environment"
-
+$commadDockerComposeToExecute = "docker-compose"
+$enviromentFile = "env.$environment"
 
 
 $commadDockerComposeToExecute += " --env-file $enviromentFile"
@@ -53,7 +57,13 @@ if ($environment -eq "test") {
     }
 
     if ($action -eq "up") {
-        $buildExec = "$commadDockerComposeToExecute build" 
+        $commandToExecuteBuildApps = "docker-compose"
+
+        foreach ($dockerComposeFile in $composeBuildFiles) {
+            $commandToExecuteBuildApps += " -f $dockerComposeFile";
+        }
+
+        $buildExec = "$commandToExecuteBuildApps build" 
         Write-Output $buildExec
         Invoke-Expression $buildExec
     }

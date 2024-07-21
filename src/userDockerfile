@@ -6,36 +6,21 @@ WORKDIR /app
 
 # Copia los archivos del proyecto y restaura las dependencias
 COPY . .
-
-ENV projectPath=./User/User.API
-
-RUN dotnet restore ${projectPath}
+RUN dotnet restore
 
 # Compila la aplicación
-RUN dotnet publish -c Release -o out ${projectPath}
-
-# Gestion de Certificados HTTPS de Kestrel
-ARG environmentDeploy
-ARG certficatePathFrom
-ARG certificatePathTo
-ARG certificatePass
-
-RUN if [ "${environmentDeploy}" = "Development" ]; then \
-    dotnet dev-certs https -ep ${certificatePathTo} -p ${certificatePass}; \
-    \
-    else \
-    cp ${certficatePathFrom} ./out/; \
-    fi
+RUN dotnet publish -c Release -o out
+RUN dotnet dev-certs https -ep /app/cert.pfx -p password
 
 # Configura la imagen de producción
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-
-ARG certificatePathTo
-
 COPY --from=build /app/out .
-COPY --from=build ${certificatePathTo} .
+COPY --from=build /app/cert.pfx .
 RUN rm -rf appsettings.json
+
+# Instalamos curl para el healthcheck de Docker
+RUN apt update && apt install -y curl
 
 # Inicia la aplicación
 ENTRYPOINT ["dotnet", "User.API.dll"]
