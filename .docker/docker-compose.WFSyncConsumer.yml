@@ -1,6 +1,7 @@
 services:
   weatherforecastconsumersyncdatabases:
     image: distributed/weatherforecastconsumersyncdatabases:latest
+    restart: always
     environment:
       - DOTNET_ENVIRONMENT=${WEATHERFORECAST_CONSUMER_DOTNET_ENVIRONMENT}
       - AppName=${WEATHERFORECAST_CONSUMER_AppName}
