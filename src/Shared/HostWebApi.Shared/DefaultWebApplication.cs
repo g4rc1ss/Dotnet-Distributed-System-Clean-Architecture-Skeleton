@@ -57,9 +57,9 @@ public static class DefaultWebApplication
             app.UseSwaggerUI();
         }
 
-        app.MapHealthChecks("/health");
+        app.MapHealthChecks("/healthz");
 
-        app.UseHealthChecks("/health", new HealthCheckOptions()
+        app.UseHealthChecks("/healthz", new HealthCheckOptions()
         {
             Predicate = _ => true,
         });

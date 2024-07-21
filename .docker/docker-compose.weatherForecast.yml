@@ -1,38 +1,35 @@
 services:
   weatherforecastapi:
+    image: distributed/weatherforecastapi:latest
     container_name: weatherforecastapi
     restart: always
-    build:
-      context: ../src
-      dockerfile: weatherForecastDockerfile
-      args:
-        - environmentDeploy=${WEATHERFORECAST_ASPNETCORE_ENVIRONMENT_SKELETON}
-        - certficatePathFrom=${WEATHERFORECAST_ASPNETCORE_Kestrel_Certificate_From_Path_SKELETON}
-        - certificatePathTo=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Path_SKELETON}
-        - certificatePass=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Password_SKELETON}
     environment:
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Path_SKELETON}
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Password_SKELETON}
-      - ASPNETCORE_ENVIRONMENT=${WEATHERFORECAST_ASPNETCORE_ENVIRONMENT_SKELETON}
-      - ASPNETCORE_URLS=${WEATHERFORECAST_ASPNETCORE_URLS_SKELETON}
-      - AppName=${WEATHERFORECAST_AppName_SKELETON}
-      - keysFolder=${WEATHERFORECAST_keysFolder_SKELETON}
-      - ConnectionStrings__DistributedContext=${WEATHERFORECAST_ConnectionStrings__DistributedContext_SKELETON}
-      - ConnectionStrings__MongoDbConnection=${WEATHERFORECAST_ConnectionStrings__MongoDbConnection_SKELETON}
-      - ConnectionStrings__RedisConnection=${WEATHERFORECAST_ConnectionStrings__RedisConnection_SKELETON}
-      - ConnectionStrings__OpenTelemetry=${WEATHERFORECAST_ConnectionStrings__OpenTelemetry_SKELETON}
-      - RabbitMqData__HostName=${WEATHERFORECAST_RabbitMqData_HostName_SKELETON}
-      - RabbitMqData__Credentials__Username=${WEATHERFORECAST_RabbitMqData_Credentials_Username_SKELETON}
-      - RabbitMqData__Credentials__Password=${WEATHERFORECAST_RabbitMqData_Credentials_Password_SKELETON}
-      - RabbitMqData__Publisher__IntegrationExchange=${WEATHERFORECAST_RabbitMqData_Publisher_IntegrationExchange_SKELETON}
-      - RabbitMqData__Publisher__DomainExchange=${WEATHERFORECAST_RabbitMqData_Publisher_DomainExchange_SKELETON}
-      - RabbitMqData__Consumer__IntegrationQueue=${WEATHERFORECAST_RabbitMqData_ConsumerSettings_IntegrationQueue_SKELETON}
-      - RabbitMqData__Consumer__DomainQueue=${WEATHERFORECAST_RabbitMqData_ConsumerSettings_DomainQueue_SKELETON}
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Path}
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${WEATHERFORECAST_ASPNETCORE_Kestrel__Certificates__Default__Password}
+      - ASPNETCORE_ENVIRONMENT=${WEATHERFORECAST_ASPNETCORE_ENVIRONMENT}
+      - ASPNETCORE_URLS=${WEATHERFORECAST_ASPNETCORE_URLS}
+      - AppName=${WEATHERFORECAST_AppName}
+      - keysFolder=${WEATHERFORECAST_keysFolder}
+      - ConnectionStrings__DistributedContext
+      - ConnectionStrings__MongoDbConnection
+      - ConnectionStrings__RedisConnection
+      - ConnectionStrings__OpenTelemetry
+      - RabbitMqData__HostName
+      - RabbitMqData__Credentials__Username
+      - RabbitMqData__Credentials__Password
+      - RabbitMqData__Publisher__IntegrationExchange
+      - RabbitMqData__Publisher__DomainExchange
     ports:
       - "7325:80"
       - "7326:443"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost/health | grep -w '[Hh]ealthy' || exit 1"]
+      interval: 1s
+      timeout: 10s
+      retries: 3
+      start_period: 2s
     volumes:
-      - dotnetapp_keys_data:${WEATHERFORECAST_keysFolder_SKELETON}
+      - dotnetapp_keys_data:${WEATHERFORECAST_keysFolder}
 
 volumes:
   dotnetapp_keys_data:

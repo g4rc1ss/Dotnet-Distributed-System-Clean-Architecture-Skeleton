@@ -1,22 +1,19 @@
 services:
   weatherforecastconsumersyncdatabases:
-    container_name: weatherforecastconsumersyncdatabases
+    image: distributed/weatherforecastconsumersyncdatabases:latest
     restart: always
-    build:
-      context: ../src
-      dockerfile: weatherForecastSyncConsumerDockerfile
     environment:
-      - DOTNET_ENVIRONMENT=${WEATHERFORECAST_CONSUMER_DOTNET_ENVIRONMENT_SKELETON}
-      - AppName=${WEATHERFORECAST_CONSUMER_AppName_SKELETON}
-      - keysFolder=${WEATHERFORECAST_CONSUMER_keysFolder_SKELETON}
-      - ConnectionStrings__MongoDbConnection=${WEATHERFORECAST_CONSUMER_ConnectionStrings__MongoDbConnection_SKELETON}
-      - ConnectionStrings__OpenTelemetry=${WEATHERFORECAST_ConnectionStrings__OpenTelemetry_SKELETON}
-      - RabbitMqData__HostName=${WEATHERFORECAST_CONSUMER_RabbitMqData_HostName_SKELETON}
-      - RabbitMqData__Credentials__Username=${WEATHERFORECAST_CONSUMER_RabbitMqData_Credentials_Username_SKELETON}
-      - RabbitMqData__Credentials__Password=${WEATHERFORECAST_CONSUMER_RabbitMqData_Credentials_Password_SKELETON}
-      - RabbitMqData__Consumer__IntegrationQueue=${WEATHERFORECAST_CONSUMER_RabbitMqData_Consumer_IntegrationQueue_SKELETON}
+      - DOTNET_ENVIRONMENT=${WEATHERFORECAST_CONSUMER_DOTNET_ENVIRONMENT}
+      - AppName=${WEATHERFORECAST_CONSUMER_AppName}
+      - keysFolder=${WEATHERFORECAST_CONSUMER_keysFolder}
+      - ConnectionStrings__MongoDbConnection
+      - ConnectionStrings__OpenTelemetry
+      - RabbitMqData__HostName
+      - RabbitMqData__Credentials__Username
+      - RabbitMqData__Credentials__Password
+      - RabbitMqData__Consumer__IntegrationQueue
     volumes:
-      - dotnetapp_keys_data:${WEATHERFORECAST_CONSUMER_keysFolder_SKELETON}
+      - dotnetapp_keys_data:${WEATHERFORECAST_CONSUMER_keysFolder}
 
 volumes:
   dotnetapp_keys_data:

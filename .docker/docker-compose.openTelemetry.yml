@@ -1,14 +1,8 @@
-﻿networks:
-  cleanArchitectureNetwork:
-    driver: bridge
-
-services:
+﻿services:
   opentelemetry-collector:
     image: otel/opentelemetry-collector-contrib:latest
     container_name: opentelemetry_collector
     restart: always
-    networks:
-      - cleanArchitectureNetwork
     command: [ "--config=/etc/otel-collector.yaml" ]
     volumes:
       - ./Observability/otel-collector.yaml:/etc/otel-collector.yaml
@@ -16,4 +10,11 @@ services:
       - "8888:8888"   # Prometheus metrics exposed by the collector
       - "8889:8889"   # Prometheus exporter metrics
       - "4317:4317"   # OTLP gRPC receiver
+      - "13133:13133"
+    # healthcheck:
+    #   test: ["CMD-SHELL", "curl http://localhost:13133/health | grep 'Server available' || exit 1"]
+    #   interval: 1s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 1s
   

@@ -1,0 +1,6 @@
+services:
+  weatherforecastapi:
+    image: distributed/weatherforecastapi:latest
+    build:
+      context: ../src
+      dockerfile: weatherForecastDockerfile

@@ -41,6 +41,7 @@ processors:
 # https://opentelemetry.io/docs/collector/configuration/#service
 # https://github.com/open-telemetry/opentelemetry-collector/blob/main/docs/design.md#pipelines
 service:
+  extensions: [health_check]
   pipelines:
     traces:
       receivers: [otlp]
@@ -54,3 +55,8 @@ service:
       receivers: [otlp]
       processors: []
       exporters: [loki, otlphttp]
+
+extensions:
+  health_check:
+    endpoint: 0.0.0.0:13133
+    path: /health
