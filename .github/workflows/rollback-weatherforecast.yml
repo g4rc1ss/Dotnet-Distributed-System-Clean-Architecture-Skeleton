@@ -1,0 +1,40 @@
+name: rollback Host Web API
+on:
+  workflow_dispatch:
+    
+jobs:
+  rollback-pro:
+    environment:
+      name: pro
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup docker
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Save SSH Public Key
+        working-directory: .docker
+        run: |
+          ls -la
+          echo "${{ secrets.SSH_KEY }}" > ./id_rsa
+          chmod 0400 ./id_rsa
+
+      - name: Set permissions to SSH Key
+        working-directory: .docker
+        run: |
+          ls -la
+          chmod 0400 ./id_rsa
+
+      - name: Add remote host to known_hosts
+        run: |
+          mkdir ~/.ssh
+          ssh-keyscan -H ${{secrets.HOST}} >> ~/.ssh/known_hosts
+          cat ~/.ssh/known_hosts
+
+      - name: rollback HostWebAPI
+        working-directory: .docker
+        run: |
+          ls -la
+          pwsh -File ./rollback.ps1 distributed/weatherforecastapi previous latest docker-compose.weatherForecast.yml ${{secrets.USER}} ${{secrets.HOST}} ${{secrets.DEST_FOLDER}} ${{vars.ENV_FILE}} ${{secrets.SUDOPASSWD}} ./id_rsa            

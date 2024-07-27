@@ -1,15 +1,14 @@
 param (
+    [string]$vpsUser = "",
+    [string]$vpsHost = "",
+    [string]$vpsDest = "",
+    [string]$envFile = "",
+    [string]$healthCheckUrl = "",
+    [string]$sudoPassword = "",
+    [string]$sshKeyPath = "",
     [string]$imageName = "distributed/weatherforecastapi",
     [string]$imageTag = "latest",
-    [string]$prevTag = "previous",
-    [string]$vpsUser = "",
-    [string]$vpsHost = "192.168.66.2",
-    [string]$vpsDest = "/home/",
-    [string]$composeDir = "/home/",
-    [string]$envFile = "env.test",
-    [string]$healthCheckUrl = "http://192.168.66.2:7325/health",
-    [string]$sudoPassword = "",
-    [string]$sshKeyPath = "./id_rsa"
+    [string]$prevTag = "previous"
 )
 $tarImageName = "weatherForecast_${imageTag}.tar"
 $dockerComposeDeploy = "docker-compose.weatherForecast.yml"
@@ -41,7 +40,7 @@ echo $sudoPassword | sudo -S bash -c '
     docker load -i ${vpsDest}/${tarImageName}
     
     # Deploy the new image with Docker Compose
-    cd ${composeDir}
+    cd ${vpsDest}
 
     echo "Ejecutamos el docker compose para levantar la nueva imagen"
     docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
@@ -49,13 +48,21 @@ echo $sudoPassword | sudo -S bash -c '
     echo "Limpiamos recursos"
     rm -rf ${tarImageName}
     docker image prune -f
+
+    # Success
+    echo "0";
 '
 "@
 
-Invoke-Command -ScriptBlock {
+$response = Invoke-Command -ScriptBlock {
     param($script, $user, $vpsHost, $sshKeyPath)
     ssh -i $sshKeyPath $user@$vpsHost $script
 } -ArgumentList $deployScript, $vpsUser, $vpsHost, $sshKeyPath
+
+if ($response[$response.Length - 1] -ne "0") {
+    Write-Error "Error al desplegar";
+    exit 1;
+}
 
 # Check the health of the deployed service
 for ($i = 0; $i -lt 10; $i++) {
@@ -69,19 +76,7 @@ for ($i = 0; $i -lt 10; $i++) {
 
 Write-Host "Health check failed. Rolling back..."
 
-# Rollback to the previous image
-$rollbackScript = @"
-    echo $sudoPassword | sudo -S bash -c '
-    echo "Tag the previous image as latest"
-    docker tag ${imageName}:${prevTag} ${imageName}:${imageTag}
-    
-    echo "Redeploy with Docker Compose"
-    cd $composeDir
-    docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
-'
-"@
+pwsh -File ./rollback.ps1 $imageName $prevTag $imageTag $dockerComposeDeploy $vpsUser $vpsHost $vpsDest $envFile $sudoPassword $sshKeyPath
 
-Invoke-Command -ScriptBlock {
-    param($script, $user, $vpsHost, $sshKeyPath)
-    ssh -i $sshKeyPath $user@$vpsHost $script
-} -ArgumentList $rollbackScript, $vpsUser, $vpsHost, $sshKeyPath
+# Cerramos con error porque ha habido que hacer rollback
+exit 1;

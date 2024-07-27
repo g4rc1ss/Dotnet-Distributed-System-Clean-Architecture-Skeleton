@@ -1,14 +1,13 @@
 param (
+    [string]$vpsUser = "",
+    [string]$vpsHost = "",
+    [string]$vpsDest = "",
+    [string]$envFile = "",
+    [string]$sudoPassword = "",
+    [string]$sshKeyPath = "",
     [string]$imageName = "distributed/weatherforecastconsumersyncdatabases",
     [string]$imageTag = "latest",
-    [string]$prevTag = "previous",
-    [string]$vpsUser = "",
-    [string]$vpsHost = "192.168.66.2",
-    [string]$vpsDest = "/home/",
-    [string]$composeDir = "/home/",
-    [string]$envFile = "env.test",
-    [string]$sudoPassword = "",
-    [string]$sshKeyPath = "./id_rsa"
+    [string]$prevTag = "previous"
 )
 $tarImageName = "weatherForecastSyncConsumer_${imageTag}.tar"
 $dockerComposeDeploy = "docker-compose.WFSyncConsumer.yml"
@@ -40,7 +39,7 @@ echo $sudoPassword | sudo -S bash -c '
     docker load -i ${vpsDest}/${tarImageName}
     
     # Deploy the new image with Docker Compose
-    cd ${composeDir}
+    cd ${vpsDest}
 
     echo "Ejecutamos el docker compose para levantar la nueva imagen"
     docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
@@ -48,10 +47,18 @@ echo $sudoPassword | sudo -S bash -c '
     echo "Limpiamos recursos"
     rm -rf ${tarImageName}
     docker image prune -f
+
+    # Success
+    echo "0";
 '
 "@
 
-Invoke-Command -ScriptBlock {
+$response = Invoke-Command -ScriptBlock {
     param($script, $user, $vpsHost, $sshKeyPath)
     ssh -i $sshKeyPath $user@$vpsHost $script
 } -ArgumentList $deployScript, $vpsUser, $vpsHost, $sshKeyPath
+
+if ($response[$response.Length - 1] -ne "0") {
+    Write-Error "Error al desplegar";
+    exit 1;
+}
