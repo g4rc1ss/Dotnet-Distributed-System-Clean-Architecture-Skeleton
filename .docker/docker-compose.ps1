@@ -35,7 +35,7 @@ $composeToExecuteOnTest = @(
 $composeToExecuteOnLocal = @(
 );
 
-$commadDockerComposeToExecute = "docker-compose"
+$commadDockerComposeToExecute = "docker compose"
 $enviromentFile = "env.$environment"
 
 
@@ -57,7 +57,7 @@ if ($environment -eq "test") {
     }
 
     if ($action -eq "up") {
-        $commandToExecuteBuildApps = "docker-compose"
+        $commandToExecuteBuildApps = "docker compose"
 
         foreach ($dockerComposeFile in $composeBuildFiles) {
             $commandToExecuteBuildApps += " -f $dockerComposeFile";

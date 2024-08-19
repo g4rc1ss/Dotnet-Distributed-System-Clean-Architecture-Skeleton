@@ -20,7 +20,7 @@ $rollbackScript = @"
     
     # Redeploy with Docker Compose
     cd $vpsDest
-    docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
+    docker compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
 
     # Success
     echo "0";
