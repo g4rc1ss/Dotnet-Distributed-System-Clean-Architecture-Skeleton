@@ -52,6 +52,7 @@ public class RabbitMqMessageConsumer<TMessage> : IMessageConsumer<TMessage>
         asyncReceiver.Received += HandleMessage;
 
         var queue = GetCorrectQueue();
+        channel.BasicQos(0, 10, false);
         channel.BasicConsume(queue, false, asyncReceiver);
         return Task.CompletedTask;
     }

@@ -23,7 +23,7 @@ public class SyncWeatherForecastDatabaseHandler(MongoClient mongoClient, ILogger
             .GetCollection<WeatherForecastMongoEntity>("WeatherForecast");
 
         await collection.InsertOneAsync(weatherForecast, new InsertOneOptions { }, cancelToken);
-        _logger.LogInformation("Coleccion insertada en Base de datos, {CosmosDocumentId}, {MySQLDocumentId}", weatherForecast.Id, weatherForecast.MySqlId);
+        _logger.LogInformation("Coleccion insertada en Base de datos, {MongoDocumentId}, {MySQLDocumentId}", weatherForecast.Id, weatherForecast.MySqlId);
     }
 
     private WeatherForecastMongoEntity GetWeatherForecastMongo(in CreateWeatherForecast weatherForecast)

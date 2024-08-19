@@ -30,7 +30,7 @@ public class WeatherForecastCommandCreate(DistributedContext context, IDistribut
         if (countOfSave > 0)
         {
             var createWeather = _weatherCreateMapper.ToWeatherForecast(weatherForecast);
-            await _integrationMessagePublisher.Publish(createWeather, null, "subscription", cancellationToken);
+            await _integrationMessagePublisher.Publish(createWeather, null, "weatherForecast.create", cancellationToken);
             await _distributedCache.RemoveAsync("WeatherForecasts", cancellationToken);
         }
 

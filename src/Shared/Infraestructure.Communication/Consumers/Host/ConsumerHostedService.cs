@@ -26,22 +26,19 @@ public class ConsumerHostedService<TMessage>(IConsumerManager<TMessage> consumer
 
     private async Task ConsumeMessages(CancellationToken cancellationToken)
     {
-        while (!cancellationToken.IsCancellationRequested)
+        var ct = _consumerManager.GetCancellationToken();
+        if (ct.IsCancellationRequested)
         {
-            var ct = _consumerManager.GetCancellationToken();
-            if (ct.IsCancellationRequested)
-            {
-                break;
-            }
+            // break;
+        }
 
-            try
-            {
-                await _messageConsumer.StartAsync(cancellationToken);
-                await Task.Delay(1000, cancellationToken);
-            }
-            catch (OperationCanceledException)
-            {
-            }
+        try
+        {
+            await _messageConsumer.StartAsync(cancellationToken);
+            await Task.Delay(1000, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
         }
     }
 }
