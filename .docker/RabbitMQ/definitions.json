@@ -119,7 +119,7 @@
             "vhost": "/",
             "destination": "publisher",
             "destination_type": "queue",
-            "routing_key": "subscription.#",
+            "routing_key": "#",
             "arguments": {}
         },
         {
@@ -127,7 +127,7 @@
             "vhost": "/",
             "destination": "subscription.weatherForecast",
             "destination_type": "queue",
-            "routing_key": "subscription.*",
+            "routing_key": "weatherForecast.*",
             "arguments": {}
         },
 
