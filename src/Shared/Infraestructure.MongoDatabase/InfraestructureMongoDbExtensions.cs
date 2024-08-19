@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Extensions.DiagnosticSources;
@@ -21,9 +20,6 @@ public static class InfraestructureMongoDbExtensions
 
     private static IServiceCollection MongoDbHealthCheck(this IServiceCollection services, MongoClientSettings clientSettings)
     {
-        services.AddHealthChecks()
-            .AddMongoDb(clientSettings, string.Empty, HealthStatus.Unhealthy, timeout: TimeSpan.FromSeconds(2));
-
         return services;
     }
 }

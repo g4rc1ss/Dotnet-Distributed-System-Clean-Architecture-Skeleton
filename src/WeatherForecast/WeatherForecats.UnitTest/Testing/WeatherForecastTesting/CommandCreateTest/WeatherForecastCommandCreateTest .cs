@@ -12,7 +12,7 @@ public class WeatherForecastCommandCreateTest
 {
 
     [ClassInitialize]
-    public static void OnInitializeTest()
+    public static void OnInitializeTest(TestContext testContext)
     {
     }
 

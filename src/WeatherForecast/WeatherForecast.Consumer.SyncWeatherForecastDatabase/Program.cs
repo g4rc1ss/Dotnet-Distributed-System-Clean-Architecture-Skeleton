@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using HostWebApi.Shared.Extensions;
 using Infraestructure.Communication.Consumers.Handler;
-using OpenTelemetry.Trace;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Infraestructure.Communication;
@@ -39,7 +38,7 @@ builder.ConfigureServices((hostBuilder, serviceCollection) =>
     }, tracer =>
     {
         tracer.AddSource(nameof(IMessageHandler));
-        tracer.AddMongoDBInstrumentation();
+        tracer.AddSource("MongoDB.Driver.Core.Extensions.DiagnosticSources");
     });
 });
 

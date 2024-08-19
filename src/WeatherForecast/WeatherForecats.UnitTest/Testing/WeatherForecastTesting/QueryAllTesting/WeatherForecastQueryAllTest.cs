@@ -10,7 +10,7 @@ public class WeatherForecastQueryAllTest
 {
 
     [ClassInitialize]
-    public static void OnInitializeTest()
+    public static void OnInitializeTest(TestContext testContext)
     {
     }
 

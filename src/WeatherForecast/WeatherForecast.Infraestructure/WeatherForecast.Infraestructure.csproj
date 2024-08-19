@@ -7,9 +7,9 @@
 		<AssemblyName>Infraestructure.MySqlEntityFramework</AssemblyName>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Dapper" Version="2.1.28" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
-		<PackageReference Include="Riok.Mapperly" Version="3.3.0" />
+		<PackageReference Include="Dapper" Version="2.1.44" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+		<PackageReference Include="Riok.Mapperly" Version="3.6.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\WeatherForecast.Interfaces\WeatherForecast.Interfaces.csproj" />

@@ -17,7 +17,8 @@ var app = DefaultWebApplication.Create(args, builder =>
     traces.AddDistributedCacheInstrumentation();
     traces.AddSource(nameof(IExternalMessagePublisher<IMessage>));
     traces.AddEntityFrameworkCoreInstrumentation();
-    traces.AddMongoDBInstrumentation();
+    traces.AddSource("MongoDB.Driver.Core.Extensions.DiagnosticSources");
+
 });
 
 
