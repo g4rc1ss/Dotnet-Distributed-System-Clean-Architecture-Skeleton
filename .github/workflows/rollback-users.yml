@@ -37,4 +37,4 @@ jobs:
         working-directory: .docker
         run: |
           ls -la
-          pwsh -File ./rollback.ps1 distributed/usersapi previous latest docker compose.users.yml ${{secrets.USER}} ${{secrets.HOST}} ${{secrets.DEST_FOLDER}} ${{vars.ENV_FILE}} ${{secrets.SUDOPASSWD}} ./id_rsa
+          pwsh -File ./rollback.ps1 distributed/usersapi previous latest docker-compose.users.yml ${{secrets.USER}} ${{secrets.HOST}} ${{secrets.DEST_FOLDER}} ${{vars.ENV_FILE}} ${{secrets.SUDOPASSWD}} ./id_rsa

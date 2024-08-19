@@ -13,29 +13,29 @@ param (
 )
 
 $composeToExecuteAlways = @(
-    "docker compose.mongo.yml",
-    "docker compose.mySQL.yml",
-    "docker compose.openTelemetry.yml",
-    "docker compose.rabbitMQ.yml",
-    "docker compose.redis.yml"
+    "docker-compose.mongo.yml",
+    "docker-compose.mySQL.yml",
+    "docker-compose.openTelemetry.yml",
+    "docker-compose.rabbitMQ.yml",
+    "docker-compose.redis.yml"
 );
 
 $composeBuildFiles = @(
-    "docker compose.usersBuild.yml",
-    "docker compose.weatherForecastBuild.yml",
-    "docker compose.WFSyncConsumerBuild.yml"
+    "docker-compose.usersBuild.yml",
+    "docker-compose.weatherForecastBuild.yml",
+    "docker-compose.WFSyncConsumerBuild.yml"
 );
 
 $composeToExecuteOnTest = @(
-    "docker compose.weatherForecast.yml",
-    "docker compose.WFSyncConsumer.yml",
-    "docker compose.users.yml"
+    "docker-compose.weatherForecast.yml",
+    "docker-compose.WFSyncConsumer.yml",
+    "docker-compose.users.yml"
 );
 
 $composeToExecuteOnLocal = @(
 );
 
-$commadDockerComposeToExecute = "docker compose"
+$commadDockerComposeToExecute = "docker-compose"
 $enviromentFile = "env.$environment"
 
 
@@ -57,7 +57,7 @@ if ($environment -eq "test") {
     }
 
     if ($action -eq "up") {
-        $commandToExecuteBuildApps = "docker compose"
+        $commandToExecuteBuildApps = "docker-compose"
 
         foreach ($dockerComposeFile in $composeBuildFiles) {
             $commandToExecuteBuildApps += " -f $dockerComposeFile";
