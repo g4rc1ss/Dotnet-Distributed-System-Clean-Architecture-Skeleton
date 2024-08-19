@@ -1,8 +1,8 @@
 {
-    "rabbit_version": "3.12.1",
-    "rabbitmq_version": "3.12.1",
+    "rabbit_version": "3.13.6",
+    "rabbitmq_version": "3.13.6",
     "product_name": "RabbitMQ",
-    "product_version": "3.12.1",
+    "product_version": "3.13.6",
     "users": [
         {
             "name": "DistributionAdmin",
@@ -16,7 +16,13 @@
     ],
     "vhosts": [
         {
-            "name": "/"
+            "name": "/",
+            "description": "",
+            "tags": [],
+            "metadata": {
+                "description": "",
+                "tags": []
+            }
         }
     ],
     "permissions": [
@@ -50,38 +56,44 @@
     ],
     "queues": [
         {
-            "name": "subscription.weatherForecast",
+            "name": "publisher",
             "vhost": "/",
             "durable": true,
             "auto_delete": false,
-            "arguments": {}
+            "arguments": {
+                "x-dead-letter-exchange": "dead-letter.exchange",
+                "x-dead-letter-routing-key": "publisher.dead-letter",
+                "x-message-ttl": 20000
+            }
         },
         {
-            "name": "subscription-queue.dead-letter",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
-            "arguments": {}
-        },
-        {
-            "name": "subscription-queue",
+            "name": "publisher.dead-letter",
             "vhost": "/",
             "durable": true,
             "auto_delete": false,
             "arguments": {
             }
+        },
+        {
+            "name": "subscription.weatherForecast",
+            "vhost": "/",
+            "durable": false,
+            "auto_delete": false,
+            "arguments": {
+                "x-dead-letter-exchange": "dead-letter.exchange",
+                "x-dead-letter-routing-key": "subscription.weatherForecast.dead-letter",
+                "x-message-ttl": 20000
+            }
+        },
+        {
+            "name": "subscription.weatherForecast.dead_letter",
+            "vhost": "/",
+            "durable": false,
+            "auto_delete": false,
+            "arguments": {}
         }
     ],
     "exchanges": [
-        {
-            "name": "subscription.exchange",
-            "vhost": "/",
-            "type": "topic",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
-        },
         {
             "name": "dead-letter.exchange",
             "vhost": "/",
@@ -90,23 +102,24 @@
             "auto_delete": false,
             "internal": false,
             "arguments": {}
+        },
+        {
+            "name": "subscription.exchange",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": true,
+            "internal": false,
+            "arguments": {}
         }
     ],
     "bindings": [
         {
-            "source": "dead-letter.exchange",
-            "vhost": "/",
-            "destination": "subscription-queue.dead-letter",
-            "destination_type": "queue",
-            "routing_key": "subscription",
-            "arguments": {}
-        },
-        {
             "source": "subscription.exchange",
             "vhost": "/",
-            "destination": "subscription-queue",
+            "destination": "publisher",
             "destination_type": "queue",
-            "routing_key": "subscription",
+            "routing_key": "subscription.#",
             "arguments": {}
         },
         {
@@ -114,7 +127,26 @@
             "vhost": "/",
             "destination": "subscription.weatherForecast",
             "destination_type": "queue",
-            "routing_key": "subscription",
+            "routing_key": "subscription.*",
+            "arguments": {}
+        },
+
+
+
+        {
+            "source": "dead-letter.exchange",
+            "vhost": "/",
+            "destination": "publisher.dead-letter",
+            "destination_type": "queue",
+            "routing_key": "publisher.dead-letter",
+            "arguments": {}
+        },
+        {
+            "source": "dead-letter.exchange",
+            "vhost": "/",
+            "destination": "subscription.weatherForecast.dead_letter",
+            "destination_type": "queue",
+            "routing_key": "subscription.weatherForecast.dead-letter",
             "arguments": {}
         }
     ]
