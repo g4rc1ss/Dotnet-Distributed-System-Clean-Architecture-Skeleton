@@ -12,12 +12,12 @@ param (
     [string]$prevTag = "previous"
 )
 $tarImageName = "users_${imageTag}.tar"
-$dockerComposeDeploy = "docker-compose.users.yml"
-$dockerComposeBuildDeploy = "docker-compose.usersBuild.yml"
+$dockerComposeDeploy = "docker compose.users.yml"
+$dockerComposeBuildDeploy = "docker compose.usersBuild.yml"
 
 
 # Build the Docker image
-docker-compose -f $dockerComposeBuildDeploy build
+docker compose -f $dockerComposeBuildDeploy build
 
 # Save the image to a tar file
 docker save -o $tarImageName "${imageName}:${imageTag}"
@@ -44,7 +44,7 @@ echo $sudoPassword | sudo -S bash -c '
     cd ${vpsDest}
 
     echo "Ejecutamos el docker compose para levantar la nueva imagen"
-    docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
+    docker compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d
 
     echo "Limpiamos recursos"
     rm -rf ${tarImageName}

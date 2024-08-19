@@ -6,7 +6,7 @@ param (
     [string]$sudoPassword = "",
     [string]$sshKeyPath = ""
 )
-$dockerComposeDeploy = "docker-compose.mongo.yml"
+$dockerComposeDeploy = "docker compose.mongo.yml"
 
 
 # Transfer the image to the VPS
@@ -21,10 +21,10 @@ echo $sudoPassword | sudo -S bash -c '
     cd ${vpsDest}
 
     echo "Updateamos las imagenes de los contenedores"
-    docker-compose -f ${dockerComposeDeploy} pull
+    docker compose -f ${dockerComposeDeploy} pull
 
     echo "Ejecutamos el docker compose para levantar la nueva imagen"
-    docker-compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d --force-recreate
+    docker compose --env-file ${envFile} -f ${dockerComposeDeploy} up -d --force-recreate
 
     # Success
     echo "0";

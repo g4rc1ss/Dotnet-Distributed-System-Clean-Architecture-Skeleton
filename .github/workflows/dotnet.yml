@@ -35,7 +35,7 @@ jobs:
       working-directory: .docker
       run: |
         ls -la
-        pwsh -File ./docker-compose.ps1 up test
+        pwsh -File ./docker compose.ps1 up test
 
     - name: Docker ps
       run: |

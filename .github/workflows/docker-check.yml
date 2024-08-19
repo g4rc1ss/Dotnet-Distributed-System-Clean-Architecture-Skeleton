@@ -24,7 +24,7 @@ jobs:
       working-directory: .docker
       run: |
         ls -la
-        pwsh -File ./docker-compose.ps1 up test
+        pwsh -File ./docker compose.ps1 up test
         
     - name: Call endpoint WeatherForecast
       run: |
@@ -58,4 +58,4 @@ jobs:
       working-directory: .docker
       run: |
         ls -la
-        pwsh -File ./docker-compose.ps1 down test v
+        pwsh -File ./docker compose.ps1 down test v
